@@ -5,3 +5,22 @@
   align-items: center;
   flex-direction: column;
 }
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.column-layout {
+  flex-direction: column; 
+}
+
+button {
+  margin: 10px;
+  width: 140px;
+}
+
+img {
+  max-width: 80%;
+  display: block;
+}
