@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
+import com.openclassrooms.mddapi.payload.response.ErrorResponse;
 import com.openclassrooms.mddapi.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.security.jwt.JwtUtils;
@@ -29,6 +30,12 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
+    /**
+     * @param authenticationManager
+     * @param passwordEncoder
+     * @param jwtUtils
+     * @param userRepository
+     */
     AuthController(AuthenticationManager authenticationManager,
             PasswordEncoder passwordEncoder,
             JwtUtils jwtUtils,
@@ -39,18 +46,24 @@ public class AuthController {
         this.userRepository = userRepository;
     }
 
+    /**
+     *  Register and authentificate a new user
+     * 
+     * @param registerRequest A requestBody with user email, name and password
+     * @return a {@link ResponseEntity} with {@link MessageResponse} request
+     */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Email is already taken!"));
+                    .body(new ErrorResponse("Error: Email is already taken!"));
         }
 
         if (userRepository.existsByUserName(registerRequest.getUserName())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new ErrorResponse("Error: Username is already taken!"));
         }
 
         // Create new user's account
