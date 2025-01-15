@@ -15,6 +15,9 @@ import com.openclassrooms.mddapi.payload.response.ErrorResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Global exception handler for the application.
+ */
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -36,6 +39,21 @@ public class GlobalExceptionHandler {
         }
         log.error(errors, exception);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errors));
+    }
+
+    /**
+     * Handle all other {@link Exception}
+     * 
+     * @param exception the thrown exception
+     * @return a {@link ResponseEntity} with {@link ErrorResponse} request and a
+     *         internal server error status (500)
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ErrorResponse> handleGlobalException(Exception exception) {
+        log.error(exception.getStackTrace().toString(), exception);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .body(new ErrorResponse(exception.getMessage()));
     }
 
 }

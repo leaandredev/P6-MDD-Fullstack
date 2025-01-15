@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.openclassrooms.mddapi.security.jwt.AuthEntryPointJwt;
@@ -41,17 +42,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
   }
 
+  /**
+   * Creates and configures an {@link AuthenticationManager} bean
+   * 
+   * @return an {@link AuthenticationManager} for authenticating users
+   * @throws Exception
+   */
   @Bean
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
   }
 
+  /**
+   * Defines a {@link BCryptPasswordEncoder} bean to hash passwords securely using
+   * the BCrypt algorithm.
+   * 
+   * @return a new instance of {@link PasswordEncoder}
+   */
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * Configures the security filter chain and defining rules for endpoint access.
+   * 
+   * @param http the {@link HttpSecurity} object used to configure HTTP security
+   * @throws Exception
+   */
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable()

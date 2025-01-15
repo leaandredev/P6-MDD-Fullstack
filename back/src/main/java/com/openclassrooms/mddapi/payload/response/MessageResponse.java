@@ -1,17 +1,17 @@
 package com.openclassrooms.mddapi.payload.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * DTO representing an success response.
+ */
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class MessageResponse {
+
     private String message;
 
-    public MessageResponse(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
