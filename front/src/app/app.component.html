@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<div class="app">
+    <mat-toolbar *ngIf="showHeader" color="secondary" fxLayout="row" fxLayoutAlign="space-between center">
+        <img src="/assets/logo_p6.png" alt="logo" />
+    </mat-toolbar>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>
