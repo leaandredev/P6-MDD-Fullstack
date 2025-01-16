@@ -23,7 +23,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.png", "src/assets"],
+            "assets": [
+              "src/favicon.png",
+              "src/assets"
+            ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles/styles.scss"
@@ -88,9 +91,49 @@
           "builder": "@angular-builders/jest:run",
           "options": {
             "tsConfig": "tsconfig.spec.json",
-            "assets": ["src/favicon.png", "src/assets"],
-            "styles": ["src/styles/styles.scss"],
+            "assets": [
+              "src/favicon.png",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles/styles.scss"
+            ],
             "scripts": []
+          }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "front:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "front:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "front:serve:production"
+            }
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "front:serve:production"
+            }
           }
         }
       }

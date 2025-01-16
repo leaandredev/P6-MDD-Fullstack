@@ -16,15 +16,10 @@ export class HomeComponent implements OnInit {
       .observe([Breakpoints.HandsetPortrait])
       .subscribe((result) => {
         if (result.matches) {
-          console.log('Mon téléphone est en mode portrait');
           this.handsetPortrait = true;
         } else {
           this.handsetPortrait = false;
         }
       });
-  }
-
-  start() {
-    alert('Commencez par lire le README et à vous de jouer !');
   }
 }
