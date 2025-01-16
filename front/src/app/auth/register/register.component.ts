@@ -1,5 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  handsetPortrait: boolean = false;
+  public handsetPortrait: boolean = false;
+  public onError: boolean = false;
+  public form = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    userName: [
+      '',
+      [Validators.required, Validators.min(3), Validators.max(20)],
+    ],
+    password: [
+      '',
+      [Validators.required, Validators.min(3), Validators.max(40)],
+    ],
+  });
 
-  constructor(private responsive: BreakpointObserver) {}
+  constructor(
+    private responsive: BreakpointObserver,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.responsive

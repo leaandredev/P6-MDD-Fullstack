@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const materialModule = [
   MatButtonModule,
@@ -33,6 +34,8 @@ const materialModule = [
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
     ...materialModule,
   ],
   providers: [],
