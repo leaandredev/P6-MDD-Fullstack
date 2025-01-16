@@ -1,1 +1,26 @@
-<p>register works!</p>
+<div class="register">
+    <button mat-icon-button (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="flex-container flex-column">
+        <img *ngIf="handsetPortrait" src="/assets/logo_p6.png" alt="logo" />
+        <h1>Inscription</h1>
+        <form class="register-form">
+            <!-- <form class="register-form" [formGroup]="form" (ngSubmit)="submit()"> -->
+            <div class="flex-container flex-column">
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Name" formControlName="name">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Email" formControlName="email">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Password" formControlName="password">
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit">S'inscrire</button>
+            </div>
+            <!-- <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button> -->
+            <!-- <span *ngIf="onError" class="error">An error occurred</span> -->
+        </form>
+    </div>
+</div>
