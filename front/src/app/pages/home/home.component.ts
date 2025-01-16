@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  handsetPortrait: boolean = false;
 
-  ngOnInit(): void {}
+  constructor(private responsive: BreakpointObserver) {}
+
+  ngOnInit(): void {
+    this.responsive
+      .observe([Breakpoints.HandsetPortrait])
+      .subscribe((result) => {
+        if (result.matches) {
+          console.log('Mon téléphone est en mode portrait');
+          this.handsetPortrait = true;
+        } else {
+          this.handsetPortrait = false;
+        }
+      });
+  }
 
   start() {
     alert('Commencez par lire le README et à vous de jouer !');
