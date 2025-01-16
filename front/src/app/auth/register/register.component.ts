@@ -1,6 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { RegisterRequest } from '../interfaces/registerRequest.interface';
 
 @Component({
   selector: 'app-register',
@@ -23,8 +26,10 @@ export class RegisterComponent implements OnInit {
   });
 
   constructor(
+    private authService: AuthService,
     private responsive: BreakpointObserver,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -42,5 +47,13 @@ export class RegisterComponent implements OnInit {
 
   public back() {
     window.history.back();
+  }
+
+  public submit(): void {
+    const registerRequest = this.form.value as RegisterRequest;
+    this.authService.register(registerRequest).subscribe({
+      next: (_: void) => this.router.navigate(['/']),
+      error: (_) => (this.onError = true),
+    });
   }
 }
