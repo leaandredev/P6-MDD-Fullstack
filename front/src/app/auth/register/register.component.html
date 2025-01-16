@@ -5,7 +5,7 @@
     <div class="flex-container flex-column">
         <img *ngIf="handsetPortrait" src="/assets/logo_p6.png" alt="logo" />
         <h1>Inscription</h1>
-        <form class="register-form" [formGroup]="form">
+        <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
             <!-- <form class="register-form" [formGroup]="form" (ngSubmit)="submit()"> -->
             <div class="flex-container flex-column">
                 <mat-form-field appearance="outline">
