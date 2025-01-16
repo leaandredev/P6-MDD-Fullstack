@@ -9,4 +9,6 @@ import com.openclassrooms.mddapi.models.User;
 @Component
 @Mapper(componentModel = "spring")
 public interface UserMapper extends EntityMapper<UserDto, User> {
+
+    
 }
