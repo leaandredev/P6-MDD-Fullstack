@@ -1,0 +1,105 @@
+/* Flex */
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* Les enfants se déplacent sur une nouvelle ligne si nécessaire */
+    justify-content: center;
+    /* Centrer les enfants horizontalement */
+    align-items: center;
+    /* Centrer les enfants verticalement */
+    gap: 1rem;
+    /* Espacement entre les enfants */
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    /* Disposition en ligne (par défaut) */
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    /* Disposition en colonne */
+}
+
+.flex-grow {
+    flex: 1;
+    /* Étendre un élément pour remplir l'espace disponible */
+}
+
+.flex-start {
+    justify-content: flex-start;
+    /* Aligner les enfants au début */
+}
+
+.flex-end {
+    justify-content: flex-end;
+    /* Aligner les enfants à la fin */
+}
+
+.flex-space-between {
+    justify-content: space-between;
+    /* Ajouter de l'espace entre les enfants */
+}
+
+/* Grid */
+
+.grid-container {
+    display: grid;
+    gap: 1rem;
+    /* Espacement entre les éléments */
+}
+
+.grid-2-columns {
+    grid-template-columns: repeat(2, 1fr);
+    /* Deux colonnes de tailles égales */
+}
+
+.grid-3-columns {
+    grid-template-columns: repeat(3, 1fr);
+    /* Trois colonnes */
+}
+
+.grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    /* Colonnes dynamiques en fonction de l'espace */
+}
+
+.grid-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    /* Colonnes qui remplissent tout l'espace */
+}
+
+.grid-center {
+    justify-content: center;
+    /* Centrer les colonnes */
+    align-items: center;
+    /* Centrer les lignes */
+}
+
+/* Margin/Padding */
+
+.margin-small {
+    margin: 0.5rem;
+}
+
+.margin-medium {
+    margin: 1rem;
+}
+
+.margin-large {
+    margin: 2rem;
+}
+
+.padding-small {
+    padding: 0.5rem;
+}
+
+.padding-medium {
+    padding: 1rem;
+}
+
+.padding-large {
+    padding: 2rem;
+}
