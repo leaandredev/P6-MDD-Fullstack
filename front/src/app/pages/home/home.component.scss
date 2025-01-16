@@ -1,22 +1,10 @@
-.center {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
 
-.button-group {
-  display: flex;
-  flex-direction: row;
-}
-
-.column-layout {
-  flex-direction: column; 
+.home {
+    height: 70vh;
 }
 
 button {
-  margin: 10px;
+  margin: 20px;
   width: 140px;
 }
 

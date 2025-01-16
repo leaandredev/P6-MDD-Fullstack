@@ -1,6 +1,6 @@
-<div class="center">
+<div class="home flex-container">
   <img src="/assets/logo_p6.png" alt="logo" />
-  <div class="button-group" [ngClass]="{'column-layout': handsetPortrait}">
+  <div [ngClass]="handsetPortrait ? 'flex-column' : 'flex-row' ">
     <button routerLink="register" mat-stroked-button color="secondary">Se connecter</button>
     <button routerLink="register" mat-stroked-button color="secondary">S'inscrire</button>
   </div>
