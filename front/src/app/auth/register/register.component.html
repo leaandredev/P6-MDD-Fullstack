@@ -20,9 +20,9 @@
                     <mat-label>Mot de passe</mat-label>
                     <input matInput formControlName="password">
                 </mat-form-field>
+                <span *ngIf="onError" class="error">An error occurred</span>
                 <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">S'inscrire</button>
             </div>
-            <span *ngIf="onError" class="error">An error occurred</span>
         </form>
     </div>
 </div>
