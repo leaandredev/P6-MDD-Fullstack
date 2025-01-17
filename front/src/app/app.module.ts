@@ -17,6 +17,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './auth/login/login.component';
 
 const materialModule = [
   MatButtonModule,
@@ -29,7 +30,12 @@ const materialModule = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, RegisterComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    RegisterComponent,
+    LoginComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
