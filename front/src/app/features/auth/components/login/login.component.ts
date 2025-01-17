@@ -1,10 +1,11 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { LoginRequest } from '../interfaces/loginRequest.interface';
-import { SessionInformationResponse } from '../interfaces/sessionInformationResponse.interface';
+import { LoginRequest } from '../../interfaces/loginRequest.interface';
+import { SessionService } from 'src/app/services/session.service';
+import { SessionInformation } from '../../interfaces/sessionInformation.interface';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private responsive: BreakpointObserver,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private sessionService: SessionService
   ) {}
 
   ngOnInit(): void {
@@ -51,9 +53,9 @@ export class LoginComponent implements OnInit {
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
-      next: (sessionInformationResponse: SessionInformationResponse) => {
-        localStorage.setItem('token', sessionInformationResponse.token);
-        this.router.navigate(['/']);
+      next: (sessionInformation: SessionInformation) => {
+        this.sessionService.logIn(sessionInformation);
+        this.router.navigate(['/feed']);
       },
       error: (error) => {
         this.onError = true;
