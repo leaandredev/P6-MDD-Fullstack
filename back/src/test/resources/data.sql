@@ -1,63 +1,9 @@
-CREATE TABLE IF NOT EXISTS USERS (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  user_name VARCHAR(40),
-  email VARCHAR(255),
-  password VARCHAR(255),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP);
-
--- CREATE TABLE IF NOT EXISTS TOPICS (
---   id INT PRIMARY KEY AUTO_INCREMENT,
---   title VARCHAR(40),
---   description VARCHAR(255),
---   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP);
-
--- CREATE TABLE IF NOT EXISTS POSTS (
---   id INT PRIMARY KEY AUTO_INCREMENT,
---   title VARCHAR(40),
---   content VARCHAR(255),
---   user_id int,
---   topic_id int,
---   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP);
-
--- ALTER TABLE POSTS ADD FOREIGN KEY (user_id) REFERENCES USERS (id);
--- ALTER TABLE POSTS ADD FOREIGN KEY (topic_id) REFERENCES TOPICS (id);
-
--- CREATE TABLE IF NOT EXISTS COMMENTS (
---   id INT PRIMARY KEY AUTO_INCREMENT,
---   user_id int,
---   post_id int,
---   content VARCHAR(255),
---   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
-
--- ALTER TABLE COMMENTS ADD FOREIGN KEY (user_id) REFERENCES USERS (id);
--- ALTER TABLE COMMENTS ADD FOREIGN KEY (post_id) REFERENCES POSTS (id);
-
--- CREATE TABLE IF NOT EXISTS SUBSCRIPTIONS (
---   user_id int,
---   topic_id int
--- );
-
--- ALTER TABLE SUBSCRIPTIONS ADD FOREIGN KEY (user_id) REFERENCES USERS (id);
--- ALTER TABLE SUBSCRIPTIONS ADD FOREIGN KEY (topic_id) REFERENCES TOPICS (id);
-
--- CREATE TABLE IF NOT EXISTS FEEDS (
---   user_id int,
---   post_id int
--- );
-
--- ALTER TABLE FEEDS ADD FOREIGN KEY (user_id) REFERENCES USERS (id);
--- ALTER TABLE FEEDS ADD FOREIGN KEY (post_id) REFERENCES POSTS (id);
-
--- Insertion des utilisateurs (développeurs)
+-- Users
 INSERT INTO USERS (user_name, email, password)
 VALUES
-('DevAlice', 'alice@mdd.com', '$2a$10$0g3zKjwFkY0i5XxsoFZfAeZ2LfjGrTjwKgptXGoAo0gRj8rHFVcXq'), -- Mot de passe: password123
-('DevBob', 'bob@mdd.com', '$2a$10$OlsSnOanRfrnpDlvhZaDoeQUkOP0NL4BQKgIaQ0XkZr76nQuKz/Mq'), -- Mot de passe: password456
-('DevCharlie', 'charlie@mdd.com', '$2a$10$LTQBPOTXkXKT1l8o45HF2uITLCL.kRHJ02vup7u6O6dKn.WN/zU/O'); -- Mot de passe: password789
+('DevAlice', 'alice@mdd.com', '$2a$10$aK5yHO5R4wKz/UVCjjqbR..wWhyKW4Laryb208sYC/aTa4TAyGqsm'), -- Password: password123
+('DevBob', 'bob@mdd.com', '$2a$10$SxMN1pz5Zd.T2EsGZKh5Iu8VJKJovCfxLeZ7WyhQ7YyT1qMAGoXXS'), -- Password: password456
+('DevCharlie', 'charlie@mdd.com', '$2a$10$QlCBKjvaCCRuNGhcavO5zuO59cLS4AmpIXDqfoka5dic0GBbgFYwu'); -- Password: password789
 
 -- -- Insertion des topics (développement)
 -- INSERT INTO TOPICS (title, description)

@@ -55,8 +55,10 @@ public class AuthController {
      * @param registerRequest A requestBody with user email, name and password
      * @return a {@link ResponseEntity} with {@link MessageResponse} request
      */
-    @PostMapping("/register")
+    @PostMapping(value = "/register", consumes = { "application/json" })
+    @ResponseBody
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+
         // Create new user's account
         User user = User.builder()
                 .userName(registerRequest.getUserName())
