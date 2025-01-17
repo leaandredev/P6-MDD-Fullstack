@@ -1,9 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { RegisterRequest } from '../interfaces/registerRequest.interface';
+import { AuthService } from '../../services/auth.service';
+import { RegisterRequest } from '../../interfaces/registerRequest.interface';
 
 @Component({
   selector: 'app-register',
