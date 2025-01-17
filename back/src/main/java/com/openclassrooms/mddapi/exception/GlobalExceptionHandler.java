@@ -3,6 +3,8 @@ package com.openclassrooms.mddapi.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,6 +21,21 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    /**
+     * Handle {@link AccessDeniedException}, {@link UnauthorizedException} and
+     * {@link AuthenticationException}
+     * 
+     * @param exception the thrown exception
+     * @return a {@link ResponseEntity} with {@link ErrorResponse} request and a
+     *         unauthorized status (401)
+     */
+    @ExceptionHandler({ AccessDeniedException.class, UnauthorizedException.class, AuthenticationException.class })
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(Exception exception) {
+        log.error(exception.getMessage(), exception);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).body(new ErrorResponse("Access denied"));
+    }
 
     /**
      * Handle {@link MethodArgumentNotValidException}
@@ -50,7 +67,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({ HttpMessageNotReadableException.class, DuplicateEntryException.class,
             IllegalArgumentException.class })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleBadequest(Exception exception) {
+    public ResponseEntity<ErrorResponse> handleBadRequest(Exception exception) {
         log.error(exception.getMessage(), exception);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(new ErrorResponse(exception.getMessage()));
     }

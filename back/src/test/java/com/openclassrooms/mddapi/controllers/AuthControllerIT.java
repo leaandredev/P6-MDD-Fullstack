@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.mddapi.MddApiApplication;
+import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
 
 @ActiveProfiles("test")
@@ -27,6 +28,46 @@ public class AuthControllerIT {
 
     @Autowired
     private ObjectMapper mapper;
+
+    @Test
+    public void testLoginUser() throws Exception {
+        // Arrange
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setIdentifier("alice@mdd.com");
+        loginRequest.setPassword("password123");
+
+        String jsonLoginRequest = mapper.writeValueAsString(loginRequest);
+
+        // Act and Assert
+        this.mockMvc.perform(
+                post("/api/auth/login")
+                        .content(jsonLoginRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").isNotEmpty());
+    }
+
+    @Test
+    public void testLoginUserWithInvalidCredentials() throws Exception {
+        // Arrange
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setIdentifier("InvalidUser");
+        loginRequest.setPassword("wrongPassword!");
+
+        String jsonLoginRequest = mapper.writeValueAsString(loginRequest);
+
+        // Act and Assert
+        this.mockMvc.perform(
+                post("/api/auth/login")
+                        .content(jsonLoginRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.message").value("Access denied"));
+    }
 
     @Test
     public void testRegisterUser() throws Exception {
@@ -67,7 +108,8 @@ public class AuthControllerIT {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Error: Username is already taken!"));
+                .andExpect(jsonPath("$.message")
+                        .value("A user already exist with this email address or username"));
     }
 
     @Test
@@ -88,7 +130,8 @@ public class AuthControllerIT {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Error: Email is already taken!"));
+                .andExpect(jsonPath("$.message")
+                        .value("A user already exist with this email address or username"));
     }
 
 }

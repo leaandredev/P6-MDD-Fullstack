@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.services;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.exception.DuplicateEntryException;
@@ -26,13 +25,12 @@ public class UserService {
      * @return The User entity saved
      */
     public User saveUser(User user) {
-        try {
+        if (userRepository.existsByEmail(user.getEmail()) || userRepository.existsByUserName(user.getUserName())) {
+            throw new DuplicateEntryException("A user already exist with this email address or username");
+        } else {
             userRepository.save(user);
             log.info("User saved");
-
             return user;
-        } catch (DataIntegrityViolationException e) {
-            throw new DuplicateEntryException("A user already exist with this email address or username");
         }
     }
 
