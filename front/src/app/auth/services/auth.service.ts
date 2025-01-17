@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { RegisterRequest } from '../interfaces/registerRequest.interface';
 import { HttpClient } from '@angular/common/http';
 import { LoginRequest } from '../interfaces/loginRequest.interface';
-import { TokenResponse } from '../interfaces/tokenResponse.interface';
+import { SessionInformationResponse } from '../interfaces/tokenResponse.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +20,10 @@ export class AuthService {
     );
   }
 
-  public login(loginRequest: LoginRequest): Observable<TokenResponse> {
-    return this.httpClient.post<TokenResponse>(
+  public login(
+    loginRequest: LoginRequest
+  ): Observable<SessionInformationResponse> {
+    return this.httpClient.post<SessionInformationResponse>(
       `${this.pathService}/login`,
       loginRequest
     );

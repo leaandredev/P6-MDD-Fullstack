@@ -3,10 +3,13 @@ package com.openclassrooms.mddapi.services;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.payload.response.SessionInformationResponse;
 import com.openclassrooms.mddapi.security.jwt.JwtUtils;
+import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,19 +31,29 @@ public class AuthService {
     }
 
     /**
-     * Authenticate a user and return a new JwtToken
+     * Authenticate a user and return a new SessionInformationResponse
      * 
      * @param identifier    the email of the user or username attempting to log in
      * @param plainPassword the plain-text password of the user
      * @return a new jwtToken provide by jwtUtils
      */
-    public String login(String identifier, String plainPassword) {
+    public SessionInformationResponse login(String identifier, String plainPassword) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         identifier,
                         plainPassword));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
         log.info("Authentication successful");
-        return jwtUtils.generateJwtToken(authentication);
+
+        return SessionInformationResponse.builder()
+                .token(jwt)
+                .id(userDetails.getId())
+                .userName(userDetails.getUsername())
+                .email(userDetails.getEmail())
+                .build();
     }
 
     /**

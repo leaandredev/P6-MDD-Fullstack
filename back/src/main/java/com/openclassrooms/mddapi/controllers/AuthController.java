@@ -15,7 +15,7 @@ import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
 import com.openclassrooms.mddapi.payload.response.MessageResponse;
-import com.openclassrooms.mddapi.payload.response.TokenResponse;
+import com.openclassrooms.mddapi.payload.response.SessionInformationResponse;
 import com.openclassrooms.mddapi.services.AuthService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -43,10 +43,12 @@ public class AuthController {
      */
     @PostMapping(value = "/login", consumes = { "application/json" })
     @ResponseBody
-    public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
-        String token = authService.login(loginRequest.getIdentifier(), loginRequest.getPassword());
+    public ResponseEntity<SessionInformationResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
+        SessionInformationResponse sessionInformation = authService.login(loginRequest.getIdentifier(),
+                loginRequest.getPassword());
+
         return ResponseEntity
-                .ok(new TokenResponse(token));
+                .ok(sessionInformation);
     }
 
     /**
