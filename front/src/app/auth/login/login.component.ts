@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../interfaces/loginRequest.interface';
-import { TokenResponse } from '../interfaces/tokenResponse.interface';
+import { SessionInformationResponse } from '../interfaces/sessionInformationResponse.interface';
 
 @Component({
   selector: 'app-login',
@@ -51,8 +51,8 @@ export class LoginComponent implements OnInit {
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
-      next: (tokenResponse: TokenResponse) => {
-        localStorage.setItem('token', tokenResponse.token);
+      next: (sessionInformationResponse: SessionInformationResponse) => {
+        localStorage.setItem('token', sessionInformationResponse.token);
         this.router.navigate(['/']);
       },
       error: (error) => {
