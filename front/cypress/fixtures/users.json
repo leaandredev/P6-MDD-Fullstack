@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "userName": "DevAlice",
+    "email": "alice@mdd.com",
+    "password": "$2a$10$aK5yHO5R4wKz/UVCjjqbR..wWhyKW4Laryb208sYC/aTa4TAyGqsm",
+    "createdAt": "2024-01-01T09:00:00Z",
+    "updatedAt": "2024-01-01T09:00:00Z"
+  },
+  {
+    "id": 2,
+    "userName": "DevBob",
+    "email": "bob@mdd.com",
+    "password": "$2a$10$SxMN1pz5Zd.T2EsGZKh5Iu8VJKJovCfxLeZ7WyhQ7YyT1qMAGoXXS",
+    "createdAt": "2024-12-31T09:00:00Z",
+    "updatedAt": "2024-12-31T09:00:00Z"
+  }
+]
