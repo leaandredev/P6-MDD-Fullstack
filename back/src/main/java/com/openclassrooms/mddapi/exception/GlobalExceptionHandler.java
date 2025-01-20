@@ -73,6 +73,20 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Handle {@link NoEntryFoundException}
+     * 
+     * @param exception the thrown exception
+     * @return a {@link ResponseEntity} with {@link ErrorResponse} request and a not
+     *         found status (404)
+     */
+    @ExceptionHandler(NoEntryFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handleNoEntryFoundExceptions(NoEntryFoundException exception) {
+        log.error(exception.getMessage(), exception);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(new ErrorResponse(exception.getMessage()));
+    }
+
+    /**
      * Handle all other {@link Exception}
      * 
      * @param exception the thrown exception
