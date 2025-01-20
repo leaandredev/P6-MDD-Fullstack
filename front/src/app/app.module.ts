@@ -12,11 +12,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
-import { RegisterComponent } from './auth/register/register.component';
+import { HomeComponent } from './features/auth/components/home/home.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './features/auth/components/login/login.component';
+import { RegisterComponent } from './features/auth/components/register/register.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { FeedComponent } from './features/feed/components/feed/feed.component';
 
 const materialModule = [
   MatButtonModule,
@@ -29,7 +32,7 @@ const materialModule = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, RegisterComponent],
+  declarations: [AppComponent, HomeComponent, FeedComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,7 +43,9 @@ const materialModule = [
     HttpClientModule,
     ...materialModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

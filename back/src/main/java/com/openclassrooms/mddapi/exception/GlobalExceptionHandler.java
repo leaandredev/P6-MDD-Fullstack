@@ -23,6 +23,21 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler {
 
     /**
+     * Handle {@link AccessDeniedException}, {@link UnauthorizedException} and
+     * {@link AuthenticationException}
+     * 
+     * @param exception the thrown exception
+     * @return a {@link ResponseEntity} with {@link ErrorResponse} request and a
+     *         unauthorized status (401)
+     */
+    @ExceptionHandler({ AccessDeniedException.class, UnauthorizedException.class, AuthenticationException.class })
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(Exception exception) {
+        log.error(exception.getMessage(), exception);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).body(new ErrorResponse("Access denied"));
+    }
+
+    /**
      * Handle {@link MethodArgumentNotValidException}
      * 
      * @param exception the thrown exception
@@ -39,6 +54,22 @@ public class GlobalExceptionHandler {
         }
         log.error(errors, exception);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errors));
+    }
+
+    /**
+     * Handle {@link HttpMessageNotReadableException},
+     * {@link DuplicateEntryException} and {@link IllegalArgumentException}
+     * 
+     * @param exception the thrown exception
+     * @return a {@link ResponseEntity} with {@link ErrorResponse} request and a bad
+     *         request status (400)
+     */
+    @ExceptionHandler({ HttpMessageNotReadableException.class, DuplicateEntryException.class,
+            IllegalArgumentException.class })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleBadRequest(Exception exception) {
+        log.error(exception.getMessage(), exception);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(new ErrorResponse(exception.getMessage()));
     }
 
     /**

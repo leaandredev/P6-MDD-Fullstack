@@ -1,27 +1,22 @@
-<div class="register">
+<div class="login">
     <button mat-icon-button (click)="back()">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <div class="flex-container flex-column">
-        <img *ngIf="handsetPortrait" src="/assets/logo_p6.png" alt="logo" />
-        <h1>Inscription</h1>
+        <!-- <img *ngIf="handsetPortrait" src="/assets/logo_p6.png" alt="logo" /> -->
+        <h1>Se connecter</h1>
         <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
-            <!-- <form class="register-form" [formGroup]="form" (ngSubmit)="submit()"> -->
             <div class="flex-container flex-column">
                 <mat-form-field appearance="outline">
-                    <mat-label>Nom d'utilisateur</mat-label>
-                    <input matInput formControlName="userName">
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Adresse e-mail</mat-label>
-                    <input matInput formControlName="email">
+                    <mat-label>E-mail ou Nom d'utilisateur</mat-label>
+                    <input matInput formControlName="identifier">
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Mot de passe</mat-label>
                     <input matInput formControlName="password">
                 </mat-form-field>
                 <span *ngIf="onError" class="error">An error occurred</span>
-                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">S'inscrire</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Se connecter</button>
             </div>
         </form>
     </div>
