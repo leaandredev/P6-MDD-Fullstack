@@ -6,6 +6,7 @@ declare namespace Cypress {
      * Custom command to login
      * @example cy.login('email@example.com', 'password123')
      */
+    login(email: string, password: string): Chainable<void>;
     register(
       firstName: string,
       lastName: string,
@@ -13,5 +14,10 @@ declare namespace Cypress {
       password: string
     ): Chainable<void>;
     initIntercepts(): Chainable<void>;
+    interceptWithFixture(
+      method: string,
+      url: string,
+      fixturePath: string
+    ): Chainable<void>;
   }
 }
