@@ -17,7 +17,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/feed/feed.module').then((m) => m.FeedModule),
   },
-  { path: '', component: HomeComponent },
 ];
 
 @NgModule({

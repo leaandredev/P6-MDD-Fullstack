@@ -1,7 +1,8 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { combineLatest, filter, map } from 'rxjs';
+import { combineLatest, filter, map, Observable } from 'rxjs';
+import { SessionService } from './services/session.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,11 @@ export class AppComponent {
   public title: string = 'front';
   public showHeader: boolean = true;
 
-  constructor(private router: Router, private responsive: BreakpointObserver) {
+  constructor(
+    private router: Router,
+    private responsive: BreakpointObserver,
+    private sessionService: SessionService
+  ) {
     const url$ = this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       map((event: any) => event.url) // Capture l'URL actuelle
@@ -35,5 +40,9 @@ export class AppComponent {
         }
       }
     );
+  }
+
+  public $isLogged(): Observable<boolean> {
+    return this.sessionService.$isLogged();
   }
 }

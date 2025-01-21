@@ -1,6 +1,11 @@
 <div class="app">
-    <mat-toolbar *ngIf="showHeader" color="secondary">
+    <mat-toolbar *ngIf="showHeader" color="secondary" class="flex-space-between">
         <img id="app-logo" src="/assets/logo_p6.png" alt="logo" />
+        <div *ngIf="$isLogged() | async">
+            <button mat-fab color="secondary" aria-label="Example icon button with a delete icon">
+                <mat-icon>person</mat-icon>
+            </button>
+        </div>
     </mat-toolbar>
     <div>
         <router-outlet></router-outlet>
