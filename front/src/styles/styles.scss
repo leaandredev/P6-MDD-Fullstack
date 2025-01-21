@@ -1,6 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import url(flex-grid.scss);
+@import 'src/styles/flex-grid.scss';
+
+@import '@angular/material/theming';
+@include mat-core();
+
+$primary: mat-palette($mat-indigo);
+$accent: mat-palette($mat-pink, A200, A100, A400);
+$warn: mat-palette($mat-red);
+
+$theme: mat-light-theme((color: (primary: $primary,
+                accent: $accent,
+                warn: $warn,
+            ),
+        ));
+
+@include angular-material-theme($theme);
 
 html,
 body {
@@ -14,4 +29,8 @@ body {
 
 .error {
     color: red;
+}
+
+.bold {
+    font-weight: bold;
 }
