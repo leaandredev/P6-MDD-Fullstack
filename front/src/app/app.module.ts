@@ -20,6 +20,7 @@ import { LoginComponent } from './features/auth/components/login/login.component
 import { RegisterComponent } from './features/auth/components/register/register.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { FeedComponent } from './features/feed/components/feed/feed.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 const materialModule = [
   MatButtonModule,
@@ -32,7 +33,12 @@ const materialModule = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, FeedComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    FeedComponent,
+    UserDetailsComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

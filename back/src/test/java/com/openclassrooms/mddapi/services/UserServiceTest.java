@@ -3,6 +3,8 @@ package com.openclassrooms.mddapi.services;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.openclassrooms.mddapi.exception.DuplicateEntryException;
+import com.openclassrooms.mddapi.exception.NoEntryFoundException;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
@@ -82,6 +85,33 @@ public class UserServiceTest {
         verify(userRepository).existsByEmail(mockUser.getEmail());
         verify(userRepository).existsByUserName(mockUser.getUserName());
         verify(userRepository, never()).save(mockUser);
+    }
+
+    @Test
+    public void testFindById() {
+        // Arrange
+        when(userRepository.findById(mockUser.getId())).thenReturn(Optional.of(mockUser));
+
+        // Act
+        User user = userService.findById(mockUser.getId());
+
+        // Assert
+        assertThat(user).isNotNull();
+        assertThat(user.getUserName()).isEqualTo("Deborah123");
+        verify(userRepository).findById(mockUser.getId());
+    }
+
+    @Test
+    public void testFindByIdNotFound() {
+        // Arrange
+        when(userRepository.findById(mockUser.getId())).thenReturn(Optional.empty());
+
+        // Act
+        Throwable thrown = catchThrowable(() -> userService.findById(mockUser.getId()));
+
+        // Assert
+        assertThat(thrown).isInstanceOf(NoEntryFoundException.class);
+        verify(userRepository).findById(mockUser.getId());
     }
 
 }

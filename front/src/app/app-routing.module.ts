@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './features/auth/components/home/home.component';
 import { UnauthGuard } from './guards/unauth.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/feed/feed.module').then((m) => m.FeedModule),
   },
-  { path: '', component: HomeComponent },
+  {
+      title: 'UserDetails',
+      path: 'user-details',
+      component: UserDetailsComponent,
+    },
 ];
 
 @NgModule({

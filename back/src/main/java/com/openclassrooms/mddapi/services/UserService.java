@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.services;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.exception.DuplicateEntryException;
+import com.openclassrooms.mddapi.exception.NoEntryFoundException;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
@@ -32,6 +33,16 @@ public class UserService {
             log.info("User saved");
             return user;
         }
+    }
+
+    /**
+     * Find a user by its id
+     * 
+     * @param id The id of the user to find
+     * @return The User entity found
+     */
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new NoEntryFoundException("The user does not exist"));
     }
 
 }
