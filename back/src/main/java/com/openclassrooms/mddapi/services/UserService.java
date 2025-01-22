@@ -25,7 +25,7 @@ public class UserService {
      * @param user The User entity to save
      * @return The User entity saved
      */
-    public User saveUser(User user) {
+    public User save(User user) {
         if (userRepository.existsByEmail(user.getEmail()) || userRepository.existsByUserName(user.getUserName())) {
             throw new DuplicateEntryException("A user already exist with this email address or username");
         } else {
@@ -43,6 +43,17 @@ public class UserService {
      */
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NoEntryFoundException("The user does not exist"));
+    }
+
+    /**
+     * Update a user
+     * 
+     * @param id The id of the user to update
+     * @param user The User entity to update
+     * @return The User entity updated
+     */
+    public User update(Long id, User user) {
+        return userRepository.save(user);
     }
 
 }
