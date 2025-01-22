@@ -17,6 +17,15 @@ Cypress.Commands.add('initIntercepts', () => {
       message: 'User registered successfully!',
     },
   }).as('register');
+
+  // get by id
+  cy.fixture('users').then((users) => {
+    cy.intercept('GET', '/api/user/*', (req) => {
+      const userId = Number(req.url.split('/').pop());
+      const user = users.find((u) => u.id === userId);
+      req.reply(user ? user : { error: 'User not found' });
+    }).as('getUser');
+  });
 });
 
 Cypress.Commands.add('login', (identifier, password) => {
