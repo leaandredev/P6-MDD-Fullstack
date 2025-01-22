@@ -47,7 +47,7 @@ public class UserServiceTest {
         when(userRepository.existsByUserName(any())).thenReturn(false);
 
         // Act
-        User actualUser = userService.saveUser(mockUser);
+        User actualUser = userService.save(mockUser);
 
         // Assert
         assertThat(actualUser).isEqualTo(mockUser);
@@ -62,7 +62,7 @@ public class UserServiceTest {
         when(userRepository.existsByEmail(any())).thenReturn(true);
 
         // Act
-        Throwable thrown = catchThrowable(() -> userService.saveUser(mockUser));
+        Throwable thrown = catchThrowable(() -> userService.save(mockUser));
 
         // Assert
         assertThat(thrown).isInstanceOf(DuplicateEntryException.class);
@@ -78,7 +78,7 @@ public class UserServiceTest {
         when(userRepository.existsByUserName(any())).thenReturn(true);
 
         // Act
-        Throwable thrown = catchThrowable(() -> userService.saveUser(mockUser));
+        Throwable thrown = catchThrowable(() -> userService.save(mockUser));
 
         // Assert
         assertThat(thrown).isInstanceOf(DuplicateEntryException.class);
