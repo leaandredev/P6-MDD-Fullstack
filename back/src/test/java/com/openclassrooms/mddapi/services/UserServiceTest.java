@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.exception.DuplicateEntryException;
 import com.openclassrooms.mddapi.exception.NoEntryFoundException;
 import com.openclassrooms.mddapi.models.User;
@@ -29,6 +30,7 @@ public class UserServiceTest {
     private UserService userService;
 
     private User mockUser;
+    private UserDto mockUserDto;
 
     @BeforeEach
     public void beforeEach() {
@@ -38,6 +40,10 @@ public class UserServiceTest {
                 .userName("Deborah123")
                 .password("password1234!")
                 .build();
+
+        mockUserDto = new UserDto();
+        mockUserDto.setEmail("test@email.com");
+        mockUserDto.setUserName("Deborah123updated");
     }
 
     @Test
@@ -112,6 +118,38 @@ public class UserServiceTest {
         // Assert
         assertThat(thrown).isInstanceOf(NoEntryFoundException.class);
         verify(userRepository).findById(mockUser.getId());
+    }
+
+    @Test
+    public void testUpdate() {
+        // Arrange
+        when(userRepository.findById(mockUser.getId())).thenReturn(Optional.of(mockUser));
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        User user = userService.update(mockUser.getId(), mockUserDto);
+
+        // Assert
+        assertThat(user).isNotNull();
+        assertThat(user.getUserName()).isEqualTo(mockUserDto.getUserName());
+        assertThat(user.getEmail()).isEqualTo(mockUserDto.getEmail());
+
+        verify(userRepository).findById(mockUser.getId());
+        verify(userRepository).save(mockUser);
+    }
+
+    @Test
+    public void testUpdateWhenUserNotFound() {
+        // Arrange
+        when(userRepository.findById(mockUser.getId())).thenReturn(Optional.empty());
+
+        // Act
+        Throwable thrown = catchThrowable(() -> userService.update(mockUser.getId(), mockUserDto));
+
+        // Assert
+        assertThat(thrown).isInstanceOf(NoEntryFoundException.class);
+        verify(userRepository).findById(mockUser.getId());
+        verify(userRepository, never()).save(mockUser);
     }
 
 }
