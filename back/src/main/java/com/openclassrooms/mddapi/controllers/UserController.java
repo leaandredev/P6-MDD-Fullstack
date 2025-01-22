@@ -41,16 +41,16 @@ public class UserController {
     /**
      * Update a user
      * 
-     * @param id The id of the user to update
+     * @param id      The id of the user to update
      * @param userDto The UserDto entity to update
      * @return a {@link ResponseEntity} with {@link UserDto} response
      */
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody UserDto userDto) {
         try {
-            User user = this.userService.update(Long.valueOf(id), this.userMapper.toEntity(userDto));
+            User user = this.userService.update(Long.valueOf(id), userDto);
             return ResponseEntity.ok().body(this.userMapper.toDto(user));
-        } catch (NumberFormatException e) {                                                                                                     
+        } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }
     }

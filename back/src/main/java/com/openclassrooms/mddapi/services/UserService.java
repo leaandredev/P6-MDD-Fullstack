@@ -1,7 +1,10 @@
 package com.openclassrooms.mddapi.services;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.exception.DuplicateEntryException;
 import com.openclassrooms.mddapi.exception.NoEntryFoundException;
 import com.openclassrooms.mddapi.models.User;
@@ -48,12 +51,19 @@ public class UserService {
     /**
      * Update a user
      * 
-     * @param id The id of the user to update
-     * @param user The User entity to update
+     * @param id      The id of the user to update
+     * @param userDto The UserDto with datas to update
      * @return The User entity updated
      */
-    public User update(Long id, User user) {
-        return userRepository.save(user);
+    public User update(Long id, UserDto userDto) {
+        User userToUpdate = userRepository.findById(id)
+                .orElseThrow(() -> new NoEntryFoundException("The user does not exist"));
+
+        userToUpdate.setEmail(userDto.getEmail());
+        userToUpdate.setUserName(userDto.getUserName());
+        userToUpdate.setUpdatedAt(LocalDateTime.now());
+
+        return userRepository.save(userToUpdate);
     }
 
 }
