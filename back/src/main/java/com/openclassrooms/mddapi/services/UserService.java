@@ -1,7 +1,10 @@
 package com.openclassrooms.mddapi.services;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.exception.DuplicateEntryException;
 import com.openclassrooms.mddapi.exception.NoEntryFoundException;
 import com.openclassrooms.mddapi.models.User;
@@ -25,7 +28,7 @@ public class UserService {
      * @param user The User entity to save
      * @return The User entity saved
      */
-    public User saveUser(User user) {
+    public User save(User user) {
         if (userRepository.existsByEmail(user.getEmail()) || userRepository.existsByUserName(user.getUserName())) {
             throw new DuplicateEntryException("A user already exist with this email address or username");
         } else {
@@ -43,6 +46,24 @@ public class UserService {
      */
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NoEntryFoundException("The user does not exist"));
+    }
+
+    /**
+     * Update a user
+     * 
+     * @param id      The id of the user to update
+     * @param userDto The UserDto with datas to update
+     * @return The User entity updated
+     */
+    public User update(Long id, UserDto userDto) {
+        User userToUpdate = userRepository.findById(id)
+                .orElseThrow(() -> new NoEntryFoundException("The user does not exist"));
+
+        userToUpdate.setEmail(userDto.getEmail());
+        userToUpdate.setUserName(userDto.getUserName());
+        userToUpdate.setUpdatedAt(LocalDateTime.now());
+
+        return userRepository.save(userToUpdate);
     }
 
 }

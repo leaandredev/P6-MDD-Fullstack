@@ -50,13 +50,13 @@ public class AuthServiceTest {
     @Test
     public void testRegister() {
         // Arrange
-        when(userService.saveUser(any(User.class))).thenReturn(mockUser);
+        when(userService.save(any(User.class))).thenReturn(mockUser);
 
         // Act
         authService.register(mockUser, "password1234!");
 
         // Assert
-        verify(userService).saveUser(mockUser);
+        verify(userService).save(mockUser);
     }
 
     @Test

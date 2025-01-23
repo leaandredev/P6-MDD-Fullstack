@@ -64,7 +64,7 @@ public class AuthService {
      * @return a new jwtToken for the newly registered user
      */
     public void register(User newUser, String plainPassword) {
-        userService.saveUser(newUser);
+        userService.save(newUser);
     }
 
 }

@@ -14,4 +14,10 @@ export class UserService {
   public getById(id: string): Observable<User> {
     return this.httpClient.get<User>(`${this.pathService}/${id}`);
   }
+
+  public update(user: User): Observable<User> {
+    console.log(user);
+
+    return this.httpClient.put<User>(`${this.pathService}/${user.id}`, user);
+  }
 }
