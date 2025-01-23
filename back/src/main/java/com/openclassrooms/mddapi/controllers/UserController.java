@@ -12,6 +12,7 @@ import com.openclassrooms.mddapi.services.UserService;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+
     private final UserMapper userMapper;
     private final UserService userService;
 
