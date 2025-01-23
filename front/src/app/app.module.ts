@@ -9,7 +9,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './features/auth/components/home/home.component';
@@ -30,6 +32,8 @@ const materialModule = [
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
+  MatSidenavModule,
+  MatListModule,
 ];
 
 @NgModule({

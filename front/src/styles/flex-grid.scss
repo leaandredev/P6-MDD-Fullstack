@@ -9,6 +9,7 @@
     /* Centrer les enfants verticalement */
     gap: 1rem;
     /* Espacement entre les enfants */
+    height: -webkit-fill-available;
 }
 
 .flex-row {
