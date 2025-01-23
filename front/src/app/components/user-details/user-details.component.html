@@ -11,8 +11,8 @@
                     <mat-label>E-mail</mat-label>
                     <input matInput formControlName="email" />
                 </mat-form-field>
-                <!-- <span *ngIf="onError" class="error">Une erreur est survenue</span> -->
                 <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Sauvegarder</button>
+                <a mat-button color="warn" (click)="logOut()">Se déconnecter</a>
             </div>
         </form>
     </div>
