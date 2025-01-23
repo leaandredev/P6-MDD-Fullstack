@@ -6,11 +6,11 @@ VALUES
 ('DevCharlie', 'charlie@mdd.com', '$2a$10$QlCBKjvaCCRuNGhcavO5zuO59cLS4AmpIXDqfoka5dic0GBbgFYwu'); -- Password: password789
 
 -- -- Insertion des topics (développement)
--- INSERT INTO TOPICS (title, description)
--- VALUES
--- ('Java Best Practices', 'Discussion sur les bonnes pratiques de développement en Java.'),
--- ('Frontend Frameworks', 'Comparaison des frameworks front-end comme Angular, React, et Vue.'),
--- ('DevOps Tools', 'Échange sur les outils et techniques en DevOps.');
+INSERT INTO TOPICS (title, description)
+VALUES
+('Java Best Practices', 'Discussion sur les bonnes pratiques de développement en Java.'),
+('Frontend Frameworks', 'Comparaison des frameworks front-end comme Angular, React, et Vue.'),
+('DevOps Tools', 'Échange sur les outils et techniques en DevOps.');
 
 -- -- Insertion des posts
 -- INSERT INTO POSTS (title, content, user_id, topic_id)
