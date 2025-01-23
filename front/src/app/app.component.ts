@@ -12,6 +12,7 @@ import { SessionService } from './services/session.service';
 export class AppComponent {
   public title: string = 'front';
   public showHeader: boolean = true;
+  public isPhonePortrait: boolean = false;
 
   constructor(
     private router: Router,
@@ -30,14 +31,11 @@ export class AppComponent {
     // Combine les deux streams
     combineLatest([url$, isPhonePortrait$]).subscribe(
       ([url, isPhonePortrait]) => {
-        if (
+        this.isPhonePortrait = isPhonePortrait;
+        this.showHeader = !(
           url === '/' ||
           (isPhonePortrait && (url === '/register' || url === '/login'))
-        ) {
-          this.showHeader = false;
-        } else {
-          this.showHeader = true;
-        }
+        );
       }
     );
   }
