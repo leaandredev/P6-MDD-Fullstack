@@ -43,7 +43,12 @@ describe('User Details Page', () => {
           'contain.text',
           'Informations sauvegardées, veuillez vous reconnecter.'
         );
-      cy.url().should('include', '/login');
+      cy.url().should('include', '/');
+    });
+
+    it('should logout properly', () => {
+      cy.contains('a', 'Se déconnecter').click();
+      cy.url().should('include', '/');
     });
   });
 
