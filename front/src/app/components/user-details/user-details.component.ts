@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user.interface';
 import { SessionService } from 'src/app/services/session.service';
 import { UserService } from 'src/app/services/user.service';
@@ -10,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-details.component.scss'],
 })
 export class UserDetailsComponent implements OnInit {
+  private user!: User;
   public form = this.fb.group({
     userName: [
       '',
@@ -21,13 +24,18 @@ export class UserDetailsComponent implements OnInit {
   constructor(
     private sessionService: SessionService,
     private fb: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private matSnackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.userService
       .getById(this.sessionService.sessionInformation!.id.toString())
-      .subscribe((user: User) => this.initForm(user));
+      .subscribe((user: User) => {
+        this.user = user;
+        this.initForm(user);
+      });
   }
 
   public initForm(user: User) {
@@ -35,5 +43,22 @@ export class UserDetailsComponent implements OnInit {
       userName: user.userName,
       email: user.email,
     });
+  }
+
+  public onSubmit(): void {
+    if (this.form.valid) {
+      const updatedUser = { ...this.user, ...this.form.value } as User;
+      this.userService.update(updatedUser).subscribe((userUpdated: User) => {
+        this.matSnackBar.open(
+          'Informations sauvegardées, veuillez vous reconnecter.',
+          'Close',
+          {
+            duration: 2000,
+          }
+        );
+        this.sessionService.logOut();
+        this.router.navigate(['/login']);
+      });
+    }
   }
 }
