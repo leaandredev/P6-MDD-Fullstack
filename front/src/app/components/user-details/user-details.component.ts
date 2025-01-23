@@ -56,9 +56,13 @@ export class UserDetailsComponent implements OnInit {
             duration: 2000,
           }
         );
-        this.sessionService.logOut();
-        this.router.navigate(['/login']);
+        this.logOut();
       });
     }
+  }
+
+  public logOut(): void {
+    this.sessionService.logOut();
+    this.router.navigate(['/']);
   }
 }
