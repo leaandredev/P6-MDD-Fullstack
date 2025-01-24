@@ -30,4 +30,16 @@ describe('Topics List Page', () => {
       );
     cy.get('mat-card-actions button').eq(2).should('not.be.disabled');
   });
+
+  it('should subscribe to a new topic if possible', () => {
+    cy.get('mat-card-actions button').eq(2).click();
+    cy.wait('@subscribe').then((interception) => {
+      expect(interception.response?.statusCode).to.equal(200);
+    });
+    cy.get('snack-bar-container').should(
+      'contain.text',
+      'Vous êtes désormais abonné au thème "React".'
+    );
+    cy.get('mat-card-actions button').eq(2).should('be.disabled');
+  });
 });

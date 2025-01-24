@@ -14,6 +14,11 @@ Cypress.Commands.add('initIntercepts', () => {
   //get all
   cy.interceptWithFixture('GET', '/api/topic', 'topics');
 
+  // user subscribe to topic
+  cy.intercept('POST', '/api/topic/*/subscribe/*', {
+    statusCode: 200,
+  }).as('subscribe');
+
   // register response success
   cy.intercept('POST', '/api/auth/register', {
     body: {
