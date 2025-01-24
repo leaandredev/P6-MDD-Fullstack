@@ -14,4 +14,11 @@ export class TopicService {
   public all(): Observable<Topic[]> {
     return this.httpClient.get<Topic[]>(this.pathService);
   }
+
+  public subscribeUser(topicId: string, userId: string): Observable<void> {
+    return this.httpClient.post<void>(
+      `${this.pathService}/${topicId}/subscribe/${userId}`,
+      null
+    );
+  }
 }

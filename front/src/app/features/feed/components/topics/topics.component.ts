@@ -3,6 +3,7 @@ import { TopicService } from '../../services/topic.service';
 import { SessionService } from 'src/app/services/session.service';
 import { User } from 'src/app/features/feed/interfaces/user.interface';
 import { UserService } from '../../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-topics',
@@ -16,7 +17,8 @@ export class TopicsComponent implements OnInit {
   constructor(
     private topicService: TopicService,
     private userService: UserService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private matSnackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -24,6 +26,24 @@ export class TopicsComponent implements OnInit {
       .getById(this.sessionService.sessionInformation!.id.toString())
       .subscribe((user: User) => {
         this.subscriptions = user.subscriptions || [];
+      });
+  }
+
+  public subscribe(topicId: number, topicName: string): void {
+    this.topicService
+      .subscribeUser(
+        topicId.toString(),
+        this.sessionService.sessionInformation!.id.toString()
+      )
+      .subscribe(() => {
+        this.matSnackBar.open(
+          `Vous êtes désormais abonné au thème "${topicName}".`,
+          'Close',
+          {
+            duration: 2000,
+          }
+        );
+        this.subscriptions.push(+topicId);
       });
   }
 }
