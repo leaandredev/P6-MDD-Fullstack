@@ -1,1 +1,42 @@
-<p>topics works!</p>
+<div class="topics">
+    <div class="grid-container grid-auto-fit padding-medium">
+        <mat-card *ngFor="let topic of (topics$ | async)">
+            <mat-card-header>
+                <mat-card-title>{{ topic.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                {{ topic.description }}
+            </mat-card-content>
+            <mat-card-actions class="grid-center">
+                <button mat-raised-button color="primary"
+                    [disabled]="subscriptions.includes(topic.id)">S'abonner</button>
+            </mat-card-actions>
+        </mat-card>
+        <!-- <mat-card>
+            <mat-card-header>
+                <mat-card-title>Titre du thème</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro iusto quis aliquid. Praesentium,
+                    rerum, eveniet aspernatur quibusdam facere impedit non, illum tenetur ut necessitatibus cumque rem
+                    mollitia nulla corporis doloremque! </p>
+            </mat-card-content>
+            <mat-card-actions class="grid-center">
+                <button mat-raised-button color="primary">S'abonner</button>
+            </mat-card-actions>
+        </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Titre du thème</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro iusto quis aliquid. Praesentium,
+                    rerum, eveniet aspernatur quibusdam facere impedit non, illum tenetur ut necessitatibus cumque rem
+                    mollitia nulla corporis doloremque! </p>
+            </mat-card-content>
+            <mat-card-actions class="grid-center">
+                <button mat-raised-button color="primary">S'abonner</button>
+            </mat-card-actions>
+        </mat-card> -->
+    </div>
+</div>

@@ -28,4 +28,8 @@ public class TopicService {
         return this.topicRepository.findAll();
     }
 
+    public Topic findById(Long id) {
+        return this.topicRepository.findById(id).orElse(null);
+    }
+
 }
