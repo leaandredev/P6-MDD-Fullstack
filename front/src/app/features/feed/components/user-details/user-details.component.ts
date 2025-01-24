@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { User } from 'src/app/interfaces/user.interface';
+import { User } from 'src/app/features/feed/interfaces/user.interface';
 import { SessionService } from 'src/app/services/session.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-details',
