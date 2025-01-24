@@ -8,35 +8,9 @@
                 {{ topic.description }}
             </mat-card-content>
             <mat-card-actions class="grid-center">
-                <button mat-raised-button color="primary"
-                    [disabled]="subscriptions.includes(topic.id)">S'abonner</button>
+                <button mat-raised-button color="primary" [disabled]="subscriptions.includes(topic.id)"
+                    (click)="subscribe(topic.id, topic.title)">S'abonner</button>
             </mat-card-actions>
         </mat-card>
-        <!-- <mat-card>
-            <mat-card-header>
-                <mat-card-title>Titre du thème</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro iusto quis aliquid. Praesentium,
-                    rerum, eveniet aspernatur quibusdam facere impedit non, illum tenetur ut necessitatibus cumque rem
-                    mollitia nulla corporis doloremque! </p>
-            </mat-card-content>
-            <mat-card-actions class="grid-center">
-                <button mat-raised-button color="primary">S'abonner</button>
-            </mat-card-actions>
-        </mat-card>
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Titre du thème</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro iusto quis aliquid. Praesentium,
-                    rerum, eveniet aspernatur quibusdam facere impedit non, illum tenetur ut necessitatibus cumque rem
-                    mollitia nulla corporis doloremque! </p>
-            </mat-card-content>
-            <mat-card-actions class="grid-center">
-                <button mat-raised-button color="primary">S'abonner</button>
-            </mat-card-actions>
-        </mat-card> -->
     </div>
 </div>
