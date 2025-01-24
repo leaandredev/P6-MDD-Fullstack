@@ -10,7 +10,9 @@ import com.openclassrooms.mddapi.mappers.TopicMapper;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.services.TopicService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -36,4 +38,22 @@ public class TopicController {
         return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
     }
 
+    /**
+     * Endpoint to subscribe a user to a topic.
+     *
+     * @param id     The ID of the topic to subscribe to.
+     * @param userId The ID of the user who wants to subscribe.
+     * @return ResponseEntity indicating the result of the subscription operation.
+     *         Returns 200 OK if the subscription is successful.
+     *         Returns 400 Bad Request if the provided IDs are not valid numbers.
+     */
+    @PostMapping("{id}/subscribe/{userId}")
+    public ResponseEntity<?> subscribe(@PathVariable("id") String id, @PathVariable("userId") String userId) {
+        try {
+            this.topicService.subscribe(Long.parseLong(id), Long.parseLong(userId));
+            return ResponseEntity.ok().build();
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
