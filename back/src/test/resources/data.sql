@@ -27,12 +27,12 @@ VALUES
 -- (3, 3, 'Assurez-vous d\'utiliser des multi-stage builds.'); -- DevCharlie commente sur son propre post
 
 -- -- Insertion des abonnements
--- INSERT INTO SUBSCRIPTIONS (user_id, topic_id)
--- VALUES
--- (1, 1), -- DevAlice s'abonne au topic Java Best Practices
--- (2, 2), -- DevBob s'abonne au topic Frontend Frameworks
--- (3, 3), -- DevCharlie s'abonne au topic DevOps Tools
--- (1, 3); -- DevAlice s'abonne également au topic DevOps Tools
+INSERT INTO SUBSCRIPTIONS (user_id, topic_id)
+VALUES
+(1, 1), -- DevAlice s'abonne au topic Java Best Practices
+(2, 2), -- DevBob s'abonne au topic Frontend Frameworks
+(3, 3), -- DevCharlie s'abonne au topic DevOps Tools
+(1, 3); -- DevAlice s'abonne également au topic DevOps Tools
 
 -- -- Insertion dans les feeds
 -- INSERT INTO FEEDS (user_id, post_id)

@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -38,4 +39,19 @@ public class TopicControllerIT {
                 .andExpect(jsonPath("$.length()").value(3));
     }
 
+    @Test
+    public void testSubscribe() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(post("/api/topic/1/subscribe/2")
+                .with(user("DevAlice")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testSubscribeWithInvalidIds() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(post("/api/topic/1/subscribe/invalid")
+                .with(user("DevAlice")))
+                .andExpect(status().isBadRequest());
+    }
 }
