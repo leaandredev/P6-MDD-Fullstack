@@ -8,7 +8,8 @@
                 {{ topic.description }}
             </mat-card-content>
             <mat-card-actions class="grid-center">
-                <button mat-raised-button color="primary">S'abonner</button>
+                <button mat-raised-button color="primary"
+                    [disabled]="subscriptions.includes(topic.id)">S'abonner</button>
             </mat-card-actions>
         </mat-card>
         <!-- <mat-card>
