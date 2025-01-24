@@ -23,6 +23,7 @@ import { RegisterComponent } from './features/auth/components/register/register.
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { FeedComponent } from './features/feed/components/feed/feed.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { TopicsComponent } from './features/feed/components/topics/topics.component';
 
 const materialModule = [
   MatButtonModule,
@@ -42,6 +43,7 @@ const materialModule = [
     HomeComponent,
     FeedComponent,
     UserDetailsComponent,
+    TopicsComponent,
   ],
   imports: [
     BrowserModule,
