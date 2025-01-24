@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Entity representing a user of the MDD application, who create posts and
@@ -51,6 +52,11 @@ public class User {
     @NonNull
     @Size(max = 120)
     private String password;
+
+    /** List of topics the user is subscribed to */
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "SUBSCRIPTIONS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "topic_id"))
+    private List<Topic> subscriptions;
 
     /** Timestamp of creation, set once and not updatable. */
     @CreatedDate

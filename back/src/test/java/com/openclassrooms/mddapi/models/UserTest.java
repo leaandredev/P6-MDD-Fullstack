@@ -72,7 +72,7 @@ public class UserTest {
     @Test
     void testAllArgsConstructor() {
         LocalDateTime now = LocalDateTime.now();
-        User user = new User(1L, "test@example.com", "John123", "password123", now, now);
+        User user = new User(1L, "test@example.com", "John123", "password123", null, now, now);
 
         assertThat(user.getId()).isEqualTo(1L);
         assertThat(user.getEmail()).isEqualTo("test@example.com");

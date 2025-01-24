@@ -9,6 +9,7 @@ import lombok.NonNull;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,6 +29,8 @@ public class UserDto {
     @JsonIgnore
     @Size(max = 120)
     private String password;
+
+    private List<Long> subscriptions;
 
     private LocalDateTime createdAt;
 
