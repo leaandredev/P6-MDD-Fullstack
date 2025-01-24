@@ -5,7 +5,7 @@
                 <div>
                     <a mat-list-item routerLink="feed/topics" routerLinkActive="active-link">Thèmes</a>
                 </div>
-                <button mat-fab routerLink="user-details" routerLinkActive="active-button" color="secondary">
+                <button mat-fab routerLink="feed/user-details" routerLinkActive="active-button" color="secondary">
                     <mat-icon>person</mat-icon>
                 </button>
             </mat-nav-list>
@@ -16,7 +16,8 @@
                 <div *ngIf="$isLogged() | async">
                     <div *ngIf="!isPhonePortrait ; else sideNavMenuButton">
                         <a mat-button routerLink="feed/topics" routerLinkActive="active-link">Thèmes</a>
-                        <button mat-fab routerLink="user-details" routerLinkActive="active-button" color="secondary">
+                        <button mat-fab routerLink="feed/user-details" routerLinkActive="active-button"
+                            color="secondary">
                             <mat-icon>person</mat-icon>
                         </button>
                     </div>

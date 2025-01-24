@@ -13,11 +13,11 @@ describe('User Details Page', () => {
   describe('User found', () => {
     beforeEach(() => {
       cy.login('alice@mdd.com', 'password123');
-      cy.visit('/user-details');
+      cy.visit('/feed/user-details');
     });
 
     it('should display the user details page if user found', () => {
-      cy.url().should('include', '/user-details');
+      cy.url().should('include', '/feed/user-details');
       cy.get('h1').should('contain', 'Profil utilisateur');
       cy.get('input[formControlName="userName"]').should(
         'have.value',
@@ -58,7 +58,7 @@ describe('User Details Page', () => {
         statusCode: 404,
       });
       cy.login('alice@mdd.com', 'password123');
-      cy.visit('/user-details');
+      cy.visit('/feed/user-details');
     });
 
     it('should not display user information', () => {

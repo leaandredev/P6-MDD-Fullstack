@@ -11,6 +11,9 @@ Cypress.Commands.add('interceptWithFixture', (method, url, fixturePath) => {
 });
 
 Cypress.Commands.add('initIntercepts', () => {
+  //get all
+  cy.interceptWithFixture('GET', '/api/topic', 'topics');
+
   // register response success
   cy.intercept('POST', '/api/auth/register', {
     body: {
