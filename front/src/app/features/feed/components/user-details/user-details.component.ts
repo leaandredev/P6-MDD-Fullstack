@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/features/feed/interfaces/user.interface';
 import { SessionService } from 'src/app/services/session.service';
 import { UserService } from '../../services/user.service';
+import { Topic } from '../../interfaces/topic.interface';
 
 @Component({
   selector: 'app-user-details',
@@ -13,6 +14,7 @@ import { UserService } from '../../services/user.service';
 })
 export class UserDetailsComponent implements OnInit {
   private user!: User;
+  public subscriptions: Topic[] = [];
   public form = this.fb.group({
     userName: [
       '',
@@ -35,6 +37,12 @@ export class UserDetailsComponent implements OnInit {
       .subscribe((user: User) => {
         this.user = user;
         this.initForm(user);
+      });
+
+    this.userService
+      .getSubscriptions(this.sessionService.sessionInformation!.id.toString())
+      .subscribe((topics: Topic[]) => {
+        this.subscriptions = topics;
       });
   }
 
