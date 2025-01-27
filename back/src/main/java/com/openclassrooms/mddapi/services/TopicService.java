@@ -64,4 +64,27 @@ public class TopicService {
         user.getSubscriptions().add(topic);
         this.userRepository.save(user);
     }
+
+    /**
+     * Unsubscribes a user to a topic.
+     *
+     * @param topicId the ID of the topic to unsubscribe to
+     * @param userId  the ID of the user who wants to unsubscribe
+     * @throws NoEntryFoundException if the topic or user is not found
+     */
+    public void unsubscribe(Long topicId, Long userId) {
+        Topic topic = this.topicRepository.findById(topicId).orElse(null);
+        User user = this.userRepository.findById(userId).orElse(null);
+        if (topic == null || user == null) {
+            throw new NoEntryFoundException("User or topic not found");
+        }
+
+        if (!user.getSubscriptions().contains(topic)) {
+            return;
+        }
+
+        user.getSubscriptions().remove(topic);
+        this.userRepository.save(user);
+
+    }
 }
