@@ -18,7 +18,7 @@ describe('User Details Page', () => {
 
     it('should display the user details page if user found', () => {
       cy.url().should('include', '/feed/user-details');
-      cy.get('h1').should('contain', 'Profil utilisateur');
+      cy.get('h1').first().should('contain', 'Profil utilisateur');
       cy.get('input[formControlName="userName"]').should(
         'have.value',
         'DevAlice'
@@ -27,6 +27,31 @@ describe('User Details Page', () => {
         'have.value',
         'alice@mdd.com'
       );
+    });
+
+    it('should display the user subscriptions', () => {
+      cy.get('h1').eq(1).should('contain', 'Abonnements');
+      cy.get('mat-card').should('have.length', 2);
+      cy.get('mat-card-title').first().should('contain.text', 'JavaScript');
+      cy.get('mat-card-content')
+        .first()
+        .should(
+          'contain.text',
+          'Un guide complet pour débuter avec JavaScript.'
+        );
+      cy.get('mat-card-actions button')
+        .first()
+        .should('contain.text', 'Se désabonner');
+      cy.get('mat-card-title').eq(1).should('contain.text', 'Python');
+      cy.get('mat-card-content')
+        .eq(1)
+        .should(
+          'contain.text',
+          'Apprendre les bases de la programmation en Python.'
+        );
+      cy.get('mat-card-actions button')
+        .eq(1)
+        .should('contain.text', 'Se désabonner');
     });
 
     it('should allow updates and submit the form', () => {
