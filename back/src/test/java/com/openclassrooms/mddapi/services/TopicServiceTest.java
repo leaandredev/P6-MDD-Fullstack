@@ -125,4 +125,52 @@ public class TopicServiceTest {
         assertThat(mockUser.getSubscriptions()).contains(mockTopic);
         verify(userRepository, never()).save(mockUser);
     }
+
+    @Test
+    public void testUnsubscribe_UserAndTopicExist() {
+        // Arrange
+        Long topicId = 1L;
+        Long userId = 1L;
+        mockUser.getSubscriptions().add(mockTopic);
+        when(topicRepository.findById(topicId)).thenReturn(Optional.of(mockTopic));
+        when(userRepository.findById(userId)).thenReturn(Optional.of(mockUser));
+
+        // Act
+        topicService.unsubscribe(topicId, userId);
+
+        // Assert
+        assertThat(mockUser.getSubscriptions()).doesNotContain(mockTopic);
+        verify(userRepository).save(mockUser);
+    }
+
+    @Test
+    public void testUnsubscribe_UserOrTopicNotFound() {
+        // Arrange
+        Long topicId = 1L;
+        Long userId = 1L;
+        when(topicRepository.findById(topicId)).thenReturn(Optional.empty());
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThatThrownBy(() -> topicService.unsubscribe(topicId, userId))
+                .isInstanceOf(NoEntryFoundException.class)
+                .hasMessage("User or topic not found");
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    public void testUnsubscribe_UserNotSubscribed() {
+        // Arrange
+        Long topicId = 1L;
+        Long userId = 1L;
+        when(topicRepository.findById(topicId)).thenReturn(Optional.of(mockTopic));
+        when(userRepository.findById(userId)).thenReturn(Optional.of(mockUser));
+
+        // Act
+        topicService.unsubscribe(topicId, userId);
+
+        // Assert
+        assertThat(mockUser.getSubscriptions()).doesNotContain(mockTopic);
+        verify(userRepository, never()).save(mockUser);
+    }
 }
