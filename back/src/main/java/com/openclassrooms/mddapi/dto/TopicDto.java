@@ -17,7 +17,8 @@ public class TopicDto {
     @NonNull
     @Size(max = 40)
     private String title;
-
+    
+    @NonNull
     @Size(max = 255)
     private String description;
 

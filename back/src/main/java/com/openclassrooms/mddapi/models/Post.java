@@ -43,15 +43,18 @@ public class Post {
     private String title;
 
     /** Post content */
+    @NonNull
     @Lob
     private String content;
 
     /** User who created the post */
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     /** Topic the post is related to */
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "topic_id")
     private Topic topic;
