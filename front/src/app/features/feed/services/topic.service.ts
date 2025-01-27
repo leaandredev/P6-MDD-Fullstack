@@ -21,4 +21,10 @@ export class TopicService {
       null
     );
   }
+
+  public unsubscribeUser(topicId: string, userId: string): Observable<void> {
+    return this.httpClient.delete<void>(
+      `${this.pathService}/${topicId}/unsubscribe/${userId}`
+    );
+  }
 }

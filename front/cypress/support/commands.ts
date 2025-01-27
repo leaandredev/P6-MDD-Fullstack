@@ -19,6 +19,11 @@ Cypress.Commands.add('initIntercepts', () => {
     statusCode: 200,
   }).as('subscribe');
 
+  //user unsubscribe from topic
+  cy.intercept('DELETE', '/api/topic/*/unsubscribe/*', {
+    statusCode: 200,
+  }).as('unsubscribe');
+
   // register response success
   cy.intercept('POST', '/api/auth/register', {
     body: {

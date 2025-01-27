@@ -26,7 +26,8 @@
                     {{ topic.description }}
                 </mat-card-content>
                 <mat-card-actions class="grid-center">
-                    <button mat-raised-button color="primary">Se désabonner</button>
+                    <button mat-raised-button color="primary" (click)="unsubscribe(topic.id, topic.title)">Se
+                        désabonner</button>
                 </mat-card-actions>
             </mat-card>
         </div>

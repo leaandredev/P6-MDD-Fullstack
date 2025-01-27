@@ -71,6 +71,14 @@ describe('User Details Page', () => {
       cy.url().should('include', '/');
     });
 
+    it('should allow to unsubscribe from a topic', () => {
+      cy.get('mat-card-actions button').first().click();
+      cy.get('snack-bar-container')
+        .should('exist')
+        .and('contain.text', 'Vous êtes désabonné du thème "JavaScript".');
+      cy.get('mat-card').should('have.length', 1);
+    });
+
     it('should logout properly', () => {
       cy.contains('a', 'Se déconnecter').click();
       cy.url().should('include', '/');
