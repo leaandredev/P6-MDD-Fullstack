@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -48,10 +49,45 @@ public class TopicControllerIT {
     }
 
     @Test
+    public void testSubscribeWithIdNotFound() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(post("/api/topic/15/subscribe/2")
+                .with(user("DevAlice")))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     public void testSubscribeWithInvalidIds() throws Exception {
         // Act and Assert
         this.mockMvc.perform(post("/api/topic/1/subscribe/invalid")
                 .with(user("DevAlice")))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testUnsubscribe() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(delete("/api/topic/3/unsubscribe/2")
+                .with(user("DevAlice")))
+                .andExpect(status().isOk());
+        ;
+    }
+
+    @Test
+    public void testUnsubscribeWithIfNotFound() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(delete("/api/topic/3/unsubscribe/36")
+                .with(user("DevAlice")))
+                .andExpect(status().isNotFound());
+        ;
+    }
+
+    @Test
+    public void testUnsubscribeWithInvalidIds() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(delete("/api/topic/invalid/unsubscribe/2")
+                .with(user("DevAlice")))
+                .andExpect(status().isBadRequest());
+        ;
     }
 }
