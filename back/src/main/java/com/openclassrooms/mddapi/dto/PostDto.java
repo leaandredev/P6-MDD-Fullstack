@@ -5,22 +5,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import javax.persistence.Lob;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TopicDto {
+public class PostDto {
     private Long id;
 
     @NonNull
-    @Size(max = 40)
+    @Size(max = 100)
     private String title;
-    
+
     @NonNull
-    @Size(max = 255)
-    private String description;
+    @Lob
+    private String content;
+
+    @NonNull
+    private Long userId;
+
+    @NonNull
+    private Long topicId;
 
     private LocalDateTime createdAt;
 
