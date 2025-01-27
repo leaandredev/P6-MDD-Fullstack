@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.mddapi.MddApiApplication;
 import com.openclassrooms.mddapi.dto.UserDto;
@@ -113,6 +112,16 @@ public class UserControllerIT {
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value("The user does not exist"));
 
+    }
+
+    @Test
+    public void testGetSubscriptions() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(get("/api/user/{id}/topics", 1)
+                .with(user("DevAlice")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(2));
     }
 
 }

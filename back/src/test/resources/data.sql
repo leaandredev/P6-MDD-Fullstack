@@ -6,11 +6,11 @@ VALUES
 ('DevCharlie', 'charlie@mdd.com', '$2a$10$QlCBKjvaCCRuNGhcavO5zuO59cLS4AmpIXDqfoka5dic0GBbgFYwu'); -- Password: password789
 
 -- -- Insertion des topics (développement)
--- INSERT INTO TOPICS (title, description)
--- VALUES
--- ('Java Best Practices', 'Discussion sur les bonnes pratiques de développement en Java.'),
--- ('Frontend Frameworks', 'Comparaison des frameworks front-end comme Angular, React, et Vue.'),
--- ('DevOps Tools', 'Échange sur les outils et techniques en DevOps.');
+INSERT INTO TOPICS (title, description)
+VALUES
+('Java Best Practices', 'Discussion sur les bonnes pratiques de développement en Java.'),
+('Frontend Frameworks', 'Comparaison des frameworks front-end comme Angular, React, et Vue.'),
+('DevOps Tools', 'Échange sur les outils et techniques en DevOps.');
 
 -- -- Insertion des posts
 -- INSERT INTO POSTS (title, content, user_id, topic_id)
@@ -27,12 +27,12 @@ VALUES
 -- (3, 3, 'Assurez-vous d\'utiliser des multi-stage builds.'); -- DevCharlie commente sur son propre post
 
 -- -- Insertion des abonnements
--- INSERT INTO SUBSCRIPTIONS (user_id, topic_id)
--- VALUES
--- (1, 1), -- DevAlice s'abonne au topic Java Best Practices
--- (2, 2), -- DevBob s'abonne au topic Frontend Frameworks
--- (3, 3), -- DevCharlie s'abonne au topic DevOps Tools
--- (1, 3); -- DevAlice s'abonne également au topic DevOps Tools
+INSERT INTO SUBSCRIPTIONS (user_id, topic_id)
+VALUES
+(1, 1), -- DevAlice s'abonne au topic Java Best Practices
+(2, 2), -- DevBob s'abonne au topic Frontend Frameworks
+(3, 3), -- DevCharlie s'abonne au topic DevOps Tools
+(1, 3); -- DevAlice s'abonne également au topic DevOps Tools
 
 -- -- Insertion dans les feeds
 -- INSERT INTO FEEDS (user_id, post_id)

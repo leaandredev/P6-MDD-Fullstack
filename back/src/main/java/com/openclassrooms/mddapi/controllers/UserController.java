@@ -1,25 +1,37 @@
 package com.openclassrooms.mddapi.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.openclassrooms.mddapi.mappers.TopicMapper;
 import com.openclassrooms.mddapi.mappers.UserMapper;
+import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.UserService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+
     private final UserMapper userMapper;
     private final UserService userService;
+    private final TopicMapper topicMapper;
 
     public UserController(
             UserService userService,
-            UserMapper userMapper) {
+            UserMapper userMapper,
+            TopicMapper topicMapper) {
         this.userMapper = userMapper;
         this.userService = userService;
+        this.topicMapper = topicMapper;
     }
 
     /**
@@ -54,4 +66,16 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @GetMapping("/{id}/subscriptions")
+    public ResponseEntity<?> getSubscriptions(@PathVariable("id") String id) {
+        try {
+            User user = this.userService.findById(Long.valueOf(id));
+            List<Topic> topics = user.getSubscriptions();
+            return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }

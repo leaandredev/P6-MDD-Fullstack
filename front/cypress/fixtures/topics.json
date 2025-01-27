@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "JavaScript",
+    "description": "Un guide complet pour débuter avec JavaScript.",
+    "createdAt": "2024-01-01T09:00:00Z",
+    "updatedAt": "2024-01-01T09:00:00Z"
+  },
+  {
+    "id": 2,
+    "title": "Python",
+    "description": "Apprendre les bases de la programmation en Python.",
+    "createdAt": "2024-01-02T09:00:00Z",
+    "updatedAt": "2024-01-02T09:00:00Z"
+  },
+  {
+    "id": 3,
+    "title": "React",
+    "description": "Construire des applications web modernes avec React.",
+    "createdAt": "2024-01-03T09:00:00Z",
+    "updatedAt": "2024-01-03T09:00:00Z"
+  }
+]

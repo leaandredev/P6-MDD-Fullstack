@@ -3,9 +3,9 @@
         <mat-sidenav #sidenav mode="over" position="end" class="app-sidenav">
             <mat-nav-list class="padding-medium flex-container flex-column flex-space-between">
                 <div>
-                    <a mat-list-item routerLink=" /link1">Link 1</a>
+                    <a mat-list-item routerLink="feed/topics" routerLinkActive="active-link">Thèmes</a>
                 </div>
-                <button mat-fab routerLink="user-details" routerLinkActive="active-button" color="secondary">
+                <button mat-fab routerLink="feed/user-details" routerLinkActive="active-button" color="secondary">
                     <mat-icon>person</mat-icon>
                 </button>
             </mat-nav-list>
@@ -15,8 +15,9 @@
                 <img id="app-logo" src="/assets/logo_p6.png" alt="logo" />
                 <div *ngIf="$isLogged() | async">
                     <div *ngIf="!isPhonePortrait ; else sideNavMenuButton">
-                        <a mat-button routerLink=" /link1">Link 1</a>
-                        <button mat-fab routerLink="user-details" routerLinkActive="active-button" color="secondary">
+                        <a mat-button routerLink="feed/topics" routerLinkActive="active-link">Thèmes</a>
+                        <button mat-fab routerLink="feed/user-details" routerLinkActive="active-button"
+                            color="secondary">
                             <mat-icon>person</mat-icon>
                         </button>
                     </div>

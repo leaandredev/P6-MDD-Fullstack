@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { User } from 'src/app/interfaces/user.interface';
+import { User } from 'src/app/features/feed/interfaces/user.interface';
 import { SessionService } from 'src/app/services/session.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from '../../services/user.service';
+import { Topic } from '../../interfaces/topic.interface';
+import { TopicService } from '../../services/topic.service';
 
 @Component({
   selector: 'app-user-details',
@@ -13,6 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserDetailsComponent implements OnInit {
   private user!: User;
+  public subscriptions: Topic[] = [];
   public form = this.fb.group({
     userName: [
       '',
@@ -23,6 +26,7 @@ export class UserDetailsComponent implements OnInit {
 
   constructor(
     private sessionService: SessionService,
+    private topicService: TopicService,
     private fb: FormBuilder,
     private userService: UserService,
     private matSnackBar: MatSnackBar,
@@ -35,6 +39,12 @@ export class UserDetailsComponent implements OnInit {
       .subscribe((user: User) => {
         this.user = user;
         this.initForm(user);
+      });
+
+    this.userService
+      .getSubscriptions(this.sessionService.sessionInformation!.id.toString())
+      .subscribe((topics: Topic[]) => {
+        this.subscriptions = topics;
       });
   }
 
@@ -59,6 +69,26 @@ export class UserDetailsComponent implements OnInit {
         this.logOut();
       });
     }
+  }
+
+  public unsubscribe(topicId: number, topicName: string): void {
+    this.topicService
+      .unsubscribeUser(
+        topicId.toString(),
+        this.sessionService.sessionInformation!.id.toString()
+      )
+      .subscribe(() => {
+        this.matSnackBar.open(
+          `Vous êtes désabonné du thème "${topicName}".`,
+          'Close',
+          {
+            duration: 2000,
+          }
+        );
+        this.subscriptions = this.subscriptions.filter(
+          (topic: Topic) => topic.id !== topicId
+        );
+      });
   }
 
   public logOut(): void {
