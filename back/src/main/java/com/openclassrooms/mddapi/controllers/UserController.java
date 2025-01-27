@@ -67,7 +67,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{id}/topics")
+    @GetMapping("/{id}/subscriptions")
     public ResponseEntity<?> getSubscriptions(@PathVariable("id") String id) {
         try {
             User user = this.userService.findById(Long.valueOf(id));
