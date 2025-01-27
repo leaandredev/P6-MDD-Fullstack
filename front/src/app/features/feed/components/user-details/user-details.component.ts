@@ -6,6 +6,7 @@ import { User } from 'src/app/features/feed/interfaces/user.interface';
 import { SessionService } from 'src/app/services/session.service';
 import { UserService } from '../../services/user.service';
 import { Topic } from '../../interfaces/topic.interface';
+import { TopicService } from '../../services/topic.service';
 
 @Component({
   selector: 'app-user-details',
@@ -25,6 +26,7 @@ export class UserDetailsComponent implements OnInit {
 
   constructor(
     private sessionService: SessionService,
+    private topicService: TopicService,
     private fb: FormBuilder,
     private userService: UserService,
     private matSnackBar: MatSnackBar,
@@ -67,6 +69,26 @@ export class UserDetailsComponent implements OnInit {
         this.logOut();
       });
     }
+  }
+
+  public unsubscribe(topicId: number, topicName: string): void {
+    this.topicService
+      .unsubscribeUser(
+        topicId.toString(),
+        this.sessionService.sessionInformation!.id.toString()
+      )
+      .subscribe(() => {
+        this.matSnackBar.open(
+          `Vous êtes désabonné du thème "${topicName}".`,
+          'Close',
+          {
+            duration: 2000,
+          }
+        );
+        this.subscriptions = this.subscriptions.filter(
+          (topic: Topic) => topic.id !== topicId
+        );
+      });
   }
 
   public logOut(): void {
