@@ -1,0 +1,31 @@
+<div class="create-post">
+    <button mat-icon-button (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="flex-container flex-column">
+        <h1>Créer un nouvel article</h1>
+        <form *ngIf="form" class="register-form" [formGroup]="form" (ngSubmit)="submit()">
+            <div class="flex-container flex-column">
+                <mat-form-field appearance="outline">
+                    <mat-label>Topic</mat-label>
+                    <mat-select formControlName="topicId">
+                        <mat-option *ngFor="let topic of (topics$ | async)" [value]="topic.id">
+                            {{ topic.title }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Titre de l'article</mat-label>
+                    <input matInput formControlName="title">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Contenu de l'article</mat-label>
+                    <textarea matInput formControlName="content"></textarea>
+                </mat-form-field>
+                <span *ngIf="onError" class="error">Une erreur est survenu</span>
+                <button mat-raised-button color="primary" type="submit">Créer</button>
+                <!-- <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Créer</button> -->
+            </div>
+        </form>
+    </div>
+</div>

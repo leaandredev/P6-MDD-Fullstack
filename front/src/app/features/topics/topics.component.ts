@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TopicService } from '../../services/topic.service';
-import { SessionService } from 'src/app/services/session.service';
-import { User } from 'src/app/features/feed/interfaces/user.interface';
-import { UserService } from '../../services/user.service';
+import { TopicService } from '../../core/services/topic.service';
+import { SessionService } from 'src/app/core/services/session.service';
+import { User } from 'src/app/core/interfaces/user.interface';
+import { UserService } from '../../core/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

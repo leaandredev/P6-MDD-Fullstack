@@ -1,21 +1,22 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { RegisterRequest } from '../../interfaces/registerRequest.interface';
+import { LoginRequest } from '../../../core/interfaces/loginRequest.interface';
+import { SessionService } from 'src/app/core/services/session.service';
+import { SessionInformation } from '../../../core/interfaces/sessionInformation.interface';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class LoginComponent implements OnInit {
   public handsetPortrait: boolean = false;
   public onError: boolean = false;
   public form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    userName: [
+    identifier: [
       '',
       [Validators.required, Validators.min(3), Validators.max(20)],
     ],
@@ -29,7 +30,8 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private responsive: BreakpointObserver,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private sessionService: SessionService
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +39,6 @@ export class RegisterComponent implements OnInit {
       .observe([Breakpoints.HandsetPortrait])
       .subscribe((result) => {
         if (result.matches) {
-          console.log('Mon téléphone est en mode portrait');
           this.handsetPortrait = true;
         } else {
           this.handsetPortrait = false;
@@ -50,10 +51,15 @@ export class RegisterComponent implements OnInit {
   }
 
   public submit(): void {
-    const registerRequest = this.form.value as RegisterRequest;
-    this.authService.register(registerRequest).subscribe({
-      next: (_: void) => this.router.navigate(['/']),
-      error: (_) => (this.onError = true),
+    const loginRequest = this.form.value as LoginRequest;
+    this.authService.login(loginRequest).subscribe({
+      next: (sessionInformation: SessionInformation) => {
+        this.sessionService.logIn(sessionInformation);
+        this.router.navigate(['/post/feed']);
+      },
+      error: (error) => {
+        this.onError = true;
+      },
     });
   }
 }

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { User } from 'src/app/features/feed/interfaces/user.interface';
-import { SessionService } from 'src/app/services/session.service';
-import { UserService } from '../../services/user.service';
-import { Topic } from '../../interfaces/topic.interface';
-import { TopicService } from '../../services/topic.service';
+import { User } from 'src/app/core/interfaces/user.interface';
+import { SessionService } from 'src/app/core/services/session.service';
+import { UserService } from '../../core/services/user.service';
+import { Topic } from '../../core/interfaces/topic.interface';
+import { TopicService } from '../../core/services/topic.service';
 
 @Component({
   selector: 'app-user-details',

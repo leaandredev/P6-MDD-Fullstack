@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AuthRoutingModule } from './auth-routing.module';
+import { PostRoutingModule } from './post-routing.module';
+import { FeedComponent } from './components/feed/feed.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,10 +10,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
+import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from './home/home.component';
+import { FormComponent } from './components/form/form.component';
+import { MatOptionModule } from '@angular/material/core';
 
 const materialModule = [
   MatButtonModule,
@@ -22,16 +26,21 @@ const materialModule = [
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatListModule,
+  MatOptionModule,
 ];
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent, HomeComponent],
+  declarations: [FeedComponent, FormComponent],
   imports: [
-    CommonModule,
-    AuthRoutingModule,
+    PostRoutingModule,
+    LayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonModule,
     ...materialModule,
   ],
 })
-export class AuthModule {}
+export class PostModule {}
