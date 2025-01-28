@@ -11,11 +11,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { FormComponent } from './components/form/form.component';
+import { MatOptionModule } from '@angular/material/core';
 
 const materialModule = [
   MatButtonModule,
@@ -25,17 +26,20 @@ const materialModule = [
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
+  MatSelectModule,
   MatSidenavModule,
   MatListModule,
+  MatOptionModule,
 ];
 
 @NgModule({
-  declarations: [FeedComponent],
+  declarations: [FeedComponent, FormComponent],
   imports: [
     PostRoutingModule,
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonModule,
     ...materialModule,
   ],
 })
