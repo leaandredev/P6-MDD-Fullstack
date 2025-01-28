@@ -1,22 +1,21 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { LoginRequest } from '../../interfaces/loginRequest.interface';
-import { SessionService } from 'src/app/services/session.service';
-import { SessionInformation } from '../../interfaces/sessionInformation.interface';
+import { AuthService } from '../../../core/services/auth.service';
+import { RegisterRequest } from '../../../core/interfaces/registerRequest.interface';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   public handsetPortrait: boolean = false;
   public onError: boolean = false;
   public form = this.fb.group({
-    identifier: [
+    email: ['', [Validators.required, Validators.email]],
+    userName: [
       '',
       [Validators.required, Validators.min(3), Validators.max(20)],
     ],
@@ -30,8 +29,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private responsive: BreakpointObserver,
     private fb: FormBuilder,
-    private router: Router,
-    private sessionService: SessionService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +37,7 @@ export class LoginComponent implements OnInit {
       .observe([Breakpoints.HandsetPortrait])
       .subscribe((result) => {
         if (result.matches) {
+          console.log('Mon téléphone est en mode portrait');
           this.handsetPortrait = true;
         } else {
           this.handsetPortrait = false;
@@ -51,15 +50,10 @@ export class LoginComponent implements OnInit {
   }
 
   public submit(): void {
-    const loginRequest = this.form.value as LoginRequest;
-    this.authService.login(loginRequest).subscribe({
-      next: (sessionInformation: SessionInformation) => {
-        this.sessionService.logIn(sessionInformation);
-        this.router.navigate(['/feed']);
-      },
-      error: (error) => {
-        this.onError = true;
-      },
+    const registerRequest = this.form.value as RegisterRequest;
+    this.authService.register(registerRequest).subscribe({
+      next: (_: void) => this.router.navigate(['/']),
+      error: (_) => (this.onError = true),
     });
   }
 }

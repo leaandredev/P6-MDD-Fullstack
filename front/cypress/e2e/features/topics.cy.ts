@@ -2,11 +2,11 @@ describe('Topics List Page', () => {
   beforeEach(() => {
     cy.initIntercepts();
     cy.login('alice@mdd.com', 'password123');
-    cy.visit('/feed/topics');
+    cy.visit('/topics');
   });
 
   it('should display the topics list page', () => {
-    cy.url().should('include', '/feed/topics');
+    cy.url().should('include', '/topics');
     cy.get('mat-card').should('have.length', 3);
     cy.get('mat-card-title').first().should('contain.text', 'JavaScript');
     cy.get('mat-card-content')
