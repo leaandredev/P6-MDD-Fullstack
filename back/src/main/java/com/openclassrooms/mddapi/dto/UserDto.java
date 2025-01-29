@@ -30,7 +30,11 @@ public class UserDto {
     @Size(max = 120)
     private String password;
 
+    @JsonIgnore
     private List<Long> subscriptions;
+
+    @JsonIgnore
+    private List<Long> feed;
 
     private LocalDateTime createdAt;
 
