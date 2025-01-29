@@ -28,4 +28,14 @@ public class PostService {
         log.info("Post saved");
         return post;
     }
+
+    /**
+     * Retrieve a post by its id
+     * 
+     * @param id the id of the post to retrieve
+     * @return the post with the given id
+     */
+    public Post findById(Long id) {
+        return this.postRepository.findById(id).orElse(null);
+    }
 }

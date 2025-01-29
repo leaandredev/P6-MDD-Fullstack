@@ -117,11 +117,21 @@ public class UserControllerIT {
     @Test
     public void testGetSubscriptions() throws Exception {
         // Act and Assert
-        this.mockMvc.perform(get("/api/user/{id}/topics", 1)
+        this.mockMvc.perform(get("/api/user/{id}/subscriptions", 1)
                 .with(user("DevAlice")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(2));
+    }
+
+    @Test
+    public void testGetFeedPosts() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(get("/api/user/{id}/feed", 1)
+                .with(user("DevAlice")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(1));
     }
 
 }

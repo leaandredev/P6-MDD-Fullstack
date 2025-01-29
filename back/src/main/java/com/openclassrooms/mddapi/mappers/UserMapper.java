@@ -26,6 +26,9 @@ public abstract class UserMapper implements EntityMapper<UserDto, User> {
     @Autowired
     TopicService topicService;
 
+    @Autowired
+    PostService postService;
+
     @Override
     @Mapping(target = "subscriptions", expression = "java(Optional.ofNullable(user.getSubscriptions()).orElseGet(Collections::emptyList).stream().map(t -> t.getId()).collect(Collectors.toList()))")
     @Mapping(target = "feed", expression = "java(Optional.ofNullable(user.getFeed()).orElseGet(Collections::emptyList).stream().map(p -> p.getId()).collect(Collectors.toList()))")

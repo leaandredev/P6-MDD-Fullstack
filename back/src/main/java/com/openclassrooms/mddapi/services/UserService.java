@@ -69,12 +69,13 @@ public class UserService {
     }
 
     /**
-     * Adds a given post to the feeds of all users who are subscribed to the topic of the post.
+     * Adds a given post to the feeds of all users who are subscribed to the topic
+     * of the post.
      *
      * @param post the post to be added to the feeds of subscribed users
      */
     public void addPostToFeeds(Post post) {
-        List<User> users = userRepository.findBySubscribedTopicsContaining(post.getTopic());
+        List<User> users = userRepository.findBySubscriptionsContaining(post.getTopic());
         for (User user : users) {
             user.getFeed().add(post);
             userRepository.save(user);
