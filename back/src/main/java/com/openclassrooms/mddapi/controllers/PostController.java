@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.services.PostService;
+import com.openclassrooms.mddapi.services.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,10 +26,12 @@ public class PostController {
 
     private final PostService postService;
     private final PostMapper postMapper;
+    private final UserService userService;
 
-    public PostController(PostService postService, PostMapper postMapper) {
+    public PostController(PostService postService, PostMapper postMapper, UserService userService) {
         this.postService = postService;
         this.postMapper = postMapper;
+        this.userService = userService;
     }
 
     /**
@@ -40,10 +44,11 @@ public class PostController {
     @PostMapping
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody PostDto postDto) {
-        log.info("PostDTO : " + postDto);
         Post post = this.postMapper.toEntity(postDto);
-        log.info(" Post : " + post);
-        return ResponseEntity.ok().body(this.postMapper.toDto(this.postService.save(post)));
+        Post savedPost = this.postService.save(post);
+        // Add the post to the feeds of all users who have subscribed to the topic
+        this.userService.addPostToFeeds(savedPost);
+        return ResponseEntity.ok().body(this.postMapper.toDto(savedPost));
     }
 
 }
