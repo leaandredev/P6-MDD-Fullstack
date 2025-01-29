@@ -28,5 +28,4 @@ public class PostService {
         log.info("Post saved");
         return post;
     }
-
 }

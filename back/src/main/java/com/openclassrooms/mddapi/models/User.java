@@ -58,6 +58,11 @@ public class User {
     @JoinTable(name = "SUBSCRIPTIONS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "topic_id"))
     private List<Topic> subscriptions;
 
+    /** List of post for user feed */
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "FEEDS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private List<Post> feed;
+
     /** Timestamp of creation, set once and not updatable. */
     @CreatedDate
     @Column(name = "created_at", updatable = false, nullable = false)

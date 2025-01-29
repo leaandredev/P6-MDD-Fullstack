@@ -1,12 +1,14 @@
 package com.openclassrooms.mddapi.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.exception.DuplicateEntryException;
 import com.openclassrooms.mddapi.exception.NoEntryFoundException;
+import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
@@ -64,6 +66,20 @@ public class UserService {
         userToUpdate.setUpdatedAt(LocalDateTime.now());
 
         return userRepository.save(userToUpdate);
+    }
+
+    /**
+     * Adds a given post to the feeds of all users who are subscribed to the topic of the post.
+     *
+     * @param post the post to be added to the feeds of subscribed users
+     */
+    public void addPostToFeeds(Post post) {
+        List<User> users = userRepository.findBySubscribedTopicsContaining(post.getTopic());
+        for (User user : users) {
+            user.getFeed().add(post);
+            userRepository.save(user);
+        }
+        log.info("Post added to feeds of subscribed users");
     }
 
 }
