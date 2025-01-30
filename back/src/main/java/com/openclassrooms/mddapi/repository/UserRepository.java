@@ -19,5 +19,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public Boolean existsByUserName(String userName);
 
-    public List<User> findBySubscribedTopicsContaining(Topic topic);
+    public List<User> findBySubscriptionsContaining(Topic topic);
 }

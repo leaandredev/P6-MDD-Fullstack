@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,14 +55,16 @@ public class User {
     private String password;
 
     /** List of topics the user is subscribed to */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "SUBSCRIPTIONS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "topic_id"))
-    private List<Topic> subscriptions;
+    @Builder.Default
+    private List<Topic> subscriptions = new ArrayList<>();
 
     /** List of post for user feed */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "FEEDS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
-    private List<Post> feed;
+    @Builder.Default
+    private List<Post> feed = new ArrayList<>();
 
     /** Timestamp of creation, set once and not updatable. */
     @CreatedDate
@@ -77,7 +80,7 @@ public class User {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = this.createdAt;
+        this.updatedAt = LocalDateTime.now();
     }
 
 }

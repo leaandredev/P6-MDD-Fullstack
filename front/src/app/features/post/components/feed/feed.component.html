@@ -1,6 +1,18 @@
-<div class="feed">
-    <div class="flex-container flex-column">
-        <h1>Feed</h1>
-        <button mat-raised-button color="primary" (click)="createPost()">Créer un article</button>
+<div class="feed padding-medium">
+    <button mat-raised-button color="primary" (click)="createPost()">Créer un article</button>
+    <div class="grid-container grid-auto-fit padding-medium">
+        <mat-card *ngFor="let post of feedPosts">
+            <mat-card-header>
+                <mat-card-title>{{ post.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="flex-container flex-row flex-space-between">
+                    <span name="createDate">{{ post.createdAt | date:'dd/MM/yyyy'}}</span>
+                    <span name="userName">{{ post.userName }}</span>
+                </div>
+                <br>
+                {{ post.content }}
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>

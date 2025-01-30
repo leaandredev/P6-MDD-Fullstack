@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { Topic } from '../interfaces/topic.interface';
+import { PostResponse } from '../interfaces/postResponse.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,12 @@ export class UserService {
   public getSubscriptions(id: string): Observable<Topic[]> {
     return this.httpClient.get<Topic[]>(
       `${this.pathService}/${id}/subscriptions`
+    );
+  }
+
+  public getFeed(id: string): Observable<PostResponse[]> {
+    return this.httpClient.get<PostResponse[]>(
+      `${this.pathService}/${id}/feed`
     );
   }
 }

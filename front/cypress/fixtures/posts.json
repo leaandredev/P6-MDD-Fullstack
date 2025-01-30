@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "Singleton ou pas ?",
+    "content": "Quels sont les avantages et inconvénients des patterns Singleton ?",
+    "userName": "DevAlice",
+    "topicTitle": "JavaScript",
+    "createdAt": "2025-01-01T09:00:00Z",
+    "updatedAt": "2025-01-01T09:00:00Z"
+  },
+  {
+    "id": 2,
+    "title": "React vs Angular",
+    "content": "Selon vous, quel framework est plus adapté pour un projet complexe ?",
+    "userName": "DevBob",
+    "topicTitle": "Python",
+    "createdAt": "2025-01-15T09:00:00Z",
+    "updatedAt": "2025-01-15T09:00:00Z"
+  },
+  {
+    "id": 3,
+    "title": "Docker Tips",
+    "content": "Vos meilleurs conseils pour optimiser Docker.",
+    "userName": "DevAlice",
+    "topicTitle": "React",
+    "createdAt": "2025-01-17T09:00:00Z",
+    "updatedAt": "2025-01-17T09:00:00Z"
+  }
+]
