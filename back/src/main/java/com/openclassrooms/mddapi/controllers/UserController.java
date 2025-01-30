@@ -74,7 +74,8 @@ public class UserController {
      * Retrieves the list of subscriptions (topics) for a given user.
      *
      * @param id the ID of the user whose subscriptions are to be retrieved
-     * @return a ResponseEntity containing the list of topics the user is subscribed to,
+     * @return a ResponseEntity containing the list of topics the user is subscribed
+     *         to,
      *         or a bad request response if the ID is not a valid number
      */
     @GetMapping("/{id}/subscriptions")
@@ -92,7 +93,8 @@ public class UserController {
      * Retrieves the feed posts for a specific user.
      *
      * @param id the ID of the user whose feed posts are to be retrieved
-     * @return a ResponseEntity containing the list of feed posts in DTO format if the user is found,
+     * @return a ResponseEntity containing the list of feed posts in DTO format if
+     *         the user is found,
      *         or a bad request response if the ID is not a valid number
      */
     @GetMapping("/{id}/feed")
@@ -100,7 +102,7 @@ public class UserController {
         try {
             User user = this.userService.findById(Long.valueOf(id));
             List<Post> posts = user.getFeed();
-            return ResponseEntity.ok().body(this.postMapper.toDto(posts));
+            return ResponseEntity.ok().body(this.postMapper.toResponse(posts));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }
