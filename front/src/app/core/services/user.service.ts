@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
@@ -29,9 +29,20 @@ export class UserService {
     );
   }
 
-  public getFeed(id: string): Observable<PostResponse[]> {
+  public getFeed(
+    id: string,
+    orderBy: string = 'date',
+    asc: boolean = true
+  ): Observable<PostResponse[]> {
+    const options = {
+      params: new HttpParams()
+        .set('orderBy', orderBy)
+        .set('asc', asc ? 'true' : 'false'),
+    };
+
     return this.httpClient.get<PostResponse[]>(
-      `${this.pathService}/${id}/feed`
+      `${this.pathService}/${id}/feed`,
+      options
     );
   }
 }
