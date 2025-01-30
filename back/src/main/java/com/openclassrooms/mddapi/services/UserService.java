@@ -85,22 +85,30 @@ public class UserService {
         log.info("Post added to feeds of subscribed users");
     }
 
+    /**
+     * Get all user feed posts, sortBy column, asc/desc.
+     * 
+     * @param user   The user to get feed Posts
+     * @param sortBy Name of column to sortBy (default = date)
+     * @param asc    order for sortBy (default = true, so ASC)
+     * @return the feed posts list, ordered
+     */
     public List<Post> getFeedSorted(User user, String sortBy, boolean asc) {
         List<Post> posts = user.getFeed();
         if (sortBy != null && !sortBy.isEmpty()) {
             Comparator<Post> comparator = null;
             switch (sortBy.toLowerCase()) {
                 case "date":
-                    comparator = Comparator.comparing(Post::getCreatedAt);
+                    comparator = Comparator.comparing(post -> post.getCreatedAt());
                     break;
                 case "username":
                     comparator = Comparator.comparing(post -> post.getUser().getUserName());
                     break;
                 case "title":
-                    comparator = Comparator.comparing(Post::getTitle);
+                    comparator = Comparator.comparing(post -> post.getTitle());
                     break;
                 default:
-                    comparator = Comparator.comparing(Post::getCreatedAt);
+                    comparator = Comparator.comparing(post -> post.getCreatedAt());
                     break;
             }
             posts.sort(comparator);

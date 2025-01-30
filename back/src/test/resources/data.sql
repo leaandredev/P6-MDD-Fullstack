@@ -37,6 +37,8 @@ VALUES
 -- -- Insertion dans les feeds
 INSERT INTO FEEDS (user_id, post_id)
 VALUES
+(1, 1), -- DevAlice voit son post sur Singleton ou pas
 (1, 2), -- DevAlice voit le post de DevBob sur React vs Angular
+(1, 3), -- DevAlice voit le post de DevCharlie sur Docker Tips
 (2, 1), -- DevBob voit le post de DevAlice sur Singleton ou pas
 (3, 3); -- DevCharlie voit son propre post sur Docker Tips
