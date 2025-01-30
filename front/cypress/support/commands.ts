@@ -31,30 +31,45 @@ Cypress.Commands.add('initIntercepts', () => {
     },
   }).as('register');
 
-  Promise.all([cy.fixture('users'), cy.fixture('topics')]).then(
-    ([users, topics]) => {
-      // user get subscriptions
-      cy.intercept('GET', '/api/user/*/subscriptions', (req) => {
-        const userId = Number(req.url.split('/').slice(-2)[0]);
-        const user = users.find((u) => u.id === userId);
-        if (user) {
-          const userTopics = topics.filter((t) =>
-            user.subscriptions.includes(t.id)
-          );
-          req.reply(userTopics);
-        } else {
-          req.reply([]);
-        }
-      }).as('getSubscriptions');
+  Promise.all([
+    cy.fixture('users'),
+    cy.fixture('topics'),
+    cy.fixture('posts'),
+  ]).then(([users, topics, posts]) => {
+    // user get subscriptions
+    cy.intercept('GET', '/api/user/*/subscriptions', (req) => {
+      const userId = Number(req.url.split('/').slice(-2)[0]);
+      const user = users.find((u) => u.id === userId);
+      if (user) {
+        const userTopics = topics.filter((t) =>
+          user.subscriptions.includes(t.id)
+        );
+        req.reply(userTopics);
+      } else {
+        req.reply([]);
+      }
+    }).as('getSubscriptions');
 
-      // get by id
-      cy.intercept('GET', '/api/user/*', (req) => {
-        const userId = Number(req.url.split('/').pop());
-        const user = users.find((u) => u.id === userId);
-        req.reply(user ? user : { error: 'User not found' });
-      }).as('getUser');
-    }
-  );
+    // user get feed
+    cy.intercept('GET', '/api/user/*/feed', (req) => {
+      const userId = Number(req.url.split('/').slice(-2)[0]);
+      const user = users.find((u) => u.id === userId);
+      if (user) {
+        const userFeedPosts = posts.filter((p) => 
+          user.feed.includes(p.id));
+        req.reply(userFeedPosts);
+      } else {
+        req.reply([]);
+      }
+    }).as('getFeed');
+
+    // get by id
+    cy.intercept('GET', '/api/user/*', (req) => {
+      const userId = Number(req.url.split('/').pop());
+      const user = users.find((u) => u.id === userId);
+      req.reply(user ? user : { error: 'User not found' });
+    }).as('getUser');
+  });
 });
 
 Cypress.Commands.add('login', (identifier, password) => {

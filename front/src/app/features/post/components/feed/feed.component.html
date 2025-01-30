@@ -7,8 +7,8 @@
             </mat-card-header>
             <mat-card-content>
                 <div class="flex-container flex-row flex-space-between">
-                    <span>{{ post.createdAt | date:'dd/MM/yyyy'}}</span>
-                    <span>{{ post.userName }}</span>
+                    <span name="createDate">{{ post.createdAt | date:'dd/MM/yyyy'}}</span>
+                    <span name="userName">{{ post.userName }}</span>
                 </div>
                 <br>
                 {{ post.content }}
