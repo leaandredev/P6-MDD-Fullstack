@@ -63,6 +63,7 @@ public class User {
     /** List of post for user feed */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "FEEDS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
+    @OrderBy("createdAt DESC")
     @Builder.Default
     private List<Post> feed = new ArrayList<>();
 
