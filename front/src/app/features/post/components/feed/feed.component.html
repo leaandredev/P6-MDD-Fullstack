@@ -1,0 +1,33 @@
+<div class="feed padding-medium">
+    <div class="flex-container flex-space-between" [ngClass]="handsetPortrait ? 'flex-column' : 'flex-row' ">
+        <button mat-raised-button color="primary" (click)="createPost()">Créer un article</button>
+        <div>
+            <span>Trier par </span>
+            <mat-form-field appearance="legacy">
+                <mat-select [(ngModel)]="orderBy" (ngModelChange)="changeOrderBy($event)">
+                    <mat-option value="title">Titre</mat-option>
+                    <mat-option value="date">Date</mat-option>
+                    <mat-option value="userName">Auteur</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-icon-button (click)="toggleSort()">
+                <mat-icon>{{ asc ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="grid-container grid-auto-fit padding-medium">
+        <mat-card *ngFor="let post of feedPosts" [routerLink]="['detail', post.id]">
+            <mat-card-header>
+                <mat-card-title>{{ post.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="flex-container flex-row flex-space-between">
+                    <span name="createDate">{{ post.createdAt | date:'dd/MM/yyyy'}}</span>
+                    <span name="userName">{{ post.userName }}</span>
+                </div>
+                <br>
+                {{ post.content }}
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

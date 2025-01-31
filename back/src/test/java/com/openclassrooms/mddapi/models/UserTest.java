@@ -8,6 +8,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,7 +73,7 @@ public class UserTest {
     @Test
     void testAllArgsConstructor() {
         LocalDateTime now = LocalDateTime.now();
-        User user = new User(1L, "test@example.com", "John123", "password123", null, now, now);
+        User user = new User(1L, "test@example.com", "John123", "password123", null, null, now, now);
 
         assertThat(user.getId()).isEqualTo(1L);
         assertThat(user.getEmail()).isEqualTo("test@example.com");

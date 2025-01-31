@@ -5,6 +5,7 @@
     "email": "alice@mdd.com",
     "password": "$2a$10$aK5yHO5R4wKz/UVCjjqbR..wWhyKW4Laryb208sYC/aTa4TAyGqsm",
     "subscriptions": [1, 2],
+    "feed": [1, 2],
     "createdAt": "2024-01-01T09:00:00Z",
     "updatedAt": "2024-01-01T09:00:00Z"
   },
@@ -14,6 +15,7 @@
     "email": "bob@mdd.com",
     "password": "$2a$10$SxMN1pz5Zd.T2EsGZKh5Iu8VJKJovCfxLeZ7WyhQ7YyT1qMAGoXXS",
     "subscriptions": [3],
+    "feed": [3],
     "createdAt": "2024-12-31T09:00:00Z",
     "updatedAt": "2024-12-31T09:00:00Z"
   }

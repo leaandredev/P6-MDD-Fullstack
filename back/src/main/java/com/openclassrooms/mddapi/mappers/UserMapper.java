@@ -11,24 +11,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.services.PostService;
 import com.openclassrooms.mddapi.services.TopicService;
 
 @Component
-@Mapper(componentModel = "spring", uses = { TopicService.class }, imports = { Arrays.class, Collectors.class,
-        Topic.class, User.class, Collections.class, Optional.class })
+@Mapper(componentModel = "spring", uses = { TopicService.class, PostService.class }, imports = { Arrays.class,
+        Collectors.class,
+        Topic.class, Post.class, User.class, Collections.class, Optional.class })
 public abstract class UserMapper implements EntityMapper<UserDto, User> {
 
     @Autowired
     TopicService topicService;
 
+    @Autowired
+    PostService postService;
+
     @Override
     @Mapping(target = "subscriptions", expression = "java(Optional.ofNullable(user.getSubscriptions()).orElseGet(Collections::emptyList).stream().map(t -> t.getId()).collect(Collectors.toList()))")
+    @Mapping(target = "feed", expression = "java(Optional.ofNullable(user.getFeed()).orElseGet(Collections::emptyList).stream().map(p -> p.getId()).collect(Collectors.toList()))")
     public abstract UserDto toDto(User user);
 
     @Override
     @Mapping(target = "subscriptions", expression = "java(Optional.ofNullable(userDto.getSubscriptions()).orElseGet(Collections::emptyList).stream().map(topic_id -> { Topic topic = this.topicService.findById(topic_id); if (topic != null) { return topic; } return null; }).collect(Collectors.toList()))")
+    @Mapping(target = "feed", expression = "java(Optional.ofNullable(userDto.getFeed()).orElseGet(Collections::emptyList).stream().map(post_id -> { Post post = this.postService.findById(post_id); if (post != null) { return post; } return null; }).collect(Collectors.toList()))")
     public abstract User toEntity(UserDto userDto);
 
 }

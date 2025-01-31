@@ -1,12 +1,16 @@
 package com.openclassrooms.mddapi.services;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.exception.DuplicateEntryException;
 import com.openclassrooms.mddapi.exception.NoEntryFoundException;
+import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
@@ -64,6 +68,56 @@ public class UserService {
         userToUpdate.setUpdatedAt(LocalDateTime.now());
 
         return userRepository.save(userToUpdate);
+    }
+
+    /**
+     * Adds a given post to the feeds of all users who are subscribed to the topic
+     * of the post.
+     *
+     * @param post the post to be added to the feeds of subscribed users
+     */
+    public void addPostToFeeds(Post post) {
+        List<User> users = userRepository.findBySubscriptionsContaining(post.getTopic());
+        for (User user : users) {
+            user.getFeed().add(post);
+            userRepository.save(user);
+        }
+        log.info("Post added to feeds of subscribed users");
+    }
+
+    /**
+     * Get all user feed posts, sortBy column, asc/desc.
+     * 
+     * @param user   The user to get feed Posts
+     * @param sortBy Name of column to sortBy (default = date)
+     * @param asc    order for sortBy (default = true, so ASC)
+     * @return the feed posts list, ordered
+     */
+    public List<Post> getFeedSorted(User user, String sortBy, boolean asc) {
+        List<Post> posts = user.getFeed();
+        if (sortBy != null && !sortBy.isEmpty()) {
+            Comparator<Post> comparator = null;
+            switch (sortBy.toLowerCase()) {
+                case "date":
+                    comparator = Comparator.comparing(post -> post.getCreatedAt());
+                    break;
+                case "username":
+                    comparator = Comparator.comparing(post -> post.getUser().getUserName());
+                    break;
+                case "title":
+                    comparator = Comparator.comparing(post -> post.getTitle());
+                    break;
+                default:
+                    comparator = Comparator.comparing(post -> post.getCreatedAt());
+                    break;
+            }
+            posts.sort(comparator);
+
+            if (!asc) {
+                Collections.reverse(posts); // Reverse list to DESC order
+            }
+        }
+        return posts;
     }
 
 }

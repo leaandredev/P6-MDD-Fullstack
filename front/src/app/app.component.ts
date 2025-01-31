@@ -2,7 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { combineLatest, filter, map, Observable } from 'rxjs';
-import { SessionService } from './services/session.service';
+import { SessionService } from './core/services/session.service';
 
 @Component({
   selector: 'app-root',

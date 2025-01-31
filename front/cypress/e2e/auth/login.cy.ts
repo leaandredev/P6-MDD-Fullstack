@@ -5,7 +5,7 @@ describe('Login spec', () => {
 
   it('should log successfully', () => {
     cy.login('alice@mdd.com', 'password123');
-    cy.url().should('include', '/feed');
+    cy.url().should('include', '/post');
   });
 
   it('should display an error if login failed', () => {

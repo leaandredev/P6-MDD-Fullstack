@@ -13,11 +13,11 @@ VALUES
 ('DevOps Tools', 'Échange sur les outils et techniques en DevOps.');
 
 -- -- Insertion des posts
--- INSERT INTO POSTS (title, content, user_id, topic_id)
--- VALUES
--- ('Singleton ou pas ?', 'Quels sont les avantages et inconvénients des patterns Singleton ?', 1, 1), -- DevAlice sur Java Best Practices
--- ('React vs Angular', 'Selon vous, quel framework est plus adapté pour un projet complexe ?', 2, 2), -- DevBob sur Frontend Frameworks
--- ('Docker Tips', 'Vos meilleurs conseils pour optimiser l\'utilisation de Docker.', 3, 3); -- DevCharlie sur DevOps Tools
+INSERT INTO POSTS (title, content, user_id, topic_id)
+VALUES
+('Singleton ou pas ?', 'Quels sont les avantages et inconvénients des patterns Singleton ?', 1, 1), -- DevAlice sur Java Best Practices
+('React vs Angular', 'Selon vous, quel framework est plus adapté pour un projet complexe ?', 2, 2), -- DevBob sur Frontend Frameworks
+('Docker Tips', 'Vos meilleurs conseils pour optimiser  Docker.', 3, 3); -- DevCharlie sur DevOps Tools
 
 -- -- Insertion des commentaires
 -- INSERT INTO COMMENTS (user_id, post_id, content)
@@ -35,8 +35,10 @@ VALUES
 (1, 3); -- DevAlice s'abonne également au topic DevOps Tools
 
 -- -- Insertion dans les feeds
--- INSERT INTO FEEDS (user_id, post_id)
--- VALUES
--- (1, 2), -- DevAlice voit le post de DevBob sur React vs Angular
--- (2, 1), -- DevBob voit le post de DevAlice sur Singleton ou pas
--- (3, 3); -- DevCharlie voit son propre post sur Docker Tips
+INSERT INTO FEEDS (user_id, post_id)
+VALUES
+(1, 1), -- DevAlice voit son post sur Singleton ou pas
+(1, 2), -- DevAlice voit le post de DevBob sur React vs Angular
+(1, 3), -- DevAlice voit le post de DevCharlie sur Docker Tips
+(2, 1), -- DevBob voit le post de DevAlice sur Singleton ou pas
+(3, 3); -- DevCharlie voit son propre post sur Docker Tips

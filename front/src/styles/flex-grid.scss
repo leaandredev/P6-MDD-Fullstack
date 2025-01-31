@@ -13,6 +13,7 @@
 }
 
 .flex-row {
+    width: 100%;
     display: flex;
     flex-direction: row;
     /* Disposition en ligne (par défaut) */
@@ -48,8 +49,10 @@
 
 .grid-container {
     display: grid;
-    gap: 1rem;
     /* Espacement entre les éléments */
+    gap: 1rem;
+    /* Espacement entre les enfants */
+    height: -webkit-fill-available;
 }
 
 .grid-2-columns {

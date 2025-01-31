@@ -14,16 +14,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './features/auth/components/home/home.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './features/auth/components/login/login.component';
-import { RegisterComponent } from './features/auth/components/register/register.component';
-import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { FeedComponent } from './features/feed/components/feed/feed.component';
-import { UserDetailsComponent } from './features/feed/components/user-details/user-details.component';
-import { TopicsComponent } from './features/feed/components/topics/topics.component';
+import { UserDetailsComponent } from './features/user-details/user-details.component';
+import { TopicsComponent } from './features/topics/topics.component';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { PostDetailComponent } from './features/post/components/post-detail/post-detail.component';
 
 const materialModule = [
   MatButtonModule,
@@ -40,10 +37,9 @@ const materialModule = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    FeedComponent,
     UserDetailsComponent,
     TopicsComponent,
+    PostDetailComponent,
   ],
   imports: [
     BrowserModule,

@@ -32,6 +32,9 @@ public class UserDto {
 
     private List<Long> subscriptions;
 
+    @JsonIgnore
+    private List<Long> feed;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

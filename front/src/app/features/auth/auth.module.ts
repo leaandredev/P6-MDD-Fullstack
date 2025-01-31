@@ -9,9 +9,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RegisterComponent } from './components/register/register.component';
-import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HomeComponent } from './home/home.component';
 
 const materialModule = [
   MatButtonModule,
@@ -24,7 +25,7 @@ const materialModule = [
 ];
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent],
+  declarations: [RegisterComponent, LoginComponent, HomeComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

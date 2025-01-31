@@ -17,8 +17,8 @@ CREATE TABLE `TOPICS` (
 
 CREATE TABLE `POSTS` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `title` VARCHAR(40),
-  `content` VARCHAR(255),
+  `title` VARCHAR(100),
+  `content` LONGTEXT,
   `user_id` int,
   `topic_id` int,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
