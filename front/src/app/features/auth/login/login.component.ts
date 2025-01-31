@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(loginRequest).subscribe({
       next: (sessionInformation: SessionInformation) => {
         this.sessionService.logIn(sessionInformation);
-        this.router.navigate(['/post/feed']);
+        this.router.navigate(['/post']);
       },
       error: (error) => {
         this.onError = true;

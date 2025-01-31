@@ -9,6 +9,7 @@ describe('Display feed', () => {
     cy.url().should('include', '/post');
     cy.get('button').should('contain.text', 'Créer un article');
     cy.get('mat-card').should('have.length', 2);
+
     // First post
     cy.get('mat-card')
       .first()
@@ -29,6 +30,7 @@ describe('Display feed', () => {
         'contain.text',
         'Quels sont les avantages et inconvénients des patterns Singleton ?'
       );
+
     //Second post
     cy.get('mat-card')
       .eq(1)
