@@ -2,21 +2,18 @@ package com.openclassrooms.mddapi.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.mappers.TopicMapper;
 import com.openclassrooms.mddapi.mappers.UserMapper;
-import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -98,10 +95,13 @@ public class UserController {
      *         or a bad request response if the ID is not a valid number
      */
     @GetMapping("/{id}/feed")
-    public ResponseEntity<?> getFeedPosts(@PathVariable("id") String id) {
+    public ResponseEntity<?> getFeedPosts(
+            @PathVariable("id") String id,
+            @RequestParam(required = false, defaultValue = "date") String orderBy,
+            @RequestParam(required = false, defaultValue = "true") boolean asc) {
         try {
             User user = this.userService.findById(Long.valueOf(id));
-            List<Post> posts = user.getFeed();
+            List<Post> posts = this.userService.getFeedSorted(user, orderBy, asc);
             return ResponseEntity.ok().body(this.postMapper.toResponse(posts));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();

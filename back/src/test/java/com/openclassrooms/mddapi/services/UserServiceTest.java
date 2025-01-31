@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.services;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,8 @@ public class UserServiceTest {
     private UserDto mockUserDto;
     private Topic mockTopic;
     private Post mockPost;
+    private Post mockPost2;
+    private Post mockPost3;
 
     @BeforeEach
     public void beforeEach() {
@@ -46,24 +49,45 @@ public class UserServiceTest {
                 .userName("Deborah123")
                 .password("password1234!")
                 .build();
+
         mockUser2 = User.builder()
                 .id(2L)
                 .email("test2@email.com")
                 .userName("Clea456")
                 .password("password1234!")
                 .build();
+
         mockTopic = Topic.builder()
                 .id(1L)
                 .title("Test Topic")
                 .description("This is a test topic")
                 .build();
+
         mockPost = Post.builder()
                 .id(1L)
-                .title("Test Post")
+                .title("Test Title A")
                 .content("This is a test post")
                 .user(mockUser1)
                 .topic(mockTopic)
                 .build();
+
+        mockPost2 = Post.builder()
+                .id(2L)
+                .title("Test Title B")
+                .content("This is a test post")
+                .user(mockUser2)
+                .topic(mockTopic)
+                .build();
+
+        mockPost3 = Post.builder()
+                .id(3L)
+                .title("Test Title C")
+                .content("This is a test post")
+                .user(mockUser1)
+                .topic(mockTopic)
+                .build();
+
+        mockUser2.setFeed(Arrays.asList(mockPost, mockPost2, mockPost3));
 
         mockUserDto = new UserDto();
         mockUserDto.setEmail("test@email.com");
@@ -204,6 +228,50 @@ public class UserServiceTest {
         // Assert
         verify(userRepository).findBySubscriptionsContaining(mockPost.getTopic());
         verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    public void testGetFeedSortedByTitle() {
+        // Act
+        List<Post> posts = userService.getFeedSorted(mockUser2, "title", true);
+
+        // Assert
+        assertThat(posts.get(0).getTitle()).isEqualTo("Test Title A");
+        assertThat(posts.get(1).getTitle()).isEqualTo("Test Title B");
+        assertThat(posts.get(2).getTitle()).isEqualTo("Test Title C");
+    }
+
+    @Test
+    public void testGetFeedSortedByTitleDesc() {
+        // Act
+        List<Post> posts = userService.getFeedSorted(mockUser2, "title", false);
+
+        // Assert
+        assertThat(posts.get(0).getTitle()).isEqualTo("Test Title C");
+        assertThat(posts.get(1).getTitle()).isEqualTo("Test Title B");
+        assertThat(posts.get(2).getTitle()).isEqualTo("Test Title A");
+    }
+
+    @Test
+    public void testGetFeedSortedByUsername() {
+        // Act
+        List<Post> posts = userService.getFeedSorted(mockUser2, "userName", true);
+
+        // Assert
+        assertThat(posts.get(0).getUser().getUserName()).isEqualTo("Clea456");
+        assertThat(posts.get(1).getUser().getUserName()).isEqualTo("Deborah123");
+        assertThat(posts.get(2).getUser().getUserName()).isEqualTo("Deborah123");
+    }
+
+    @Test
+    public void testGetFeedSortedByUsernameDesc() {
+        // Act
+        List<Post> posts = userService.getFeedSorted(mockUser2, "userName", false);
+
+        // Assert
+        assertThat(posts.get(0).getUser().getUserName()).isEqualTo("Deborah123");
+        assertThat(posts.get(1).getUser().getUserName()).isEqualTo("Deborah123");
+        assertThat(posts.get(2).getUser().getUserName()).isEqualTo("Clea456");
     }
 
 }

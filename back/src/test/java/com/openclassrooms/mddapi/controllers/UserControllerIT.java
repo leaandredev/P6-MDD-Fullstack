@@ -131,7 +131,37 @@ public class UserControllerIT {
                 .with(user("DevAlice")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()").value(1));
+                .andExpect(jsonPath("$.length()").value(3));
+    }
+
+    @Test
+    public void testGetFeedPostsSortByUsernameAsc() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(get("/api/user/{id}/feed", 1)
+                .with(user("DevAlice"))
+                .param("sortBy", "userName")
+                .param("asc", "true"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$[0].userName").value("DevAlice"))
+                .andExpect(jsonPath("$[1].userName").value("DevBob"))
+                .andExpect(jsonPath("$[2].userName").value("DevCharlie"));
+    }
+
+    @Test
+    public void testGetFeedPostsSortByUsernameDesc() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(get("/api/user/{id}/feed", 1)
+                .with(user("DevAlice"))
+                .param("sortBy", "userName")
+                .param("asc", "false"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$[0].userName").value("DevCharlie"))
+                .andExpect(jsonPath("$[1].userName").value("DevBob"))
+                .andExpect(jsonPath("$[2].userName").value("DevAlice"));
     }
 
 }
