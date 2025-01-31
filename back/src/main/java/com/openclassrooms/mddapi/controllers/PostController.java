@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.PostDto;
+import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.models.Post;
+import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.PostService;
 import com.openclassrooms.mddapi.services.UserService;
 
@@ -16,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -31,6 +36,22 @@ public class PostController {
         this.postService = postService;
         this.postMapper = postMapper;
         this.userService = userService;
+    }
+
+    /**
+     * Find a post by its id
+     * 
+     * @param id The id of the post to find
+     * @return a {@link ResponseEntity} with {@link PostResponse} response
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable("id") String id) {
+        try {
+            Post post = this.postService.findById(Long.valueOf(id));
+            return ResponseEntity.ok().body(this.postMapper.toResponse(post));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     /**

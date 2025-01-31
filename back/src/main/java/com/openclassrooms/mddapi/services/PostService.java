@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.services;
 
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.mddapi.exception.NoEntryFoundException;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.repository.PostRepository;
 
@@ -36,6 +37,6 @@ public class PostService {
      * @return the post with the given id
      */
     public Post findById(Long id) {
-        return this.postRepository.findById(id).orElse(null);
+        return this.postRepository.findById(id).orElseThrow(() -> new NoEntryFoundException("The post does not exist"));
     }
 }
