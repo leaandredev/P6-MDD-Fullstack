@@ -35,6 +35,10 @@
     /* Aligner les enfants au début */
 }
 
+.align-start {
+    align-items: start;
+}
+
 .flex-end {
     justify-content: flex-end;
     /* Aligner les enfants à la fin */

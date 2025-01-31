@@ -11,4 +11,18 @@
         </div>
         <p>{{ post.content }}</p>
     </div>
+    <hr>
+    <div class="flex-container flex-column padding-medium align-start">
+        <h3>Commentaires</h3>
+        <form *ngIf="form" class="register-form" [formGroup]="form" ngClass="flex-row" (ngSubmit)="addComment()">
+            <mat-form-field appearance="outline" class="full-size">
+                <mat-label>Ecrivez ici votre commentaire</mat-label>
+                <textarea matInput formControlName="content" rows="7"></textarea>
+            </mat-form-field>
+            <button mat-button type="submit">
+                <img class="padding-medium" src="../../../../../assets/icon _send.svg">
+            </button>
+        </form>
+        <span *ngIf="onError" class="error">Une erreur est survenu</span>
+    </div>
 </div>
