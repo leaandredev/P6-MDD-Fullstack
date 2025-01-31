@@ -24,8 +24,8 @@ public abstract class CommentMapper
     UserService userService;
 
     @Mappings({
-            @Mapping(target = "post", expression = "java(postService.findById(postDto.getPostId()))"),
-            @Mapping(target = "user", expression = "java(userService.findById(postDto.getUserId()))")
+            @Mapping(target = "post", expression = "java(postService.findById(commentDto.getPostId()))"),
+            @Mapping(target = "user", expression = "java(userService.findById(commentDto.getUserId()))")
     })
     public abstract Comment toEntity(CommentDto commentDto);
 

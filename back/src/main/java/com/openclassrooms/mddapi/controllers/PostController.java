@@ -54,7 +54,7 @@ public class PostController {
     /**
      * Creates a new post.
      *
-     * @param postDto the data transfer object containing the details of the post to
+     * @param postDto the dto containing the details of the post to
      *                be created
      * @return a ResponseEntity containing the saved post
      */
