@@ -3,8 +3,6 @@ package com.openclassrooms.mddapi.services;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,24 +10,25 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.openclassrooms.mddapi.exception.NoEntryFoundException;
+import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
-import com.openclassrooms.mddapi.repository.PostRepository;
+import com.openclassrooms.mddapi.repository.CommentRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class PostServiceTest {
+public class CommentServiceTest {
 
     @Mock
-    private PostRepository postRepository;
+    private CommentRepository commentRepository;
 
     @InjectMocks
-    private PostService postService;
+    private CommentService commentService;
 
     private Topic mockTopic;
     private User mockUser;
     private Post mockPost;
+    private Comment mockComment;
 
     @BeforeEach
     public void beforeEach() {
@@ -53,45 +52,24 @@ public class PostServiceTest {
                 .user(mockUser)
                 .topic(mockTopic)
                 .build();
+        mockComment = Comment.builder()
+                .id(1L)
+                .content("This is a comment")
+                .user(mockUser)
+                .post(mockPost)
+                .build();
     }
 
     @Test
     public void testSave() {
         // Arrange
-        when(postRepository.save(mockPost)).thenReturn(mockPost);
+        when(commentRepository.save(mockComment)).thenReturn(mockComment);
 
         // Act
-        Post savedPost = postService.save(mockPost);
+        Comment savedComment = commentService.save(mockComment);
 
         // Assert
-        verify(postRepository).save(mockPost);
-        assertThat(mockPost).isEqualTo(savedPost);
-    }
-
-    @Test
-    public void testFindById() {
-        // Arrange
-        when(postRepository.findById(mockPost.getId())).thenReturn(Optional.of(mockPost));
-
-        // Act
-        Post post = postService.findById(mockPost.getId());
-
-        // Assert
-        assertThat(post).isNotNull();
-        assertThat(post.getTitle()).isEqualTo("Test Post");
-        verify(postRepository).findById(mockPost.getId());
-    }
-
-    @Test
-    public void testFindByIdNotFound() {
-        // Arrange
-        when(postRepository.findById(mockPost.getId())).thenReturn(Optional.empty());
-
-        // Act
-        Throwable thrown = catchThrowable(() -> postService.findById(mockPost.getId()));
-
-        // Assert
-        assertThat(thrown).isInstanceOf(NoEntryFoundException.class);
-        verify(postRepository).findById(mockPost.getId());
+        verify(commentRepository).save(mockComment);
+        assertThat(mockComment).isEqualTo(savedComment);
     }
 }

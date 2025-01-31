@@ -17,12 +17,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.mddapi.MddApiApplication;
-import com.openclassrooms.mddapi.dto.PostDto;
+import com.openclassrooms.mddapi.dto.CommentDto;
 
 @ActiveProfiles("test")
-@SpringBootTest(classes = { MddApiApplication.class, PostController.class })
+@SpringBootTest(classes = { MddApiApplication.class, CommentController.class })
 @AutoConfigureMockMvc
-public class PostControllerIT {
+public class CommentControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -33,43 +33,22 @@ public class PostControllerIT {
     @Test
     public void testCreate() throws Exception {
         // Arrange
-        PostDto postDto = new PostDto();
-        postDto.setTitle("Test Title");
-        postDto.setContent("Test Content");
-        postDto.setUserId(1L);
-        postDto.setTopicId(1L);
+        CommentDto commentDto = new CommentDto();
+        commentDto.setContent("Test Comment");
+        commentDto.setUserId(1L);
+        commentDto.setPostId(1L);
 
-        String jsonPostDto = mapper.writeValueAsString(postDto);
+        String jsonCommentDto = mapper.writeValueAsString(commentDto);
 
         // Act and Assert
-        this.mockMvc.perform(post("/api/post")
+        this.mockMvc.perform(post("/api/comment")
                 .with(user("DevAlice"))
-                .content(jsonPostDto).contentType(MediaType.APPLICATION_JSON)
+                .content(jsonCommentDto).contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.title").value("Test Title"))
-                .andExpect(jsonPath("$.content").value("Test Content"));
-    }
-
-    @Test
-    public void testFindById() throws Exception {
-        // Act and Assert
-        this.mockMvc.perform(get("/api/post/{id}", 1)
-                .with(user("DevAlice")))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Singleton ou pas ?"))
-                .andExpect(jsonPath("$.topicTitle").value("Java Best Practices"))
-                .andExpect(jsonPath("$.userName").value("DevAlice"));
-    }
-
-    @Test
-    public void testFindByIdWithPostNotFound() throws Exception {
-        // Act and Assert
-        this.mockMvc.perform(get("/api/post/{id}", 12)
-                .with(user("DevAlice")))
-                .andExpect(status().isNotFound());
+                .andExpect(jsonPath("$.content").value("Test Comment"));
     }
 
 }
