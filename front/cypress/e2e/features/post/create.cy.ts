@@ -16,7 +16,7 @@ describe('Create post (form spec)', () => {
 
   it('should go back on post feed if back button clicked', () => {
     cy.contains('button', 'arrow_back').click();
-    cy.url().should('include', '/post/feed');
+    cy.url().should('include', '/post');
   });
 
   it('should display the create post form', () => {
@@ -43,6 +43,6 @@ describe('Create post (form spec)', () => {
       'contain.text',
       'Votre article a bien été créé.'
     );
-    cy.url().should('include', '/post/feed');
+    cy.url().should('include', '/post');
   });
 });

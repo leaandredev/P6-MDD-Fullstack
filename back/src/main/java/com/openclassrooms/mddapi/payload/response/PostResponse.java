@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PostResponse {
 
+    private Long id;
+
     private String title;
 
     private String content;

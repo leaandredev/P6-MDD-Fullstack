@@ -54,4 +54,23 @@ public class PostControllerIT {
                 .andExpect(jsonPath("$.content").value("Test Content"));
     }
 
+    @Test
+    public void testFindById() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(get("/api/post/{id}", 1)
+                .with(user("DevAlice")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Singleton ou pas ?"))
+                .andExpect(jsonPath("$.topicTitle").value("Java Best Practices"))
+                .andExpect(jsonPath("$.userName").value("DevAlice"));
+    }
+
+    @Test
+    public void testFindByIdWithPostNotFound() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(get("/api/post/{id}", 12)
+                .with(user("DevAlice")))
+                .andExpect(status().isNotFound());
+    }
+
 }

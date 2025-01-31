@@ -20,6 +20,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserDetailsComponent } from './features/user-details/user-details.component';
 import { TopicsComponent } from './features/topics/topics.component';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { PostDetailComponent } from './features/post/components/post-detail/post-detail.component';
 
 const materialModule = [
   MatButtonModule,
@@ -34,7 +35,12 @@ const materialModule = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, UserDetailsComponent, TopicsComponent],
+  declarations: [
+    AppComponent,
+    UserDetailsComponent,
+    TopicsComponent,
+    PostDetailComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

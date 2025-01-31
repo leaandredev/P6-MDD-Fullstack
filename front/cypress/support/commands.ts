@@ -51,24 +51,30 @@ Cypress.Commands.add('initIntercepts', () => {
     }).as('getSubscriptions');
 
     // user get feed
-    cy.intercept('GET', '/api/user/*/feed', (req) => {
+    cy.intercept('GET', '/api/user/*/feed*', (req) => {
       const userId = Number(req.url.split('/').slice(-2)[0]);
       const user = users.find((u) => u.id === userId);
       if (user) {
-        const userFeedPosts = posts.filter((p) => 
-          user.feed.includes(p.id));
+        const userFeedPosts = posts.filter((p) => user.feed.includes(p.id));
         req.reply(userFeedPosts);
       } else {
         req.reply([]);
       }
     }).as('getFeed');
 
-    // get by id
+    // get user by id
     cy.intercept('GET', '/api/user/*', (req) => {
       const userId = Number(req.url.split('/').pop());
       const user = users.find((u) => u.id === userId);
       req.reply(user ? user : { error: 'User not found' });
     }).as('getUser');
+
+    // get post by id
+    cy.intercept('GET', '/api/post/*', (req) => {
+      const postId = Number(req.url.split('/').pop());
+      const post = posts.find((p) => p.id === postId);
+      req.reply(post ? post : { error: 'Post not found' });
+    }).as('getPost');
   });
 });
 

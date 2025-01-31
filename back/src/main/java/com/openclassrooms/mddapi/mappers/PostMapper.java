@@ -1,7 +1,5 @@
 package com.openclassrooms.mddapi.mappers;
 
-import java.util.List;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

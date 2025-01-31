@@ -1,0 +1,14 @@
+<div class="post-detail">
+    <button mat-icon-button (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div *ngIf="post" class="flex-container flex-start padding-medium">
+        <h1 class="">{{ post.title }}</h1>
+        <div class="flex-row" style="gap: 40px;">
+            <span>{{ post.createdAt | date:'dd/MM/yyyy'}}</span>
+            <span>{{ post.userName }}</span>
+            <span>{{ post.topicTitle }}</span>
+        </div>
+        <p>{{ post.content }}</p>
+    </div>
+</div>

@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="grid-container grid-auto-fit padding-medium">
-        <mat-card *ngFor="let post of feedPosts">
+        <mat-card *ngFor="let post of feedPosts" [routerLink]="['detail', post.id]">
             <mat-card-header>
                 <mat-card-title>{{ post.title }}</mat-card-title>
             </mat-card-header>
