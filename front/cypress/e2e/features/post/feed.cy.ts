@@ -2,11 +2,11 @@ describe('Display feed', () => {
   beforeEach(() => {
     cy.initIntercepts();
     cy.login('alice@mdd.com', 'password123');
-    cy.visit('/post/feed');
+    cy.visit('/post');
   });
 
   it('should display create button and user feed posts', () => {
-    cy.url().should('include', '/post/feed');
+    cy.url().should('include', '/post');
     cy.get('button').should('contain.text', 'Créer un article');
     cy.get('mat-card').should('have.length', 2);
     // First post
