@@ -17,7 +17,6 @@ export class PostDetailComponent implements OnInit {
   public postId: string;
   public post: PostResponse | undefined;
   public form: FormGroup | undefined;
-  public onError: boolean = false;
 
   constructor(
     private postService: PostService,
@@ -61,7 +60,9 @@ export class PostDetailComponent implements OnInit {
           this.form?.get('content')?.setErrors(null);
         },
         error: () => {
-          this.onError = true;
+          this.matSnackBar.open('Une erreur est survenu', 'Close', {
+            duration: 2000,
+          });
         },
       });
     }

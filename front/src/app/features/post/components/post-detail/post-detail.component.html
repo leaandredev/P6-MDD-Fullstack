@@ -19,10 +19,9 @@
                 <mat-label>Ecrivez ici votre commentaire</mat-label>
                 <textarea matInput formControlName="content" rows="7"></textarea>
             </mat-form-field>
-            <button mat-button type="submit">
+            <button mat-button type="submit" [disabled]="form.invalid">
                 <img class="padding-medium" src="../../../../../assets/icon _send.svg">
             </button>
         </form>
-        <span *ngIf="onError" class="error">Une erreur est survenu</span>
     </div>
 </div>
