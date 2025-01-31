@@ -1,5 +1,8 @@
 package com.openclassrooms.mddapi.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,8 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.PostDto;
+import com.openclassrooms.mddapi.mappers.CommentMapper;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.models.Post;
+import com.openclassrooms.mddapi.models.Comment;
+import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.services.PostService;
 import com.openclassrooms.mddapi.services.UserService;
 
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -28,11 +35,16 @@ public class PostController {
     private final PostService postService;
     private final PostMapper postMapper;
     private final UserService userService;
+    private final CommentService commentService;
+    private final CommentMapper commentMapper;
 
-    public PostController(PostService postService, PostMapper postMapper, UserService userService) {
+    public PostController(PostService postService, PostMapper postMapper, UserService userService,
+            CommentService commentService, CommentMapper commentMapper) {
         this.postService = postService;
         this.postMapper = postMapper;
         this.userService = userService;
+        this.commentService = commentService;
+        this.commentMapper = commentMapper;
     }
 
     /**
@@ -66,6 +78,23 @@ public class PostController {
         // Add the post to the feeds of all users who have subscribed to the topic
         this.userService.addPostToFeeds(savedPost);
         return ResponseEntity.ok().body(this.postMapper.toDto(savedPost));
+    }
+
+    /**
+     * Get all comments for a post
+     * 
+     * @param id The id of the post to find comments
+     * @return a ResponseEntity containing all comments related to post
+     */
+    @GetMapping("/{id}/comments")
+    public ResponseEntity<?> getComments(@PathVariable("id") String id) {
+        try {
+            Post post = this.postService.findById(Long.valueOf(id));
+            List<Comment> comments = this.commentService.getPostComments(post);
+            return ResponseEntity.ok().body(this.commentMapper.toResponse(comments));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

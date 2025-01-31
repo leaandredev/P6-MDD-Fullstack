@@ -51,4 +51,14 @@ public class CommentControllerIT {
                 .andExpect(jsonPath("$.content").value("Test Comment"));
     }
 
+    @Test
+    public void testGetComments() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(get("/api/post/{id}/comments", 1)
+                .with(user("DevAlice")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(1));
+    }
+
 }

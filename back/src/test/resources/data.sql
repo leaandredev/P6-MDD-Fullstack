@@ -20,11 +20,11 @@ VALUES
 ('Docker Tips', 'Vos meilleurs conseils pour optimiser  Docker.', 3, 3); -- DevCharlie sur DevOps Tools
 
 -- -- Insertion des commentaires
--- INSERT INTO COMMENTS (user_id, post_id, content)
--- VALUES
--- (2, 1, 'Je pense que le Singleton est souvent sur-utilisé.'), -- DevBob commente sur le post de DevAlice
--- (1, 2, 'Angular est plus adapté pour les grandes applications.'), -- DevAlice commente sur le post de DevBob
--- (3, 3, 'Assurez-vous d\'utiliser des multi-stage builds.'); -- DevCharlie commente sur son propre post
+INSERT INTO COMMENTS (user_id, post_id, content)
+VALUES
+(2, 1, 'Je pense que le Singleton est souvent sur-utilisé.'), -- DevBob commente sur le post de DevAlice
+(1, 2, 'Angular est plus adapté pour les grandes applications.'), -- DevAlice commente sur le post de DevBob
+(3, 3, 'Assurez-vous de mettre des multi-stage builds.'); -- DevCharlie commente sur son propre post
 
 -- -- Insertion des abonnements
 INSERT INTO SUBSCRIPTIONS (user_id, topic_id)
