@@ -35,6 +35,10 @@
     /* Aligner les enfants au début */
 }
 
+.align-start {
+    align-items: start;
+}
+
 .flex-end {
     justify-content: flex-end;
     /* Aligner les enfants à la fin */
@@ -53,11 +57,16 @@
     gap: 1rem;
     /* Espacement entre les enfants */
     height: -webkit-fill-available;
+    width: 100%;
 }
 
 .grid-2-columns {
     grid-template-columns: repeat(2, 1fr);
     /* Deux colonnes de tailles égales */
+}
+
+.grid-user-comments {
+    grid-template-columns: 150px 1fr;
 }
 
 .grid-3-columns {
@@ -81,6 +90,18 @@
     /* Centrer les colonnes */
     align-items: center;
     /* Centrer les lignes */
+}
+
+.align-left {
+    text-align: left;
+    justify-content: left;
+    align-items: center;
+}
+
+.align-right {
+    text-align: right;
+    justify-content: right;
+    align-items: center;
 }
 
 /* Margin/Padding */

@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "content": "Le pattern Singleton peut être très utile pour gérer des instances uniques, surtout lorsque l'on travaille avec des ressources partagées comme des connexions à une base de données. Cependant, j'ai souvent remarqué qu'il peut rendre les tests unitaires plus compliqués. Qu'en pensez-vous ?",
+    "postId": 1,
+    "userName": "DevAlice",
+    "createdAt": "2025-02-01T09:00:00Z"
+  },
+  {
+    "id": 2,
+    "content": "Je trouve que le Singleton peut parfois être un anti-pattern, surtout dans les grandes applications. Cela peut conduire à un couplage trop fort et rendre le code moins maintenable. Avez-vous des conseils sur comment éviter ces pièges tout en utilisant le Singleton ?",
+    "postId": 1,
+    "userName": "DevBob",
+    "createdAt": "2025-02-01T10:00:00Z"
+  },
+  {
+    "id": 3,
+    "content": "Personnellement, je préfère utiliser des modules ES6 pour gérer l'état partagé. Cela me semble plus simple et plus clair que d'implémenter un Singleton. Est-ce que quelqu'un a déjà comparé les deux approches en termes de performance et de lisibilité ?",
+    "postId": 1,
+    "userName": "DevAlice",
+    "createdAt": "2025-02-01T11:00:00Z"
+  }
+]

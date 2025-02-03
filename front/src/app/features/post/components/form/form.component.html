@@ -23,8 +23,7 @@
                     <textarea matInput formControlName="content"></textarea>
                 </mat-form-field>
                 <span *ngIf="onError" class="error">Une erreur est survenu</span>
-                <button mat-raised-button color="primary" type="submit">Créer</button>
-                <!-- <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Créer</button> -->
+                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Créer</button>
             </div>
         </form>
     </div>

@@ -1,6 +1,7 @@
 <div class="topics">
     <div class="grid-container grid-auto-fit padding-medium">
-        <mat-card *ngFor="let topic of (topics$ | async)">
+        <mat-card class="grey-rounded-card" *ngFor="let topic of (topics$ | async)">
+            <!-- <div class="grey-rounded-card" *ngFor="let topic of (topics$ | async)"> -->
             <mat-card-header>
                 <mat-card-title>{{ topic.title }}</mat-card-title>
             </mat-card-header>

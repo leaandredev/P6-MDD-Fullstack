@@ -16,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.mddapi.MddApiApplication;
 
 @ActiveProfiles("test")
@@ -26,9 +25,6 @@ public class TopicControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper mapper;
 
     @Test
     public void testFindAll() throws Exception {
