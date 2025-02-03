@@ -2,6 +2,8 @@ package com.openclassrooms.mddapi.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,8 @@ import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.mappers.CommentMapper;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.models.Post;
+import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.payload.response.PostResponse;
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.services.PostService;
@@ -71,6 +75,10 @@ public class PostController {
     @PostMapping
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody PostDto postDto) {
+        User user = this.userService.findById(Long.valueOf(postDto.getUserId()));
+        if (!this.userService.isCurrentUserAuthorized(user)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         Post post = this.postMapper.toEntity(postDto);
         Post savedPost = this.postService.save(post);
         // Add the post to the feeds of all users who have subscribed to the topic

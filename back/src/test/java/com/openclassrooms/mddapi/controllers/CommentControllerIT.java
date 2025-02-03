@@ -47,8 +47,26 @@ public class CommentControllerIT {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.id").value(4))
                 .andExpect(jsonPath("$.content").value("Test Comment"));
+    }
+
+    @Test
+    public void testCreateUnauthorizedUser() throws Exception {
+        // Arrange
+        CommentDto commentDto = new CommentDto();
+        commentDto.setContent("Test Comment");
+        commentDto.setUserId(2L);
+        commentDto.setPostId(1L);
+
+        String jsonCommentDto = mapper.writeValueAsString(commentDto);
+
+        // Act and Assert
+        this.mockMvc.perform(post("/api/comment")
+                .with(user("DevAlice"))
+                .content(jsonCommentDto).contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

@@ -1,10 +1,14 @@
 package com.openclassrooms.mddapi.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.UserDto;
@@ -79,7 +83,9 @@ public class UserService {
     public void addPostToFeeds(Post post) {
         List<User> users = userRepository.findBySubscriptionsContaining(post.getTopic());
         for (User user : users) {
-            user.getFeed().add(post);
+            List<Post> modifiableFeed = new ArrayList<>(user.getFeed());
+            modifiableFeed.add(post);
+            user.setFeed(modifiableFeed);
             userRepository.save(user);
         }
         log.info("Post added to feeds of subscribed users");
@@ -118,6 +124,18 @@ public class UserService {
             }
         }
         return posts;
+    }
+
+    /**
+     * Verify if user is the same has the user authenticate
+     * 
+     * @param id The user we want to test
+     * @return true if users are the same
+     */
+    public boolean isCurrentUserAuthorized(User user) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return Objects.equals(userDetails.getUsername(), user.getEmail()) ||
+                Objects.equals(userDetails.getUsername(), user.getUserName());
     }
 
 }

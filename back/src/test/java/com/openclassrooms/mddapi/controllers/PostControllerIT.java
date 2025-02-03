@@ -48,9 +48,28 @@ public class PostControllerIT {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.id").value(4))
                 .andExpect(jsonPath("$.title").value("Test Title"))
                 .andExpect(jsonPath("$.content").value("Test Content"));
+    }
+
+    @Test
+    public void testCreateUnauthorizedUser() throws Exception {
+        // Arrange
+        PostDto postDto = new PostDto();
+        postDto.setTitle("Test Title");
+        postDto.setContent("Test Content");
+        postDto.setUserId(2L);
+        postDto.setTopicId(1L);
+
+        String jsonPostDto = mapper.writeValueAsString(postDto);
+
+        // Act and Assert
+        this.mockMvc.perform(post("/api/post")
+                .with(user("DevAlice"))
+                .content(jsonPostDto).contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.mappers.CommentMapper;
 import com.openclassrooms.mddapi.models.Comment;
+import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.CommentService;
+import com.openclassrooms.mddapi.services.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,10 +26,13 @@ public class CommentController {
 
     private final CommentService commentService;
     private final CommentMapper commentMapper;
+    private final UserService userService;
 
-    CommentController(CommentService commentService, CommentMapper commentMapper) {
+    CommentController(CommentService commentService, CommentMapper commentMapper,
+            UserService userService) {
         this.commentService = commentService;
         this.commentMapper = commentMapper;
+        this.userService = userService;
     }
 
     /**
@@ -38,6 +44,11 @@ public class CommentController {
     @PostMapping
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody CommentDto commentDto) {
+        User user = this.userService.findById(Long.valueOf(commentDto.getUserId()));
+        if (!this.userService.isCurrentUserAuthorized(user)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         Comment comment = this.commentMapper.toEntity(commentDto);
         Comment savedComment = this.commentService.save(comment);
 

@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controllers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,6 @@ import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -23,7 +23,6 @@ public class UserController {
     private final UserMapper userMapper;
     private final UserService userService;
     private final TopicMapper topicMapper;
-
     private final PostMapper postMapper;
 
     public UserController(UserService userService, UserMapper userMapper, TopicMapper topicMapper,
@@ -44,6 +43,9 @@ public class UserController {
     public ResponseEntity<?> findById(@PathVariable("id") String id) {
         try {
             User user = this.userService.findById(Long.valueOf(id));
+            if (!this.userService.isCurrentUserAuthorized(user)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
             return ResponseEntity.ok().body(this.userMapper.toDto(user));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
@@ -60,7 +62,12 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody UserDto userDto) {
         try {
-            User user = this.userService.update(Long.valueOf(id), userDto);
+            User user = this.userService.findById(Long.valueOf(id));
+            if (!this.userService.isCurrentUserAuthorized(user)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            user = this.userService.update(Long.valueOf(id), userDto);
+
             return ResponseEntity.ok().body(this.userMapper.toDto(user));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
@@ -79,6 +86,9 @@ public class UserController {
     public ResponseEntity<?> getSubscriptions(@PathVariable("id") String id) {
         try {
             User user = this.userService.findById(Long.valueOf(id));
+            if (!this.userService.isCurrentUserAuthorized(user)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
             List<Topic> topics = user.getSubscriptions();
             return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
         } catch (NumberFormatException e) {
@@ -101,6 +111,9 @@ public class UserController {
             @RequestParam(required = false, defaultValue = "true") boolean asc) {
         try {
             User user = this.userService.findById(Long.valueOf(id));
+            if (!this.userService.isCurrentUserAuthorized(user)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
             List<Post> posts = this.userService.getFeedSorted(user, orderBy, asc);
             return ResponseEntity.ok().body(this.postMapper.toResponse(posts));
         } catch (NumberFormatException e) {
