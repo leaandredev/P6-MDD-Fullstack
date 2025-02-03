@@ -78,6 +78,24 @@ public class UserControllerIT {
     }
 
     @Test
+    public void testUpdateUnauthorized() throws Exception {
+        // Arrange
+        UserDto userDto = new UserDto();
+        userDto.setEmail("alice@mdd.com");
+        userDto.setUserName("DevAliceUpdated");
+
+        String jsonUserDto = mapper.writeValueAsString(userDto);
+
+        // Act and Assert
+        this.mockMvc.perform(put("/api/user/{id}", 2)
+                .with(user("DevAlice"))
+                .content(jsonUserDto).contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+
+    }
+
+    @Test
     public void testUpdateWithWrongNumberFormat() throws Exception {
         // Arrange
         UserDto userDto = new UserDto();
@@ -125,6 +143,14 @@ public class UserControllerIT {
     }
 
     @Test
+    public void testGetSubscriptionsUnauthorized() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(get("/api/user/{id}/subscriptions", 2)
+                .with(user("DevAlice")))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     public void testGetFeedPosts() throws Exception {
         // Act and Assert
         this.mockMvc.perform(get("/api/user/{id}/feed", 1)
@@ -132,6 +158,14 @@ public class UserControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(3));
+    }
+
+    @Test
+    public void testGetFeedPostsUnauthorized() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(get("/api/user/{id}/feed", 2)
+                .with(user("DevAlice")))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

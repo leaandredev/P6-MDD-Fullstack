@@ -45,6 +45,14 @@ public class TopicControllerIT {
     }
 
     @Test
+    public void testSubscribeUnauthorized() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(post("/api/topic/2/subscribe/2")
+                .with(user("DevAlice")))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     public void testSubscribeWithIdNotFound() throws Exception {
         // Act and Assert
         this.mockMvc.perform(post("/api/topic/15/subscribe/2")
@@ -70,7 +78,16 @@ public class TopicControllerIT {
     }
 
     @Test
-    public void testUnsubscribeWithIfNotFound() throws Exception {
+    public void testUnsubscribeUnauthorized() throws Exception {
+        // Act and Assert
+        this.mockMvc.perform(delete("/api/topic/3/unsubscribe/2")
+                .with(user("DevAlice")))
+                .andExpect(status().isUnauthorized());
+        ;
+    }
+
+    @Test
+    public void testUnsubscribeWithTopicNotFound() throws Exception {
         // Act and Assert
         this.mockMvc.perform(delete("/api/topic/3/unsubscribe/36")
                 .with(user("DevAlice")))
