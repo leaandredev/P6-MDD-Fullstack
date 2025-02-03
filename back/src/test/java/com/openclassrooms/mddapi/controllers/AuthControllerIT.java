@@ -134,4 +134,125 @@ public class AuthControllerIT {
                         .value("A user already exist with this email address or username"));
     }
 
+    @Test
+    public void testWhenUserPasswordIncorrect_TooShort() throws Exception {
+        // Arrange
+        RegisterRequest RegisterRequest = new RegisterRequest();
+        RegisterRequest.setUserName("JeffTrulu5478");
+        RegisterRequest.setEmail("jtrulu@example.com");
+        RegisterRequest.setPassword("newP1!");
+
+        String jsonRegisterRequest = mapper.writeValueAsString(RegisterRequest);
+
+        // Act & Assert
+        this.mockMvc.perform(
+                post("/api/auth/register")
+                        .content(jsonRegisterRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testWhenUserPasswordIncorrect_TooLong() throws Exception {
+        // Arrange
+        RegisterRequest RegisterRequest = new RegisterRequest();
+        RegisterRequest.setUserName("JeffTrulu5478");
+        RegisterRequest.setEmail("jtrulu@example.com");
+        RegisterRequest.setPassword(
+                "newP1!ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+
+        String jsonRegisterRequest = mapper.writeValueAsString(RegisterRequest);
+
+        // Act & Assert
+        this.mockMvc.perform(
+                post("/api/auth/register")
+                        .content(jsonRegisterRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testWhenUserPasswordIncorrect_WithoutNumber() throws Exception {
+        // Arrange
+        RegisterRequest RegisterRequest = new RegisterRequest();
+        RegisterRequest.setUserName("JeffTrulu5478");
+        RegisterRequest.setEmail("jtrulu@example.com");
+        RegisterRequest.setPassword("newPassword!");
+
+        String jsonRegisterRequest = mapper.writeValueAsString(RegisterRequest);
+
+        // Act & Assert
+        this.mockMvc.perform(
+                post("/api/auth/register")
+                        .content(jsonRegisterRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testWhenUserPasswordIncorrect_WithoutUppercase() throws Exception {
+        // Arrange
+        RegisterRequest RegisterRequest = new RegisterRequest();
+        RegisterRequest.setUserName("JeffTrulu5478");
+        RegisterRequest.setEmail("jtrulu@example.com");
+        RegisterRequest.setPassword("newpassword1234!");
+
+        String jsonRegisterRequest = mapper.writeValueAsString(RegisterRequest);
+
+        // Act & Assert
+        this.mockMvc.perform(
+                post("/api/auth/register")
+                        .content(jsonRegisterRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testWhenUserPasswordIncorrect_WithoutLowercase() throws Exception {
+        // Arrange
+        RegisterRequest RegisterRequest = new RegisterRequest();
+        RegisterRequest.setUserName("JeffTrulu5478");
+        RegisterRequest.setEmail("jtrulu@example.com");
+        RegisterRequest.setPassword("NEWPASSWORD1234!");
+
+        String jsonRegisterRequest = mapper.writeValueAsString(RegisterRequest);
+
+        // Act & Assert
+        this.mockMvc.perform(
+                post("/api/auth/register")
+                        .content(jsonRegisterRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testWhenUserPasswordIncorrect_WithoutSpecialCaracter() throws Exception {
+        // Arrange
+        RegisterRequest RegisterRequest = new RegisterRequest();
+        RegisterRequest.setUserName("JeffTrulu5478");
+        RegisterRequest.setEmail("jtrulu@example.com");
+        RegisterRequest.setPassword("NewPassword1234");
+
+        String jsonRegisterRequest = mapper.writeValueAsString(RegisterRequest);
+
+        // Act & Assert
+        this.mockMvc.perform(
+                post("/api/auth/register")
+                        .content(jsonRegisterRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
 }

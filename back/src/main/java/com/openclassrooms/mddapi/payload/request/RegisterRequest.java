@@ -2,6 +2,8 @@ package com.openclassrooms.mddapi.payload.request;
 
 import javax.validation.constraints.*;
 
+import com.openclassrooms.mddapi.validation.ValidPassword;
+
 import lombok.Data;
 
 /**
@@ -36,6 +38,6 @@ public class RegisterRequest {
      */
     @NotBlank(message = "The password field is required.")
     @NotNull(message = "The password field cannot be null.")
-    @Size(min = 6, max = 40)
+    @ValidPassword
     private String password;
 }
