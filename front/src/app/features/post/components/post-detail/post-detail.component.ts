@@ -1,8 +1,11 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs';
 import { Comment } from 'src/app/core/interfaces/comment.interface';
+import { CommentResponse } from 'src/app/core/interfaces/commentResponse.interface';
 import { PostResponse } from 'src/app/core/interfaces/postResponse.interface';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { PostService } from 'src/app/core/services/post.service';
@@ -17,6 +20,8 @@ export class PostDetailComponent implements OnInit {
   public postId: string;
   public post: PostResponse | undefined;
   public form: FormGroup | undefined;
+  public comments!: CommentResponse[];
+  handsetPortrait: boolean = false;
 
   constructor(
     private postService: PostService,
@@ -24,15 +29,25 @@ export class PostDetailComponent implements OnInit {
     private fb: FormBuilder,
     private sessionService: SessionService,
     private commentService: CommentService,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
+    private responsive: BreakpointObserver
   ) {
     this.postId = this.route.snapshot.paramMap.get('id')!;
+
+    this.responsive
+      .observe([Breakpoints.HandsetPortrait])
+      .subscribe((result) => {
+        if (result.matches) {
+          this.handsetPortrait = true;
+        } else {
+          this.handsetPortrait = false;
+        }
+      });
   }
 
   ngOnInit(): void {
-    this.postService.getById(this.postId).subscribe((post: PostResponse) => {
-      this.post = post;
-    });
+    this.fetchDetail();
+    this.fetchComments();
     this.form = this.fb.group({
       content: ['', Validators.required],
     });
@@ -42,6 +57,20 @@ export class PostDetailComponent implements OnInit {
     window.history.back();
   }
 
+  private fetchDetail() {
+    this.postService.getById(this.postId).subscribe((post: PostResponse) => {
+      this.post = post;
+    });
+  }
+
+  private fetchComments() {
+    this.postService
+      .getComments(this.postId)
+      .subscribe((comments: CommentResponse[]) => {
+        this.comments = comments;
+      });
+  }
+
   public addComment() {
     if (this.form && this.form.valid) {
       const commentRequest = this.form.value as Comment;
@@ -49,6 +78,7 @@ export class PostDetailComponent implements OnInit {
       commentRequest.userId = this.sessionService.sessionInformation!.id;
       this.commentService.create(commentRequest).subscribe({
         next: () => {
+          this.fetchComments();
           this.matSnackBar.open(
             'Votre commentaire a bien été ajouté.',
             'Close',

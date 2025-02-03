@@ -21,6 +21,7 @@ import { UserDetailsComponent } from './features/user-details/user-details.compo
 import { TopicsComponent } from './features/topics/topics.component';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { PostDetailComponent } from './features/post/components/post-detail/post-detail.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 const materialModule = [
   MatButtonModule,
@@ -32,6 +33,7 @@ const materialModule = [
   MatInputModule,
   MatSidenavModule,
   MatListModule,
+  MatGridListModule,
 ];
 
 @NgModule({
