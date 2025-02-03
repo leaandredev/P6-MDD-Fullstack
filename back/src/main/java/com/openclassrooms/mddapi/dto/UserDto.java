@@ -9,6 +9,7 @@ import lombok.NonNull;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,10 +31,10 @@ public class UserDto {
     @Size(max = 120)
     private String password;
 
-    private List<Long> subscriptions;
+    private List<Long> subscriptions = new ArrayList<>();
 
     @JsonIgnore
-    private List<Long> feed;
+    private List<Long> feed = new ArrayList<>();
 
     private LocalDateTime createdAt;
 

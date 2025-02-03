@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -82,7 +83,9 @@ public class UserService {
     public void addPostToFeeds(Post post) {
         List<User> users = userRepository.findBySubscriptionsContaining(post.getTopic());
         for (User user : users) {
-            user.getFeed().add(post);
+            List<Post> modifiableFeed = new ArrayList<>(user.getFeed());
+            modifiableFeed.add(post);
+            user.setFeed(modifiableFeed);
             userRepository.save(user);
         }
         log.info("Post added to feeds of subscribed users");

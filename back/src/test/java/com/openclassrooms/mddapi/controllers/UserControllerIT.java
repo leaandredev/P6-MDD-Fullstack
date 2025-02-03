@@ -33,12 +33,12 @@ public class UserControllerIT {
     @Test
     public void testFindById() throws Exception {
         // Act and Assert
-        this.mockMvc.perform(get("/api/user/{id}", 2)
+        this.mockMvc.perform(get("/api/user/{id}", 1)
                 .with(user("DevAlice")))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(2))
-                .andExpect(jsonPath("$.email").value("bob@mdd.com"))
-                .andExpect(jsonPath("$.userName").value("DevBob"));
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.email").value("alice@mdd.com"))
+                .andExpect(jsonPath("$.userName").value("DevAlice"));
     }
 
     @Test

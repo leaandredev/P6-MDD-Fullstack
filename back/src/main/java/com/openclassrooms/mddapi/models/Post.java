@@ -71,14 +71,14 @@ public class Post {
     /** Initializes `createdAt` and `updatedAt` before persisting */
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = createdAt;
     }
 
     /** Updates `updatedAt` before updating */
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
 }

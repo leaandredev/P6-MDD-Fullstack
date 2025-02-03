@@ -73,7 +73,7 @@ class RegisterRequestTest {
         RegisterRequest validRequest = new RegisterRequest();
         validRequest.setEmail("valid@example.com");
         validRequest.setUserName("John123");
-        validRequest.setPassword("securePassword");
+        validRequest.setPassword("securePassword123!");
 
         violations = validator.validate(validRequest);
 

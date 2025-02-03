@@ -48,7 +48,7 @@ public class PostControllerIT {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.id").value(4))
                 .andExpect(jsonPath("$.title").value("Test Title"))
                 .andExpect(jsonPath("$.content").value("Test Content"));
     }
