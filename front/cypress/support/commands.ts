@@ -35,7 +35,8 @@ Cypress.Commands.add('initIntercepts', () => {
     cy.fixture('users'),
     cy.fixture('topics'),
     cy.fixture('posts'),
-  ]).then(([users, topics, posts]) => {
+    cy.fixture('comments'),
+  ]).then(([users, topics, posts, comments]) => {
     // user get subscriptions
     cy.intercept('GET', '/api/user/*/subscriptions', (req) => {
       const userId = Number(req.url.split('/').slice(-2)[0]);
@@ -75,6 +76,18 @@ Cypress.Commands.add('initIntercepts', () => {
       const post = posts.find((p) => p.id === postId);
       req.reply(post ? post : { error: 'Post not found' });
     }).as('getPost');
+
+    // get comments by post
+    cy.intercept('GET', '/api/post/*/comments', (req) => {
+      const postId = Number(req.url.split('/').slice(-2)[0]);
+      const post = posts.find((p) => p.id === postId);
+      if (post) {
+        const postComments = comments.filter((c) => c.postId === postId);
+        req.reply(postComments);
+      } else {
+        req.reply([]);
+      }
+    }).as('getComments');
   });
 });
 
