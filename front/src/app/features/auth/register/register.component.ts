@@ -21,7 +21,12 @@ export class RegisterComponent implements OnInit {
     ],
     password: [
       '',
-      [Validators.required, Validators.min(3), Validators.max(40)],
+      [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(40),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/), // Uppercase, lowercase, number and special caracter
+      ],
     ],
   });
 
@@ -55,5 +60,9 @@ export class RegisterComponent implements OnInit {
       next: (_: void) => this.router.navigate(['/']),
       error: (_) => (this.onError = true),
     });
+  }
+
+  get password() {
+    return this.form.get('password');
   }
 }
