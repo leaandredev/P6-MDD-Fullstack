@@ -32,7 +32,7 @@ CREATE TABLE `COMMENTS` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `user_id` int,
   `post_id` int,
-  `content` VARCHAR(255),
+  `content` LONGTEXT,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

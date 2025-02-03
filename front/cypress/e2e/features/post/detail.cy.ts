@@ -40,6 +40,19 @@ describe('Post details', () => {
       'contain.text',
       'Votre commentaire a bien été ajouté.'
     );
+    cy.get('div.user-comment').should('have.length', 3);
+  });
+
+  it('should display error message if send a new comment failed', () => {
+    cy.intercept('POST', '/api/comment', {
+      statusCode: 500,
+    });
+    cy.get('textarea[formControlName=content]').type('a new comment');
+    cy.get('button[type=submit]').click();
+    cy.get('snack-bar-container').and(
+      'contain.text',
+      'Une erreur est survenu.'
+    );
   });
 
   it('should go back on post feed if back button clicked', () => {

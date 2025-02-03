@@ -90,7 +90,7 @@ export class PostDetailComponent implements OnInit {
           this.form?.get('content')?.setErrors(null);
         },
         error: () => {
-          this.matSnackBar.open('Une erreur est survenu', 'Close', {
+          this.matSnackBar.open('Une erreur est survenu.', 'Close', {
             duration: 2000,
           });
         },

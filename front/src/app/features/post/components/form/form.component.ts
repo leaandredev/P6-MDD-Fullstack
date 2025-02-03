@@ -50,7 +50,9 @@ export class FormComponent implements OnInit {
           this.router.navigate(['/post/feed']);
         },
         error: () => {
-          this.onError = true;
+          this.matSnackBar.open('Une erreur est survenu.', 'Close', {
+            duration: 2000,
+          });
         },
       });
     }

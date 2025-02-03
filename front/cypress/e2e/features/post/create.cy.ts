@@ -39,4 +39,19 @@ describe('Create post (form spec)', () => {
     );
     cy.url().should('include', '/post');
   });
+
+  it('should display error message if send a new comment failed', () => {
+    cy.intercept('POST', '/api/post', {
+      statusCode: 500,
+    });
+    cy.get('input[formControlName=title]').type('Post title');
+    cy.get('textarea[formControlName=content]').type('Post content');
+    cy.get('mat-select[formControlName=topicId]').click();
+    cy.get('mat-option').first().click();
+    cy.get('button[type=submit]').click();
+    cy.get('snack-bar-container').and(
+      'contain.text',
+      'Une erreur est survenu.'
+    );
+  });
 });
