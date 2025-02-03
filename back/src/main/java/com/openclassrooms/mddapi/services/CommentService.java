@@ -1,8 +1,11 @@
 package com.openclassrooms.mddapi.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.models.Comment;
+import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.repository.CommentRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +29,17 @@ public class CommentService {
         this.commentRepository.save(comment);
         log.info("Comment saved");
         return comment;
+    }
+
+    /**
+     * Get all comments related to a post
+     * 
+     * @param post The post related to comments
+     * @return a list of comments for the post
+     */
+    public List<Comment> getPostComments(Post post) {
+        List<Comment> comments = this.commentRepository.findByPost(post);
+        return comments;
     }
 
 }

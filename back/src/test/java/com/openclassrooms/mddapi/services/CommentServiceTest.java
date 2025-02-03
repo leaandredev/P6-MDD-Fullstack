@@ -3,6 +3,9 @@ package com.openclassrooms.mddapi.services;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -71,5 +74,31 @@ public class CommentServiceTest {
         // Assert
         verify(commentRepository).save(mockComment);
         assertThat(mockComment).isEqualTo(savedComment);
+    }
+
+    @Test
+    public void testGetPostComments() {
+        // Arrange
+        when(commentRepository.findByPost(mockPost)).thenReturn(List.of(mockComment));
+
+        // Act
+        List<Comment> comments = commentService.getPostComments(mockPost);
+
+        // Assert
+        assertThat(comments).isNotNull();
+        verify(commentRepository).findByPost(mockPost);
+    }
+
+    @Test
+    public void testGetPostCommentsWithNoComments() {
+        // Arrange
+        when(commentRepository.findByPost(mockPost)).thenReturn(null);
+
+        // Act
+        List<Comment> comments = commentService.getPostComments(mockPost);
+
+        // Assert
+        assertThat(comments).isNull();
+        verify(commentRepository).findByPost(mockPost);
     }
 }

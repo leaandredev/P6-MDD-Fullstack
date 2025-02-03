@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Post } from '../interfaces/post.interface';
 import { Observable } from 'rxjs';
 import { PostResponse } from '../interfaces/postResponse.interface';
+import { CommentResponse } from '../interfaces/commentResponse.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,5 +19,11 @@ export class PostService {
 
   public getById(id: string): Observable<PostResponse> {
     return this.httpClient.get<PostResponse>(`${this.pathService}/${id}`);
+  }
+
+  public getComments(id: string): Observable<CommentResponse[]> {
+    return this.httpClient.get<CommentResponse[]>(
+      `${this.pathService}/${id}/comments`
+    );
   }
 }

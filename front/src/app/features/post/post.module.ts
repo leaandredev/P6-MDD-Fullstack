@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from './components/form/form.component';
@@ -30,6 +31,7 @@ const materialModule = [
   MatSidenavModule,
   MatListModule,
   MatOptionModule,
+  MatGridListModule,
 ];
 
 @NgModule({

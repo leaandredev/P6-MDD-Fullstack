@@ -9,11 +9,10 @@ describe('Post details', () => {
       createdAt: new Date().toISOString(),
     }).as('createPost');
     cy.login('alice@mdd.com', 'password123');
-    cy.visit('/post');
+    cy.visit('/post/detail/1');
   });
 
   it('should display details when a post is clicked', () => {
-    cy.get('mat-card').first().click();
     cy.url().should('include', '/post/detail/1');
 
     // Post details
@@ -28,12 +27,13 @@ describe('Post details', () => {
 
     // Comments
     cy.get('h3').should('contain.text', 'Commentaires');
+    cy.get('div.user-comment').should('exist');
+    cy.get('div.user-comment').should('have.length', 3);
     cy.get('textarea[formControlName=content]').should('exist');
     cy.get('button[type=submit]').should('exist');
   });
 
   it('should send a new comment', () => {
-    cy.get('mat-card').first().click();
     cy.get('textarea[formControlName=content]').type('a new comment');
     cy.get('button[type=submit]').click();
     cy.get('snack-bar-container').and(
@@ -43,7 +43,6 @@ describe('Post details', () => {
   });
 
   it('should go back on post feed if back button clicked', () => {
-    cy.visit('/post/detail/1');
     cy.contains('button', 'arrow_back').click();
     cy.url().should('include', '/post');
   });

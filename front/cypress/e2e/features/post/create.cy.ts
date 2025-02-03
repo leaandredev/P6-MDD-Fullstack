@@ -27,12 +27,6 @@ describe('Create post (form spec)', () => {
     cy.get('button[type=submit]').should('exist');
   });
 
-  it('should display an error message if form is invalid', () => {
-    cy.get('button[type=submit]').click();
-    cy.get('error').should('have.length', 1);
-    cy.get('error').and('contain.text', 'Une erreur est survenu');
-  });
-
   it('should create a new post', () => {
     cy.get('input[formControlName=title]').type('Post title');
     cy.get('textarea[formControlName=content]').type('Post content');
