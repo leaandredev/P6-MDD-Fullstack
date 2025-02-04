@@ -2,12 +2,8 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=sass&logoColor=white)
 ![Cypress](https://img.shields.io/badge/Tests-Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white)
-![Java](https://img.shields.io/badge/Java-11-blue?style=for-the-badge&logo=java&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.6.1-brightgreen?style=for-the-badge&logo=springboot&logoColor=white)
-![JUnit](https://img.shields.io/badge/Tests-JUnit-25A162?style=for-the-badge&logo=java&logoColor=white)
-![Mockito](https://img.shields.io/badge/Tests-Mockito-59666C?style=for-the-badge&logo=java&logoColor=white)
 
-# MDD App
+# MDD App (Front-end)
 
 This is the MDD App, used to handle posts for developer.
 
@@ -20,12 +16,57 @@ This is the MDD App, used to handle posts for developer.
 - Handle topics to subscribe
 - Handle user profile
 
-## Documentation
+## Installation
 
-For more details, including installation instructions and resources, please refer to the following:
+Git clone:
 
-- [Front-end README](front/README.md)
-- [Back-end README](back/README.md)
+```
+git clone https://github.com/leaandredev/P6-MDD-Fullstack.git
+```
+
+Install dependencies:
+
+```
+npm install
+```
+
+Launch Front-end:
+
+```
+npm run start;
+```
+
+## Ressources
+
+### MySQL
+
+SQL script for creating the schema is available in the backend `back/src/main/resources/data.sql`
+
+You will find installation procedure in back-end README.
+
+## Testing
+
+### End to End (E2E) with Cypress
+
+Launching e2e test:
+
+```
+npm run e2e
+```
+
+## Technologies
+
+**Angular** - Main framework
+
+**TypeScript** - Programming language
+
+**SCSS** - Styling for the UI design
+
+**Cypress** - End to End (E2E) library
+
+## Contributing
+
+Mdd APP is an open source project. Feel free to fork the source and contribute with your own features.
 
 ## Authors
 
