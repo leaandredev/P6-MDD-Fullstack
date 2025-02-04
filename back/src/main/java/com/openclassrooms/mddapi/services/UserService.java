@@ -2,11 +2,10 @@ package com.openclassrooms.mddapi.services;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,7 @@ import com.openclassrooms.mddapi.exception.DuplicateEntryException;
 import com.openclassrooms.mddapi.exception.NoEntryFoundException;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.repository.PostRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +24,13 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class UserService {
-    private final UserRepository userRepository;
 
-    public UserService(final UserRepository userRepository) {
+    private final UserRepository userRepository;
+    private final PostRepository postRepository;
+
+    public UserService(final UserRepository userRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     /**
@@ -99,30 +102,21 @@ public class UserService {
      * @return the feed posts list, ordered
      */
     public List<Post> getFeedSorted(final User user, final String sortBy, final boolean asc) {
-        final List<Post> posts = user.getFeed();
-        if (sortBy != null && !sortBy.isEmpty()) {
-            Comparator<Post> comparator = null;
-            switch (sortBy.toLowerCase()) {
-                case "date":
-                    comparator = Comparator.comparing(post -> post.getCreatedAt());
-                    break;
-                case "username":
-                    comparator = Comparator.comparing(post -> post.getUser().getUserName());
-                    break;
-                case "title":
-                    comparator = Comparator.comparing(post -> post.getTitle());
-                    break;
-                default:
-                    comparator = Comparator.comparing(post -> post.getCreatedAt());
-                    break;
-            }
-            posts.sort(comparator);
-
-            if (!asc) {
-                Collections.reverse(posts); // Reverse list to DESC order
-            }
+        String validSortBy;
+        switch (sortBy != null ? sortBy.toLowerCase() : "date") {
+            case "username":
+                validSortBy = "user.userName";
+                break;
+            case "title":
+                validSortBy = "title";
+                break;
+            case "date":
+            default:
+                validSortBy = "createdAt";
+                break;
         }
-        return posts;
+
+        return postRepository.findByUser(user, Sort.by(asc ? Sort.Direction.ASC : Sort.Direction.DESC, validSortBy));
     }
 
     /**
