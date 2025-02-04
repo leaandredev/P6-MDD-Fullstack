@@ -46,10 +46,6 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  public back() {
-    window.history.back();
-  }
-
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({

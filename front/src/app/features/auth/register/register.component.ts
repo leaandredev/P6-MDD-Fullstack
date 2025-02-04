@@ -50,10 +50,6 @@ export class RegisterComponent implements OnInit {
       });
   }
 
-  public back() {
-    window.history.back();
-  }
-
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
     this.authService.register(registerRequest).subscribe({

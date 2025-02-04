@@ -6,20 +6,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  handsetPortrait: boolean = false;
-
-  constructor(private responsive: BreakpointObserver) {}
-
-  ngOnInit(): void {
-    this.responsive
-      .observe([Breakpoints.HandsetPortrait])
-      .subscribe((result) => {
-        if (result.matches) {
-          this.handsetPortrait = true;
-        } else {
-          this.handsetPortrait = false;
-        }
-      });
-  }
+export class HomeComponent {
+  constructor() {}
 }

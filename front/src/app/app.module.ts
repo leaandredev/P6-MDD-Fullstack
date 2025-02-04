@@ -22,6 +22,8 @@ import { TopicsComponent } from './features/topics/topics.component';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { PostDetailComponent } from './features/post/components/post-detail/post-detail.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { LoggedLayoutComponent } from './core/layouts/logged-layout/logged-layout.component';
+import { UnloggedLayoutComponent } from './core/layouts/unlogged-layout/unlogged-layout.component';
 
 const materialModule = [
   MatButtonModule,
@@ -42,6 +44,8 @@ const materialModule = [
     UserDetailsComponent,
     TopicsComponent,
     PostDetailComponent,
+    LoggedLayoutComponent,
+    UnloggedLayoutComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,9 @@
+<div class="app">
+    <mat-toolbar *ngIf="showHeader" color="secondary" class="flex-space-between">
+        <img id="app-logo" src="/assets/logo_p6.png" alt="logo" />
+    </mat-toolbar>
+    <button *ngIf="showBackButton" mat-icon-button (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <router-outlet></router-outlet>
+</div>
