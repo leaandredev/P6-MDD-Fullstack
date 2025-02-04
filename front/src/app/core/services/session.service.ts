@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SessionInformation } from '../interfaces/sessionInformation.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +12,12 @@ export class SessionService {
 
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
 
-  constructor() {
+  constructor(private cookieService: CookieService) {
     this.loadSession();
   }
 
   private loadSession(): void {
-    const sessionData = localStorage.getItem('sessionInformation');
+    const sessionData = this.cookieService.get('sessionInformation');
     if (sessionData) {
       this.sessionInformation = JSON.parse(sessionData);
       this.isLogged = true;
@@ -31,14 +32,14 @@ export class SessionService {
   public logIn(user: SessionInformation): void {
     this.sessionInformation = user;
     this.isLogged = true;
-    localStorage.setItem('sessionInformation', JSON.stringify(user));
+    this.cookieService.set('sessionInformation', JSON.stringify(user));
     this.next();
   }
 
   public logOut(): void {
     this.sessionInformation = undefined;
     this.isLogged = false;
-    localStorage.removeItem('sessionInformation');
+    this.cookieService.delete('sessionInformation');
     this.next();
   }
 
