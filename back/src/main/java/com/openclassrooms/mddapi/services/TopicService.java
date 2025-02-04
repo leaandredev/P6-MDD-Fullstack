@@ -19,7 +19,7 @@ public class TopicService {
     private final TopicRepository topicRepository;
     private final UserRepository userRepository;
 
-    TopicService(TopicRepository topicRepository, UserRepository userRepository) {
+    TopicService(final TopicRepository topicRepository, final UserRepository userRepository) {
         this.topicRepository = topicRepository;
         this.userRepository = userRepository;
     }
@@ -39,7 +39,7 @@ public class TopicService {
      * @param id the id of the topic to retrieve
      * @return the topic with the given id
      */
-    public Topic findById(Long id) {
+    public Topic findById(final Long id) {
         return this.topicRepository.findById(id).orElse(null);
     }
 
@@ -50,8 +50,8 @@ public class TopicService {
      * @param userId  the ID of the user who wants to subscribe
      * @throws NoEntryFoundException if the topic or user is not found
      */
-    public void subscribe(Long topicId, Long userId) {
-        Topic topic = this.topicRepository.findById(topicId).orElse(null);
+    public void subscribe(final Long topicId, final Long userId) {
+        final Topic topic = this.topicRepository.findById(topicId).orElse(null);
         User user = this.userRepository.findById(userId).orElse(null);
         if (topic == null || user == null) {
             throw new NoEntryFoundException("User or topic not found");
@@ -72,8 +72,8 @@ public class TopicService {
      * @param userId  the ID of the user who wants to unsubscribe
      * @throws NoEntryFoundException if the topic or user is not found
      */
-    public void unsubscribe(Long topicId, Long userId) {
-        Topic topic = this.topicRepository.findById(topicId).orElse(null);
+    public void unsubscribe(final Long topicId, final Long userId) {
+        final Topic topic = this.topicRepository.findById(topicId).orElse(null);
         User user = this.userRepository.findById(userId).orElse(null);
         if (topic == null || user == null) {
             throw new NoEntryFoundException("User or topic not found");

@@ -62,7 +62,8 @@ public class Post {
     /** Timestamp of creation */
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     /** Timestamp of last update */
     @Column(name = "updated_at", nullable = false)
@@ -71,7 +72,6 @@ public class Post {
     /** Initializes `createdAt` and `updatedAt` before persisting */
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
         this.updatedAt = createdAt;
     }
 

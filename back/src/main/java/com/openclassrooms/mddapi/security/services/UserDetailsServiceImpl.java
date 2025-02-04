@@ -11,16 +11,16 @@ import com.openclassrooms.mddapi.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-  UserRepository userRepository;
+  private final UserRepository userRepository;
 
-  UserDetailsServiceImpl(UserRepository userRepository) {
+  UserDetailsServiceImpl(final UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 
   @Override
   @Transactional
-  public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
-    User user = userRepository.findByUserName(identifier)
+  public UserDetails loadUserByUsername(final String identifier) throws UsernameNotFoundException {
+    final User user = userRepository.findByUserName(identifier)
         .or(() -> userRepository.findByEmail(identifier))
         .orElseThrow(() -> new UsernameNotFoundException("User Not Found with identifier: " + identifier));
 

@@ -42,9 +42,9 @@ public class UserController {
      * @return a {@link ResponseEntity} with {@link UserDto} response
      */
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> findById(@PathVariable("id") String id) {
+    public ResponseEntity<UserDto> findById(@PathVariable("id") final String id) {
         try {
-            User user = this.userService.findById(Long.valueOf(id));
+            final User user = this.userService.findById(Long.valueOf(id));
             if (!this.userService.isCurrentUserAuthorized(user)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
@@ -62,15 +62,15 @@ public class UserController {
      * @return a {@link ResponseEntity} with {@link UserDto} response
      */
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable("id") String id, @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> update(@PathVariable("id") final String id, @RequestBody final UserDto userDto) {
         try {
-            User user = this.userService.findById(Long.valueOf(id));
+            final User user = this.userService.findById(Long.valueOf(id));
             if (!this.userService.isCurrentUserAuthorized(user)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
-            user = this.userService.update(Long.valueOf(id), userDto);
+            final User userUpdated = this.userService.update(Long.valueOf(id), userDto);
 
-            return ResponseEntity.ok().body(this.userMapper.toDto(user));
+            return ResponseEntity.ok().body(this.userMapper.toDto(userUpdated));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -85,13 +85,13 @@ public class UserController {
      * 
      */
     @GetMapping("/{id}/subscriptions")
-    public ResponseEntity<List<TopicDto>> getSubscriptions(@PathVariable("id") String id) {
+    public ResponseEntity<List<TopicDto>> getSubscriptions(@PathVariable("id") final String id) {
         try {
-            User user = this.userService.findById(Long.valueOf(id));
+            final User user = this.userService.findById(Long.valueOf(id));
             if (!this.userService.isCurrentUserAuthorized(user)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
-            List<Topic> topics = user.getSubscriptions();
+            final List<Topic> topics = user.getSubscriptions();
             return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
@@ -107,15 +107,15 @@ public class UserController {
      */
     @GetMapping("/{id}/feed")
     public ResponseEntity<List<PostResponse>> getFeedPosts(
-            @PathVariable("id") String id,
-            @RequestParam(required = false, defaultValue = "date") String orderBy,
-            @RequestParam(required = false, defaultValue = "true") boolean asc) {
+            @PathVariable("id") final String id,
+            @RequestParam(required = false, defaultValue = "date") final String orderBy,
+            @RequestParam(required = false, defaultValue = "true") final boolean asc) {
         try {
-            User user = this.userService.findById(Long.valueOf(id));
+            final User user = this.userService.findById(Long.valueOf(id));
             if (!this.userService.isCurrentUserAuthorized(user)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
-            List<Post> posts = this.userService.getFeedSorted(user, orderBy, asc);
+            final List<Post> posts = this.userService.getFeedSorted(user, orderBy, asc);
             return ResponseEntity.ok().body(this.postMapper.toResponse(posts));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();

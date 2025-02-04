@@ -11,13 +11,15 @@ import com.openclassrooms.mddapi.models.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    public Optional<User> findByEmail(String email);
+    public Optional<User> findByEmail(final String email);
 
-    public Optional<User> findByUserName(String userName);
+    public Optional<User> findByUserName(final String userName);
 
-    public Boolean existsByEmail(String email);
+    public Boolean existsByEmail(final String email);
 
-    public Boolean existsByUserName(String userName);
+    public Boolean existsByUserName(final String userName);
 
-    public List<User> findBySubscriptionsContaining(Topic topic);
+    public List<User> findBySubscriptionsContaining(final Topic topic);
+
+    // TODO: Voir pour le tri du feed directement avec @Query et fetch join
 }

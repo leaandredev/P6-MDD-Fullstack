@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PostService {
     private final PostRepository postRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(final PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
@@ -24,10 +24,9 @@ public class PostService {
      * @param post the post to be saved
      * @return the saved post
      */
-    public Post save(Post post) {
-        postRepository.save(post);
+    public Post save(final Post post) {
         log.info("Post saved");
-        return post;
+        return postRepository.save(post);
     }
 
     /**
@@ -36,7 +35,7 @@ public class PostService {
      * @param id the id of the post to retrieve
      * @return the post with the given id
      */
-    public Post findById(Long id) {
+    public Post findById(final Long id) {
         return this.postRepository.findById(id).orElseThrow(() -> new NoEntryFoundException("The post does not exist"));
     }
 }

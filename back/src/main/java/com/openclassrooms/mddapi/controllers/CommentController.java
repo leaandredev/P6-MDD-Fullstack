@@ -43,14 +43,14 @@ public class CommentController {
      */
     @PostMapping
     @ResponseBody
-    public ResponseEntity<CommentDto> create(@RequestBody CommentDto commentDto) {
-        User user = this.userService.findById(Long.valueOf(commentDto.getUserId()));
+    public ResponseEntity<CommentDto> create(@RequestBody final CommentDto commentDto) {
+        final User user = this.userService.findById(Long.valueOf(commentDto.getUserId()));
         if (!this.userService.isCurrentUserAuthorized(user)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        Comment comment = this.commentMapper.toEntity(commentDto);
-        Comment savedComment = this.commentService.save(comment);
+        final Comment comment = this.commentMapper.toEntity(commentDto);
+        final Comment savedComment = this.commentService.save(comment);
 
         return ResponseEntity.ok().body(this.commentMapper.toDto(savedComment));
     }

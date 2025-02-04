@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -36,7 +36,7 @@ public class UserService {
      * @param user The User entity to save
      * @return The User entity saved
      */
-    public User save(User user) {
+    public User save(final User user) {
         if (userRepository.existsByEmail(user.getEmail()) || userRepository.existsByUserName(user.getUserName())) {
             throw new DuplicateEntryException("A user already exist with this email address or username");
         } else {
@@ -62,7 +62,7 @@ public class UserService {
      * @param userDto The UserDto with datas to update
      * @return The User entity updated
      */
-    public User update(Long id, UserDto userDto) {
+    public User update(final Long id, final UserDto userDto) {
         User userToUpdate = userRepository.findById(id)
                 .orElseThrow(() -> new NoEntryFoundException("The user does not exist"));
 
@@ -79,7 +79,7 @@ public class UserService {
      *
      * @param post the post to be added to the feeds of subscribed users
      */
-    public void addPostToFeeds(Post post) {
+    public void addPostToFeeds(final Post post) {
         List<User> users = userRepository.findBySubscriptionsContaining(post.getTopic());
         for (User user : users) {
             List<Post> modifiableFeed = new ArrayList<>(user.getFeed());
@@ -98,8 +98,8 @@ public class UserService {
      * @param asc    order for sortBy (default = true, so ASC)
      * @return the feed posts list, ordered
      */
-    public List<Post> getFeedSorted(User user, String sortBy, boolean asc) {
-        List<Post> posts = user.getFeed();
+    public List<Post> getFeedSorted(final User user, final String sortBy, final boolean asc) {
+        final List<Post> posts = user.getFeed();
         if (sortBy != null && !sortBy.isEmpty()) {
             Comparator<Post> comparator = null;
             switch (sortBy.toLowerCase()) {
@@ -131,8 +131,9 @@ public class UserService {
      * @param id The user we want to test
      * @return true if users are the same
      */
-    public boolean isCurrentUserAuthorized(User user) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public boolean isCurrentUserAuthorized(final User user) {
+        final UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
         return Objects.equals(userDetails.getUsername(), user.getEmail()) ||
                 Objects.equals(userDetails.getUsername(), user.getUserName());
     }

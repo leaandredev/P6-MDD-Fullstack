@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -57,9 +56,9 @@ public class PostController {
      * @return a {@link ResponseEntity} with the {@link PostResponse} (post found)
      */
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> findById(@PathVariable("id") String id) {
+    public ResponseEntity<PostResponse> findById(@PathVariable("id") final String id) {
         try {
-            Post post = this.postService.findById(Long.valueOf(id));
+            final Post post = this.postService.findById(Long.valueOf(id));
             return ResponseEntity.ok().body(this.postMapper.toResponse(post));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
@@ -76,13 +75,13 @@ public class PostController {
      */
     @PostMapping
     @ResponseBody
-    public ResponseEntity<PostDto> create(@RequestBody PostDto postDto) {
-        User user = this.userService.findById(Long.valueOf(postDto.getUserId()));
+    public ResponseEntity<PostDto> create(@RequestBody final PostDto postDto) {
+        final User user = this.userService.findById(Long.valueOf(postDto.getUserId()));
         if (!this.userService.isCurrentUserAuthorized(user)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        Post post = this.postMapper.toEntity(postDto);
-        Post savedPost = this.postService.save(post);
+        final Post post = this.postMapper.toEntity(postDto);
+        final Post savedPost = this.postService.save(post);
         // Add the post to the feeds of all users who have subscribed to the topic
         this.userService.addPostToFeeds(savedPost);
         return ResponseEntity.ok().body(this.postMapper.toDto(savedPost));
@@ -96,10 +95,10 @@ public class PostController {
      *         a list of {@link CommentResponse}
      */
     @GetMapping("/{id}/comments")
-    public ResponseEntity<List<CommentResponse>> getComments(@PathVariable("id") String id) {
+    public ResponseEntity<List<CommentResponse>> getComments(@PathVariable("id") final String id) {
         try {
-            Post post = this.postService.findById(Long.valueOf(id));
-            List<Comment> comments = this.commentService.getPostComments(post);
+            final Post post = this.postService.findById(Long.valueOf(id));
+            final List<Comment> comments = this.commentService.getPostComments(post);
             return ResponseEntity.ok().body(this.commentMapper.toResponse(comments));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();

@@ -53,7 +53,7 @@ public class AuthServiceTest {
         when(userService.save(any(User.class))).thenReturn(mockUser);
 
         // Act
-        authService.register(mockUser, "password1234!");
+        authService.register(mockUser);
 
         // Assert
         verify(userService).save(mockUser);

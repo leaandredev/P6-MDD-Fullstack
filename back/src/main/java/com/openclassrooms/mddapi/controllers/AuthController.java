@@ -43,7 +43,7 @@ public class AuthController {
      */
     @PostMapping(value = "/login", consumes = { "application/json" })
     @ResponseBody
-    public ResponseEntity<SessionInformationResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<SessionInformationResponse> login(@Valid @RequestBody final LoginRequest loginRequest) {
         SessionInformationResponse sessionInformation = authService.login(loginRequest.getIdentifier(),
                 loginRequest.getPassword());
 
@@ -59,7 +59,7 @@ public class AuthController {
      */
     @PostMapping(value = "/register", consumes = { "application/json" })
     @ResponseBody
-    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody final RegisterRequest registerRequest) {
 
         // Create new user's account
         final User user = User.builder()
@@ -68,7 +68,7 @@ public class AuthController {
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .build();
 
-        authService.register(user, registerRequest.getPassword());
+        authService.register(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

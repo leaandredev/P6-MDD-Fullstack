@@ -23,7 +23,7 @@ public class JwtUtils {
   /**
    * Secret key used to encode and decode JWT tokens
    */
-  private SecretKey jwtSecret = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+  private final SecretKey jwtSecret = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
   /**
    * Delay for token expiration (ms)
@@ -38,9 +38,9 @@ public class JwtUtils {
    * @param authentication Represent the token for the authenticated user
    * @return a jwtToken for the authenticated user
    */
-  public String generateJwtToken(Authentication authentication) {
+  public String generateJwtToken(final Authentication authentication) {
 
-    UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+    final UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
     return Jwts.builder()
         .setSubject((userPrincipal.getUsername()))
@@ -56,7 +56,7 @@ public class JwtUtils {
    * @param token a jwtToken of the authenticated user
    * @return the userName from JwtToken
    */
-  public String getUserNameFromJwtToken(String token) {
+  public String getUserNameFromJwtToken(final String token) {
     return Jwts.parserBuilder()
         .setSigningKey(jwtSecret)
         .build()
@@ -71,7 +71,7 @@ public class JwtUtils {
    * @param authToken a jwtToken of the authenticated user
    * @return the validation status, true or false
    */
-  public boolean validateJwtToken(String authToken) {
+  public boolean validateJwtToken(final String authToken) {
     try {
       Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(authToken);
       return true;

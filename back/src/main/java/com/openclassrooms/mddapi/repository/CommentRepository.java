@@ -11,5 +11,5 @@ import com.openclassrooms.mddapi.models.Post;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    public List<Comment> findByPost(Post post);
+    public List<Comment> findByPost(final Post post);
 }

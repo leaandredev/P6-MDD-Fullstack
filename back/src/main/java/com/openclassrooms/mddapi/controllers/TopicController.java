@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,7 +29,8 @@ public class TopicController {
     private final TopicMapper topicMapper;
     private final UserService userService;
 
-    public TopicController(TopicService topicService, TopicMapper topicMapper, UserService userService) {
+    public TopicController(TopicService topicService, TopicMapper topicMapper,
+            UserService userService) {
         this.topicService = topicService;
         this.topicMapper = topicMapper;
         this.userService = userService;
@@ -43,7 +43,7 @@ public class TopicController {
      */
     @GetMapping()
     public ResponseEntity<List<TopicDto>> findAll() {
-        List<Topic> topics = this.topicService.findAll();
+        final List<Topic> topics = this.topicService.findAll();
         return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
     }
 
@@ -57,9 +57,10 @@ public class TopicController {
      * 
      */
     @PostMapping("{id}/subscribe/{userId}")
-    public ResponseEntity<?> subscribe(@PathVariable("id") String id, @PathVariable("userId") String userId) {
+    public ResponseEntity<?> subscribe(@PathVariable("id") final String id,
+            @PathVariable("userId") final String userId) {
         try {
-            User user = this.userService.findById(Long.valueOf(userId));
+            final User user = this.userService.findById(Long.valueOf(userId));
             if (!this.userService.isCurrentUserAuthorized(user)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
@@ -79,9 +80,10 @@ public class TopicController {
      * 
      */
     @DeleteMapping("{id}/unsubscribe/{userId}")
-    public ResponseEntity<?> unsubscribe(@PathVariable("id") String id, @PathVariable("userId") String userId) {
+    public ResponseEntity<?> unsubscribe(@PathVariable("id") final String id,
+            @PathVariable("userId") final String userId) {
         try {
-            User user = this.userService.findById(Long.valueOf(userId));
+            final User user = this.userService.findById(Long.valueOf(userId));
             if (!this.userService.isCurrentUserAuthorized(user)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }

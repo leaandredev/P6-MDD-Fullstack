@@ -24,7 +24,8 @@ public class AuthService {
     private final JwtUtils jwtUtils;
     private final UserService userService;
 
-    public AuthService(AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserService userService) {
+    public AuthService(final AuthenticationManager authenticationManager, final JwtUtils jwtUtils,
+            final UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.userService = userService;
@@ -37,14 +38,14 @@ public class AuthService {
      * @param plainPassword the plain-text password of the user
      * @return a new jwtToken provide by jwtUtils
      */
-    public SessionInformationResponse login(String identifier, String plainPassword) {
-        Authentication authentication = authenticationManager.authenticate(
+    public SessionInformationResponse login(final String identifier, final String plainPassword) {
+        final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         identifier,
                         plainPassword));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        final String jwt = jwtUtils.generateJwtToken(authentication);
+        final UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         log.info("Authentication successful");
 
@@ -59,11 +60,10 @@ public class AuthService {
     /**
      * Save a new user to the database, authenticate him and return a JwtToken
      * 
-     * @param newUser       The user to register
-     * @param plainPassword the plain-text password of the new user
+     * @param newUser The user to register
      * @return a new jwtToken for the newly registered user
      */
-    public void register(User newUser, String plainPassword) {
+    public void register(final User newUser) {
         userService.save(newUser);
     }
 

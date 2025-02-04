@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(final CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
 
@@ -25,10 +25,9 @@ public class CommentService {
      * @param comment the comment to be saved
      * @return the saved comment
      */
-    public Comment save(Comment comment) {
-        this.commentRepository.save(comment);
+    public Comment save(final Comment comment) {
         log.info("Comment saved");
-        return comment;
+        return this.commentRepository.save(comment);
     }
 
     /**
@@ -37,9 +36,8 @@ public class CommentService {
      * @param post The post related to comments
      * @return a list of comments for the post
      */
-    public List<Comment> getPostComments(Post post) {
-        List<Comment> comments = this.commentRepository.findByPost(post);
-        return comments;
+    public List<Comment> getPostComments(final Post post) {
+        return this.commentRepository.findByPost(post);
     }
 
 }

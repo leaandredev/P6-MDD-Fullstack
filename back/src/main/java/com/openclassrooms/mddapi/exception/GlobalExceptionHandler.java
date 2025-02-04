@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({ AccessDeniedException.class, UnauthorizedException.class, AuthenticationException.class })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<ErrorResponse> handleAccessDeniedException(Exception exception) {
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(final Exception exception) {
         log.error(exception.getMessage(), exception);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).body(new ErrorResponse("Access denied"));
     }
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException exception) {
+    public ResponseEntity<ErrorResponse> handleValidationExceptions(final MethodArgumentNotValidException exception) {
         String errors = "";
         for (FieldError error : exception.getBindingResult().getFieldErrors()) {
             errors += error.getDefaultMessage() + ". ";
@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({ HttpMessageNotReadableException.class, DuplicateEntryException.class,
             IllegalArgumentException.class })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleBadRequest(Exception exception) {
+    public ResponseEntity<ErrorResponse> handleBadRequest(final Exception exception) {
         log.error(exception.getMessage(), exception);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(new ErrorResponse(exception.getMessage()));
     }
@@ -81,7 +81,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NoEntryFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponse> handleNoEntryFoundExceptions(NoEntryFoundException exception) {
+    public ResponseEntity<ErrorResponse> handleNoEntryFoundExceptions(final NoEntryFoundException exception) {
         log.error(exception.getMessage(), exception);
         return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(new ErrorResponse(exception.getMessage()));
     }
@@ -95,7 +95,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ErrorResponse> handleGlobalException(Exception exception) {
+    public ResponseEntity<ErrorResponse> handleGlobalException(final Exception exception) {
         log.error(exception.getStackTrace().toString(), exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .body(new ErrorResponse(exception.getMessage()));

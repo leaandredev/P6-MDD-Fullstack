@@ -19,14 +19,14 @@ import lombok.Getter;
 public class UserDetailsImpl implements UserDetails {
   private static final long serialVersionUID = 1L;
 
-  private Long id;
+  private final Long id;
 
-  private String username;
+  private final String username;
 
-  private String email;
+  private final String email;
 
   @JsonIgnore
-  private String password;
+  private final String password;
 
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return new HashSet<GrantedAuthority>();
@@ -53,12 +53,12 @@ public class UserDetailsImpl implements UserDetails {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o)
       return true;
     if (o == null || getClass() != o.getClass())
       return false;
-    UserDetailsImpl user = (UserDetailsImpl) o;
+    final UserDetailsImpl user = (UserDetailsImpl) o;
     return Objects.equals(id, user.id);
   }
 }
