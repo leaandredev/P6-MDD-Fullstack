@@ -15,6 +15,7 @@ import com.openclassrooms.mddapi.mappers.CommentMapper;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.payload.response.CommentResponse;
 import com.openclassrooms.mddapi.payload.response.PostResponse;
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.services.CommentService;
@@ -53,10 +54,10 @@ public class PostController {
      * Find a post by its id
      * 
      * @param id The id of the post to find
-     * @return a {@link ResponseEntity} with {@link PostResponse} response
+     * @return a {@link ResponseEntity} with the {@link PostResponse} (post found)
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") String id) {
+    public ResponseEntity<PostResponse> findById(@PathVariable("id") String id) {
         try {
             Post post = this.postService.findById(Long.valueOf(id));
             return ResponseEntity.ok().body(this.postMapper.toResponse(post));
@@ -71,10 +72,11 @@ public class PostController {
      * @param postDto the dto containing the details of the post to
      *                be created
      * @return a ResponseEntity containing the saved post
+     * @return a {@link ResponseEntity} with the {@link PostDto} (post saved)
      */
     @PostMapping
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody PostDto postDto) {
+    public ResponseEntity<PostDto> create(@RequestBody PostDto postDto) {
         User user = this.userService.findById(Long.valueOf(postDto.getUserId()));
         if (!this.userService.isCurrentUserAuthorized(user)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -90,10 +92,11 @@ public class PostController {
      * Get all comments for a post
      * 
      * @param id The id of the post to find comments
-     * @return a ResponseEntity containing all comments related to post
+     * @return a {@link ResponseEntity} containing all comments related to post, in
+     *         a list of {@link CommentResponse}
      */
     @GetMapping("/{id}/comments")
-    public ResponseEntity<?> getComments(@PathVariable("id") String id) {
+    public ResponseEntity<List<CommentResponse>> getComments(@PathVariable("id") String id) {
         try {
             Post post = this.postService.findById(Long.valueOf(id));
             List<Comment> comments = this.commentService.getPostComments(post);

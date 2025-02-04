@@ -59,10 +59,10 @@ public class AuthController {
      */
     @PostMapping(value = "/register", consumes = { "application/json" })
     @ResponseBody
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
 
         // Create new user's account
-        User user = User.builder()
+        final User user = User.builder()
                 .userName(registerRequest.getUserName())
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))

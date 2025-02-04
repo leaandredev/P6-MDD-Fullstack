@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.mappers.TopicMapper;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
@@ -38,10 +39,10 @@ public class TopicController {
     /**
      * Find all topics
      * 
-     * @return a {@link ResponseEntity} with a list of {@link Topic} response
+     * @return a {@link ResponseEntity} with a list of {@link TopicDto}
      */
     @GetMapping()
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<List<TopicDto>> findAll() {
         List<Topic> topics = this.topicService.findAll();
         return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
     }
@@ -51,7 +52,8 @@ public class TopicController {
      *
      * @param id     The ID of the topic to subscribe to.
      * @param userId The ID of the user who wants to subscribe.
-     * @return ResponseEntity indicating the result of the subscription operation.
+     * @return a {@link ResponseEntity} indicating the result of the subscription
+     *         operation.
      * 
      */
     @PostMapping("{id}/subscribe/{userId}")
@@ -73,7 +75,7 @@ public class TopicController {
      *
      * @param id     the ID of the topic to unsubscribe from
      * @param userId the ID of the user to unsubscribe
-     * @return a ResponseEntity indicating the result of the operation
+     * @return a {@link ResponseEntity} indicating the result of the operation
      * 
      */
     @DeleteMapping("{id}/unsubscribe/{userId}")

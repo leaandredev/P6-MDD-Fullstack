@@ -43,7 +43,7 @@ public class CommentController {
      */
     @PostMapping
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<CommentDto> create(@RequestBody CommentDto commentDto) {
         User user = this.userService.findById(Long.valueOf(commentDto.getUserId()));
         if (!this.userService.isCurrentUserAuthorized(user)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

@@ -99,6 +99,7 @@ public class UserServiceTest {
         // Arrange
         when(userRepository.existsByEmail(any())).thenReturn(false);
         when(userRepository.existsByUserName(any())).thenReturn(false);
+        when(userRepository.save(any(User.class))).thenReturn(mockUser1);
 
         // Act
         User actualUser = userService.save(mockUser1);

@@ -40,9 +40,8 @@ public class UserService {
         if (userRepository.existsByEmail(user.getEmail()) || userRepository.existsByUserName(user.getUserName())) {
             throw new DuplicateEntryException("A user already exist with this email address or username");
         } else {
-            userRepository.save(user);
             log.info("User saved");
-            return user;
+            return userRepository.save(user);
         }
     }
 

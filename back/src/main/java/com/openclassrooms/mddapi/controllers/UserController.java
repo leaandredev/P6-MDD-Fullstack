@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.mappers.TopicMapper;
 import com.openclassrooms.mddapi.mappers.UserMapper;
+import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.payload.response.PostResponse;
 import com.openclassrooms.mddapi.services.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -40,7 +42,7 @@ public class UserController {
      * @return a {@link ResponseEntity} with {@link UserDto} response
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") String id) {
+    public ResponseEntity<UserDto> findById(@PathVariable("id") String id) {
         try {
             User user = this.userService.findById(Long.valueOf(id));
             if (!this.userService.isCurrentUserAuthorized(user)) {
@@ -60,7 +62,7 @@ public class UserController {
      * @return a {@link ResponseEntity} with {@link UserDto} response
      */
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> update(@PathVariable("id") String id, @RequestBody UserDto userDto) {
         try {
             User user = this.userService.findById(Long.valueOf(id));
             if (!this.userService.isCurrentUserAuthorized(user)) {
@@ -78,12 +80,12 @@ public class UserController {
      * Retrieves the list of subscriptions (topics) for a given user.
      *
      * @param id the ID of the user whose subscriptions are to be retrieved
-     * @return a ResponseEntity containing the list of topics the user is subscribed
-     *         to,
-     *         or a bad request response if the ID is not a valid number
+     * @return a {@link ResponseEntity} containing the list of {@link TopicDto} the
+     *         user is subscribed to
+     * 
      */
     @GetMapping("/{id}/subscriptions")
-    public ResponseEntity<?> getSubscriptions(@PathVariable("id") String id) {
+    public ResponseEntity<List<TopicDto>> getSubscriptions(@PathVariable("id") String id) {
         try {
             User user = this.userService.findById(Long.valueOf(id));
             if (!this.userService.isCurrentUserAuthorized(user)) {
@@ -100,12 +102,11 @@ public class UserController {
      * Retrieves the feed posts for a specific user.
      *
      * @param id the ID of the user whose feed posts are to be retrieved
-     * @return a ResponseEntity containing the list of feed posts in DTO format if
-     *         the user is found,
-     *         or a bad request response if the ID is not a valid number
+     * @return a {@link ResponseEntity} containing the list of feed
+     *         {@link PostResponse}
      */
     @GetMapping("/{id}/feed")
-    public ResponseEntity<?> getFeedPosts(
+    public ResponseEntity<List<PostResponse>> getFeedPosts(
             @PathVariable("id") String id,
             @RequestParam(required = false, defaultValue = "date") String orderBy,
             @RequestParam(required = false, defaultValue = "true") boolean asc) {
