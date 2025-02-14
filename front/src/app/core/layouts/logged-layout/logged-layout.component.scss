@@ -1,0 +1,20 @@
+@import '@angular/material/theming';
+@import 'src/styles/styles.scss';
+
+#app-logo {
+    max-height: 100%;
+    display: block;
+}
+
+.active-button {
+    background-color: mat-color($primary);
+    color: white;
+}
+
+.active-link {
+    color: mat-color($primary);
+}
+
+.app, .app-container {
+    height: 100%;
+}
